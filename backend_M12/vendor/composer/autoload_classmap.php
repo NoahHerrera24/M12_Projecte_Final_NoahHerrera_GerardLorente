@@ -6,9 +6,9 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Http\\Controllers\\ApiController' => $baseDir . '/app/Http/Controllers/ApiController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Models\\Equip' => $baseDir . '/app/Models/Equip.php',
-    'App\\Models\\Ranking' => $baseDir . '/app/Models/Ranking.php',
     'App\\Models\\TicketQueixa' => $baseDir . '/app/Models/TicketQueixa.php',
     'App\\Models\\Torneig' => $baseDir . '/app/Models/Torneig.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
@@ -2355,6 +2355,12 @@ return array(
     'Illuminate\\View\\ViewFinderInterface' => $vendorDir . '/laravel/framework/src/Illuminate/View/ViewFinderInterface.php',
     'Illuminate\\View\\ViewName' => $vendorDir . '/laravel/framework/src/Illuminate/View/ViewName.php',
     'Illuminate\\View\\ViewServiceProvider' => $vendorDir . '/laravel/framework/src/Illuminate/View/ViewServiceProvider.php',
+    'Laravel\\Breeze\\BreezeServiceProvider' => $vendorDir . '/laravel/breeze/src/BreezeServiceProvider.php',
+    'Laravel\\Breeze\\Console\\InstallCommand' => $vendorDir . '/laravel/breeze/src/Console/InstallCommand.php',
+    'Laravel\\Breeze\\Console\\InstallsApiStack' => $vendorDir . '/laravel/breeze/src/Console/InstallsApiStack.php',
+    'Laravel\\Breeze\\Console\\InstallsBladeStack' => $vendorDir . '/laravel/breeze/src/Console/InstallsBladeStack.php',
+    'Laravel\\Breeze\\Console\\InstallsInertiaStacks' => $vendorDir . '/laravel/breeze/src/Console/InstallsInertiaStacks.php',
+    'Laravel\\Breeze\\Console\\InstallsLivewireStack' => $vendorDir . '/laravel/breeze/src/Console/InstallsLivewireStack.php',
     'Laravel\\Pail\\Console\\Commands\\PailCommand' => $vendorDir . '/laravel/pail/src/Console/Commands/PailCommand.php',
     'Laravel\\Pail\\Contracts\\Printer' => $vendorDir . '/laravel/pail/src/Contracts/Printer.php',
     'Laravel\\Pail\\File' => $vendorDir . '/laravel/pail/src/File.php',
