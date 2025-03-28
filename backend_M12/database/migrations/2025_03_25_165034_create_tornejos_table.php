@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('tornejos', function (Blueprint $table) {
             $table->id();
+            $table->string('nom');
+            $table->string('regles');
+            $table->string('premis');
+            $table->string('categoria');
+            $table->string('format');
+            $table->date('data_inici');
+            $table->date('data_fi');
             $table->timestamps();
         });
     }

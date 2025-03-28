@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('tickets_queixa', function (Blueprint $table) {
             $table->id();
+            $table->string('descripcio');
+            $table->string('proves');
+            $table->string('estat');
             $table->timestamps();
         });
     }

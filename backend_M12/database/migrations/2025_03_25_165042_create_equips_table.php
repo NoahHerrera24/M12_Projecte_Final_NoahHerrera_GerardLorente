@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('equips', function (Blueprint $table) {
             $table->id();
+            $table->string('nom');
+            $table->string('colors_representatius');
+            $table->string('idioma_equip');
+            $table->string('patrocinadors');
+            $table->date('data_fundacio');
+            $table->string('entrenador')->nullable();
+            $table->string('logo')->nullable();
+            $table->string('descripcio');
+            $table->boolean('actiu');
             $table->timestamps();
         });
     }
