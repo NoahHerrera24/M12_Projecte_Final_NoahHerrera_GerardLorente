@@ -1,12 +1,19 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { ITicketQueixa } from '../interfaces/iticket-queixa';
 
 @Pipe({
-  name: 'ticketQueixaListFilter'
+  name: 'ticketQueixaListFilter',
+  standalone: false
 })
 export class TicketQueixaListFilterPipe implements PipeTransform {
 
-  transform(value: unknown, ...args: unknown[]): unknown {
-    return null;
+  transform(ticketsQueixa: ITicketQueixa[], filterBy: string): ITicketQueixa[] {
+    filterBy = filterBy ? filterBy.toLowerCase() : '';
+    return filterBy
+      ? ticketsQueixa.filter((ticketQueixa) =>
+          ticketQueixa.descripcio.toLowerCase().indexOf(filterBy) !== -1 || ticketQueixa.estat.toLowerCase().indexOf(filterBy) !== -1
+        )
+      : ticketsQueixa;
   }
 
 }

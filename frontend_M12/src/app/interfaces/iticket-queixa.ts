@@ -1,7 +1,8 @@
 export interface ITicketQueixa {
 
+   id: number;
    descripcio: string;
-   proves: string;
+   proves: string[];
    estat: string; 
    
 }
