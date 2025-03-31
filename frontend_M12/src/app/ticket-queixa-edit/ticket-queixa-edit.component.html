@@ -1,1 +1,27 @@
-<p>ticket-queixa-edit works!</p>
+<h3 class="fill-remaining-space">Edita Ticket Queixa</h3>
+<div class="container">
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="descripcio">Descripcio:</label>
+      <input class="form-control" formControlName="descripcio" id="descripcio">
+    </div>
+    <div class="form-group">
+      <label for="proves">Proves:</label>
+      <input type="file" class="form-control" id="proves" (change)="onFileChange($event)" multiple>
+      <div class="preview-container" *ngIf="filePreviews.length">
+        <div *ngFor="let preview of filePreviews">
+          <img *ngIf="isImage(preview)" [src]="preview" alt="Previsualització" width="100">
+          <video *ngIf="isVideo(preview)" [src]="preview" controls width="200"></video>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+        <label for="estat">Estat:</label>
+        <input class="form-control" formControlName="estat" id="estat" readonly>
+    </div>
+    <button type="submit" class="btn btn-primary">Enviar</button>
+  </form>
+</div>
+<div class="alert alert-danger" *ngIf="errorMessage">
+  {{ errorMessage }}
+</div>

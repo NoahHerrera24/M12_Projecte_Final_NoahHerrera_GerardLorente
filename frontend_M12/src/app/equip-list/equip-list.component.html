@@ -1,1 +1,58 @@
-<p>equip-list works!</p>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    {{ titolLlistat }}
+  </div>
+  <div *ngIf="equips.length == 0">
+    <h4>No hi ha equips</h4>
+  </div>
+  <div *ngIf="equips.length > 0" class="table-responsive">
+    <!-- Caixa de filtrat -->
+    <div class="row">
+      <div class="col-md-2">
+        Filtrat per:
+      </div>
+      <div class="col-md-4">
+        <input type="text" [(ngModel)]="listFilter" placeholder="Filtra equips">
+      </div>
+    </div>
+    <div class="col-md-2">
+      <h3>Filtrat per: {{ listFilter }}</h3>
+    </div>
+    <!-- Fi caixa filtrat -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Colors Representatius</th>
+          <th>Idioma Equip</th>
+          <th>Patrocinadors</th>
+          <th>Data Fundació</th>
+          <th>Entrenador</th>
+          <th>Logo</th>
+          <th>Descripció</th>
+          <th>Actiu</th>
+          <th>Guanyador</th>
+          <th>Accions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let equip of equips | equipListFilter:listFilter">
+          <td>{{ equip.nom }}</td>
+          <td>{{ equip.colors_representatius }}</td>
+          <td>{{ equip.idioma_equip }}</td>
+          <td>{{ equip.patrocinadors }}</td>
+          <td>{{ equip.data_fundacio }}</td>
+          <td>{{ equip.entrenador || 'Sense entrenador' }}</td>
+          <td><img [src]="equip.logo" alt="logo equip" height="30%" width="30%"></td>
+          <td>{{ equip.descripcio }}</td>
+          <td>{{ equip.actiu ? 'Sí' : 'No' }}</td>
+          <td>{{ equip.guanyador ? 'Sí' : 'No' }}</td>
+          <td>
+            <a [routerLink]="['/equip-edit', equip.id]" class="btn btn-primary">Editar</a>
+            <a (click)="deleteEquip(equip.id)" class="btn btn-danger">Eliminar</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -227,40 +227,59 @@ class ApiController extends Controller
 
     public function createTicketQueixa(Request $request)
     {
-        $ticketQueixa = new TicketQueixa();
+    $ticketQueixa = new TicketQueixa();
+    $ticketQueixa->descripcio = $request->input('descripcio');
+    $ticketQueixa->estat = $request->input('estat');
 
-        $ticketQueixa->descripcio = $request->input('descripcio');
-        $ticketQueixa->proves = $request->input('proves');
-        $ticketQueixa->estat = $request->input('estat');
-
-        $ticketQueixa->save();
-
-        return response()->json($ticketQueixa, 201);
+    $files = [];
+    if ($request->hasFile('proves')) {
+        foreach ($request->file('proves') as $file) {
+            $path = $file->store(
+                str_starts_with($file->getMimeType(), 'image') ? env('RUTA_IMATGES') : env('RUTA_VIDEOS'),
+                'public'
+            );
+            $files[] = $path;
+        }
     }
+
+    $ticketQueixa->proves = json_encode($files);
+    $ticketQueixa->save();
+
+    return response()->json($ticketQueixa, 201);
+    }   
 
     public function updateTicketQueixa(Request $request, $id)
     {
-        $ticketQueixa = TicketQueixa::find($id);
+    $ticketQueixa = TicketQueixa::find($id);
 
-        if (!$ticketQueixa) {
-            return response()->json(['error' => 'Ticket de Queixa no trobat'], 404);
+    if (!$ticketQueixa) {
+        return response()->json(['error' => 'Ticket de Queixa no trobat'], 404);
+    }
+
+    if ($request->has('descripcio')) {
+        $ticketQueixa->descripcio = $request->input('descripcio');
+    }
+
+    if ($request->has('estat')) {
+        $ticketQueixa->estat = $request->input('estat');
+    }
+
+    $files = json_decode($ticketQueixa->proves, true) ?? [];
+
+    if ($request->hasFile('proves')) {
+        foreach ($request->file('proves') as $file) {
+            $path = $file->store(
+                str_starts_with($file->getMimeType(), 'image') ? env('RUTA_IMATGES') : env('RUTA_VIDEOS'),
+                'public'
+            );
+            $files[] = $path;
         }
+    }
 
-        if (isset($request->descripcio)) {
-            $ticketQueixa->descripcio = $request->descripcio;
-        }
+    $ticketQueixa->proves = json_encode($files);
+    $ticketQueixa->save();
 
-        if (isset($request->proves)) {
-            $ticketQueixa->proves = $request->proves;
-        }
-
-        if (isset($request->estat)) {
-            $ticketQueixa->estat = $request->estat;
-        }
-
-        $ticketQueixa->save();
-
-        return response()->json($ticketQueixa, 200);
+    return response()->json($ticketQueixa, 200);
     }
 
     public function deleteTicketQueixa($id)
