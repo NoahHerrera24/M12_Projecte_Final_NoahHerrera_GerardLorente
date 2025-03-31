@@ -4,12 +4,12 @@ import { ITicketQueixa } from '../interfaces/iticket-queixa';
 
 @Component({
   selector: 'app-ticket-queixa-list',
+  standalone: false,
   templateUrl: './ticket-queixa-list.component.html',
   styleUrl: './ticket-queixa-list.component.css',
-  standalone: false,
 
 })
-export class TicketQueixaListComponent implements OnInit{
+export class TicketQueixaListComponent implements OnInit {
   listFilter: string = '';
   ticketsQueixa: ITicketQueixa[] = [];
 

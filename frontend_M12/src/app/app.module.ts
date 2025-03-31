@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app.routes';
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 import { EquipListComponent } from './equip-list/equip-list.component';
 import { EquipEditComponent } from './equip-edit/equip-edit.component';
 import { EquipCreateComponent } from './equip-create/equip-create.component';
@@ -30,13 +30,13 @@ import { TorneigListFilterPipe } from './torneig-list/torneig-list-filter.pipe';
     EquipListComponent,
     EquipEditComponent,
     EquipCreateComponent,
-    RankingEquipsListComponent,
     TorneigListComponent,
     TorneigEditComponent,
     TorneigCreateComponent,
     TicketQueixaListComponent,
     TicketQueixaEditComponent,
     TicketQueixaCreateComponent,
+    RankingEquipsListComponent,
     RankingTorneigListComponent,
     RankingParticipantListComponent,
     WelcomeComponent,

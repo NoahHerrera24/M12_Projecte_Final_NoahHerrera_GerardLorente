@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-ranking-participant-list',
-  imports: [],
+  standalone: false,
   templateUrl: './ranking-participant-list.component.html',
   styleUrl: './ranking-participant-list.component.css'
 })

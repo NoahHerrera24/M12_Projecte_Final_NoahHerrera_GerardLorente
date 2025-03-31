@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'rankingTorneigListFilter'
+  name: 'rankingTorneigListFilter',
+  standalone: false
 })
 export class RankingTorneigListFilterPipe implements PipeTransform {
 

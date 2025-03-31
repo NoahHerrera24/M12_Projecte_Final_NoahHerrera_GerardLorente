@@ -177,7 +177,12 @@
   }
 </style>
 
-<main class="main">
+<app-nav-bar></app-nav-bar>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
+
+<!--<main class="main">
   <div class="content">
     <div class="left-side">
       <svg
@@ -322,7 +327,7 @@
       </div>
     </div>
   </div>
-</main>
+</main>-->
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
@@ -331,6 +336,3 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
-
-<router-outlet />

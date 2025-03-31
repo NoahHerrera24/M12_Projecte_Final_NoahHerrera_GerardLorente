@@ -6,9 +6,9 @@ import { DadesTicketsQueixaService } from '../services/dades-tickets-queixa.serv
 
 @Component({
   selector: 'app-ticket-queixa-create',
+  standalone: false,
   templateUrl: './ticket-queixa-create.component.html',
   styleUrl: './ticket-queixa-create.component.css',
-  standalone: false,
 
 })
 export class TicketQueixaCreateComponent implements OnInit {

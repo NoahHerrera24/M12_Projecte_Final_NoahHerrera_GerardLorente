@@ -3,9 +3,19 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "frontend_M12": {
+    "projecte_m7_uf4_client": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "standalone": false
+        },
+        "@schematics/angular:directive": {
+          "standalone": false
+        },
+        "@schematics/angular:pipe": {
+          "standalone": false
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -13,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/frontend-m12",
+            "outputPath": "dist/projecte_m7_uf4_client",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -29,7 +39,12 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "server": "src/main.server.ts",
+            "outputMode": "server",
+            "ssr": {
+              "entry": "src/server.ts"
+            }
           },
           "configurations": {
             "production": {
@@ -62,10 +77,10 @@
           },
           "configurations": {
             "production": {
-              "buildTarget": "frontend_M12:build:production"
+              "buildTarget": "projecte_m7_uf4_client:build:production"
             },
             "development": {
-              "buildTarget": "frontend_M12:build:development"
+              "buildTarget": "projecte_m7_uf4_client:build:development"
             }
           },
           "defaultConfiguration": "development"

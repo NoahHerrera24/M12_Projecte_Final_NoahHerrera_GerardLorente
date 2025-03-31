@@ -5,12 +5,12 @@ import { DadesTicketsQueixaService } from '../services/dades-tickets-queixa.serv
 
 @Component({
   selector: 'app-ticket-queixa-edit',
+  standalone: false,
   templateUrl: './ticket-queixa-edit.component.html',
   styleUrl: './ticket-queixa-edit.component.css',
-  standalone: false,
 
 })
-export class TicketQueixaEditComponent implements OnInit{
+export class TicketQueixaEditComponent implements OnInit {
 
   myForm: FormGroup;
   errorMessage: string = '';
