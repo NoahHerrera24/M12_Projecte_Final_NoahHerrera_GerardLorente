@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DadesTicketsQueixaService } from '../services/dades-tickets-queixa.service';
+
 
 @Component({
   selector: 'app-ticket-queixa-create',
@@ -10,7 +11,7 @@ import { DadesTicketsQueixaService } from '../services/dades-tickets-queixa.serv
   standalone: false,
 
 })
-export class TicketQueixaCreateComponent {
+export class TicketQueixaCreateComponent implements OnInit {
 
   myForm: FormGroup;
   errorMessage: string = '';
@@ -49,12 +50,12 @@ export class TicketQueixaCreateComponent {
   onSubmit(): void {
     const formData = new FormData();
     formData.append('descripcio', this.myForm.get('descripcio')?.value);
-    formData.append('estat', 'Ticket de Queixa inicialitzat'); 
-  
+    formData.append('estat', 'Ticket de Queixa inicialitzat');
+
     this.selectedFiles.forEach(file => {
       formData.append('proves[]', file);
     });
-  
+
     this.ticketQueixaService.createTicketQueixa(formData).subscribe({
       next: () => {
         this.router.navigate(['/ticket-queixa-list']);

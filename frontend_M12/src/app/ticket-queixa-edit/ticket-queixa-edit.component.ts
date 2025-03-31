@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DadesTicketsQueixaService } from '../services/dades-tickets-queixa.service';
@@ -10,7 +10,7 @@ import { DadesTicketsQueixaService } from '../services/dades-tickets-queixa.serv
   standalone: false,
 
 })
-export class TicketQueixaEditComponent {
+export class TicketQueixaEditComponent implements OnInit{
 
   myForm: FormGroup;
   errorMessage: string = '';

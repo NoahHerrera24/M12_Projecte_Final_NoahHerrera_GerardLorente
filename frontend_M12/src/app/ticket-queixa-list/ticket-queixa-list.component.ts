@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DadesTicketsQueixaService } from '../services/dades-tickets-queixa.service';
 import { ITicketQueixa } from '../interfaces/iticket-queixa';
 
@@ -9,7 +9,7 @@ import { ITicketQueixa } from '../interfaces/iticket-queixa';
   standalone: false,
 
 })
-export class TicketQueixaListComponent {
+export class TicketQueixaListComponent implements OnInit{
   listFilter: string = '';
   ticketsQueixa: ITicketQueixa[] = [];
 
