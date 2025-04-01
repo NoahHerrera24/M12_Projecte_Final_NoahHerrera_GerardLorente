@@ -20,8 +20,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EquipListFilterPipe } from './equip-list/equip-list-filter.pipe';
 import { TicketQueixaListFilterPipe } from './ticket-queixa-list/ticket-queixa-list-filter.pipe';
-import { RankingEquipsListFilterPipe } from './ranking-equips-list/ranking-equips-list-filter.pipe';
-import { RankingTorneigListFilterPipe } from './ranking-torneig-list/ranking-torneig-list-filter.pipe';
 import { TorneigListFilterPipe } from './torneig-list/torneig-list-filter.pipe';
 
 @NgModule({
@@ -43,8 +41,6 @@ import { TorneigListFilterPipe } from './torneig-list/torneig-list-filter.pipe';
     NavBarComponent,
     EquipListFilterPipe,
     TicketQueixaListFilterPipe,
-    RankingEquipsListFilterPipe,
-    RankingTorneigListFilterPipe,
     TorneigListFilterPipe
   ],
   imports: [

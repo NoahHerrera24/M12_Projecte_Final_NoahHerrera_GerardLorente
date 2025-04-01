@@ -43,3 +43,11 @@ Route::post('ticket-queixa/create', [ApiController::class, 'createTicketQueixa']
 Route::post('ticket-queixa/{id}', [ApiController::class, 'updateTicketQueixa']);
 
 Route::delete('ticket-queixa/delete/{id}', [ApiController::class, 'deleteTicketQueixa']);
+
+//// RANKINGS
+
+Route::get('ranking-equips', [ApiController::class, 'getRankingEquips']);
+
+Route::get('ranking-participants', [ApiController::class, 'getRankingParticipants']);
+
+Route::get('ranking-tornejos', [ApiController::class, 'getRankingTornejos']);

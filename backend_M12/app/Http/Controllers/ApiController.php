@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\Torneig;
 use App\Models\Equip;
 use App\Models\TicketQueixa;
+use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
@@ -288,5 +289,46 @@ class ApiController extends Controller
         $ticketQueixa->delete();
 
         return $ticketQueixa;
+    }
+
+    public function getRankingEquips() 
+    {
+        $ranking = DB::table('equips')
+        ->select('equips.id', 'equips.nom', DB::raw('COUNT(tornejos_equips.id) as victories'))
+        ->join('tornejos_equips', 'equips.id', '=', 'tornejos_equips.equip_id')
+        ->where('tornejos_equips.guanyador', true) 
+        ->groupBy('equips.id', 'equips.nom')
+        ->orderByDesc('victories')
+        ->get();
+
+        return response()->json($ranking);
+    }
+
+    public function getRankingParticipants()
+    {
+        $ranking = DB::table('users')
+        ->select('users.id', 'users.name', DB::raw('COUNT(tornejos_users.id) as victories'))
+        ->join('tornejos_users', 'users.id', '=', 'tornejos_users.user_id')
+        ->where('tornejos_users.guanyador', true) 
+        ->where('users.role', 'participant') 
+        ->groupBy('users.id', 'users.name')
+        ->orderByDesc('victories')
+        ->get();
+
+        return response()->json($ranking);
+    }
+
+    public function getRankingTornejos()
+    {
+        $ranking = DB::table('tornejos')
+        ->select('tornejos.id', 'tornejos.nom', DB::raw('
+            (SELECT COUNT(*) FROM tornejos_equips WHERE tornejos_equips.torneig_id = tornejos.id) +
+            (SELECT COUNT(*) FROM tornejos_users WHERE tornejos_users.torneig_id = tornejos.id)
+            as total_inscrits
+        '))
+        ->orderByDesc('total_inscrits')
+        ->get();
+
+        return response()->json($ranking);
     }
 }
