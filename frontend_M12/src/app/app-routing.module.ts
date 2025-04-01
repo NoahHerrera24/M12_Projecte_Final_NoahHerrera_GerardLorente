@@ -27,8 +27,8 @@ export const routes: Routes = [
     { path: 'ticket-queixa-list', component: TicketQueixaListComponent },
     { path: 'ticket-queixa-edit/:id', component: TicketQueixaEditComponent },
     { path: 'ticket-queixa-create', component: TicketQueixaCreateComponent },
-    { path: 'ranking-torneig-list', component: RankingTorneigListComponent },
-    { path: 'ranking-participant-list', component: RankingParticipantListComponent },
+    { path: 'ranking-tornejos', component: RankingTorneigListComponent },
+    { path: 'ranking-participants', component: RankingParticipantListComponent },
     { path: '', redirectTo: 'welcome', pathMatch: 'full' },
     { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
 ];

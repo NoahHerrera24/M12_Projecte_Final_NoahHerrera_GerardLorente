@@ -51,3 +51,7 @@ Route::get('ranking-equips', [ApiController::class, 'getRankingEquips']);
 Route::get('ranking-participants', [ApiController::class, 'getRankingParticipants']);
 
 Route::get('ranking-tornejos', [ApiController::class, 'getRankingTornejos']);
+
+//// USERS
+
+Route::get('jugadors', [ApiController::class, 'getJugadors']);

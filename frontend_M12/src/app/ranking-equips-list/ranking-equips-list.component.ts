@@ -16,8 +16,11 @@ export class RankingEquipsListComponent {
   
   ngOnInit(): void {
     this.rankingsService.getRankingEquips().subscribe({
-      next: (data) => this.rankingEquips = data.body, 
-      error: (err) => this.errorMessage = err.message
+      next: (data) => this.rankingEquips = data.body,
+      error: (err) => {
+        console.error('Error fetching ranking equips:', err);
+        this.errorMessage = 'Failed to load ranking equips. Please try again later.';
+      }
     });
   }
 

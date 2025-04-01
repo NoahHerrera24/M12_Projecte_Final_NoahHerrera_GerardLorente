@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\Torneig;
 use App\Models\Equip;
 use App\Models\TicketQueixa;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
@@ -331,4 +332,12 @@ class ApiController extends Controller
 
         return response()->json($ranking);
     }
+
+    public function getJugadors()
+    {
+        $participants = User::where('role', 'participant')->get();
+
+        return response()->json($participants);
+    }
+
 }
