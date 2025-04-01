@@ -5,6 +5,7 @@ import { DadesTornejosService } from '../services/dades-tornejos.service';
 import { DadesEquipsService } from '../services/dades-equips.service';
 import { IEquip } from '../interfaces/iequip';
 import { IUser } from '../interfaces/iuser';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-torneig-create',
@@ -54,13 +55,13 @@ export class TorneigCreateComponent implements OnInit {
     });
 
     this.torneigService.getJugadors().subscribe({
-      next: (resp) => {
+      next: (resp: HttpResponse<IUser[]>) => {
         if (resp.body) {
           this.users = resp.body;
         }
       },
-      error: (error) => {
-        console.error('Error fetching jugadors', error);
+      error: (error: any) => {
+        console.error('Error al obtener los jugadores', error);
       }
     });
   }

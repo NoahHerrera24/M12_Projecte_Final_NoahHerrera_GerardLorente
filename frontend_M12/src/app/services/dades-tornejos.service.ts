@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { ITorneig } from '../interfaces/itorneig';
+import { IUser } from '../interfaces/iuser';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,11 @@ export class DadesTornejosService {
 
   public createTorneig(dada: any): Observable<HttpResponse<any>> {
     return this._http.post<any>('/api/torneig/create', dada, { observe: 'response' });
+  }
+
+  // filepath: /var/www/html/m12/M12_Projecte_Final_NoahHerrera_GerardLorente/frontend_M12/src/app/services/dades-tornejos.service.ts
+  public getJugadors(): Observable<HttpResponse<IUser[]>> {
+    return this._http.get<IUser[]>('/api/jugadors', { observe: 'response' });
   }
 
 }

@@ -5,6 +5,7 @@ import { DadesTornejosService } from '../services/dades-tornejos.service';
 import { DadesEquipsService } from '../services/dades-equips.service';
 import { IEquip } from '../interfaces/iequip';
 import { IUser } from '../interfaces/iuser';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-torneig-edit',
@@ -55,13 +56,13 @@ export class TorneigEditComponent implements OnInit {
     });
 
     this.torneigService.getJugadors().subscribe({
-      next: (resp) => {
+      next: (resp: HttpResponse<IUser[]>) => {
         if (resp.body) {
           this.users = resp.body;
         }
       },
-      error: (err) => {
-        console.error('Error en obtenir les dades dels jugadors:', err);
+      error: (err: any) => {
+        console.error('Error al obtener los datos de los jugadores:', err);
       }
     });
 
@@ -77,7 +78,7 @@ export class TorneigEditComponent implements OnInit {
             data_inici: data.body?.data_inici ? new Date(data.body.data_inici).toISOString().split('T')[0] : '',
             data_fi: data.body?.data_fi ? new Date(data.body.data_fi).toISOString().split('T')[0] : '',
             equips: data.body?.equips.map(equip => equip.id) || [],
-            users: data.body?.users.map(jugador => jugador.id) || []
+            users: data.body?.jugadors.map((user: IUser) => user.id) || []
           });
         },
         error: (error) => {
