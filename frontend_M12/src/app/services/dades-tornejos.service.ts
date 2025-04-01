@@ -32,7 +32,6 @@ export class DadesTornejosService {
     return this._http.post<any>('/api/torneig/create', dada, { observe: 'response' });
   }
 
-  // filepath: /var/www/html/m12/M12_Projecte_Final_NoahHerrera_GerardLorente/frontend_M12/src/app/services/dades-tornejos.service.ts
   public getJugadors(): Observable<HttpResponse<IUser[]>> {
     return this._http.get<IUser[]>('/api/jugadors', { observe: 'response' });
   }
