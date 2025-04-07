@@ -105,33 +105,43 @@ class ApiController extends Controller
         $equips = Equip::all();
 
         foreach ($equips as $equip) {
-            $equip->logo = url(env('RUTA_IMATGES', 'uploads/imatges') . '/' . $equip->logo);
+            // Generar la URL para acceder a la imagen del equipo
+            $equip->logo = url('/api/equip/getimg/' . $equip->id);
         }
 
         return response()->json($equips);
     }
-
-/*   public function getEquip($id)
-    {
-        $equip = Equip::find($id);
-        return response()->json($equip);
-    } */
 
     public function getEquip($id)
     {
         $equip = Equip::find($id);
 
         if (!$equip) {
-            return response()->json(['error' => 'Equip not found'], 404);
+            return response()->json(['error' => 'Equip no trobat'], 404);
         }
 
-        $pathToFile = public_path(env('RUTA_IMATGES') . '/' . $equip->logo);
+        // Generar la URL para acceder a la imagen del equipo
+        $equip->logo = url('/api/equip/getimg/' . $equip->id);
 
-        if (!file_exists($pathToFile)) {
-            return response()->json(['error' => 'Image not found'], 404);
+        return response()->json($equip);
+    }
+
+    public function getEquipImg($id)
+    {
+        $equip = Equip::find($id);
+        
+        if (!$equip || !$equip->logo) {
+            return response()->json(['error' => 'Imagen no encontrada'], 404);
         }
-
-        return response()->download($pathToFile);
+        
+        $path = public_path(env('RUTA_IMATGES') . '/' . $equip->logo);
+        
+        if (file_exists($path)) {
+            $headers = ['Content-Type' => mime_content_type($path)];
+            return response()->file($path, $headers);
+        }
+        
+        return response()->json(['error' => 'Imagen no encontrada'], 404);
     }
 
     public function createEquip(Request $request)
@@ -158,8 +168,6 @@ class ApiController extends Controller
             $filename = "{$equip->nom}_{$idAleatori}.{$extensio}";
             $file->move(public_path(env('RUTA_IMATGES')), $filename);
             $equip->logo = $filename;
-
-
         }
 
         $equip->save();
@@ -233,7 +241,7 @@ class ApiController extends Controller
 
     public function deleteEquip($id)
     {
-        $equip= Equip::find($id);
+        $equip = Equip::find($id);
         $equip->delete();
 
         return $equip;
@@ -276,8 +284,6 @@ class ApiController extends Controller
 
         return response()->json(['message' => 'Guanyador actualitzat amb èxit'], 200);
     }
-
- 
 
     //// TICKETS QUEIXA:
 
@@ -377,59 +383,56 @@ class ApiController extends Controller
 
     public function getRankingEquips() 
     {
-    try {
-        $ranking = DB::table('equips')
-            ->select('equips.id', 'equips.nom', DB::raw('COUNT(tornejos_equips.id) as victories'))
-            ->join('tornejos_equips', 'equips.id', '=', 'tornejos_equips.equip_id')
-            ->where('tornejos_equips.guanyador', 1) 
-            ->groupBy('equips.id', 'equips.nom')
-            ->orderByDesc('victories')
-            ->get();
+        try {
+            $ranking = DB::table('equips')
+                ->select('equips.id', 'equips.nom', DB::raw('COUNT(tornejos_equips.id) as victories'))
+                ->join('tornejos_equips', 'equips.id', '=', 'tornejos_equips.equip_id')
+                ->where('tornejos_equips.guanyador', 1) 
+                ->groupBy('equips.id', 'equips.nom')
+                ->orderByDesc('victories')
+                ->get();
 
-        return response()->json($ranking);
-    } catch (\Exception $e) {
-        return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json($ranking);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
-    }
-
 
     public function getRankingParticipants()
     {
-    try {
-        $ranking = DB::table('users')
-            ->select('users.id', 'users.name', DB::raw('COUNT(tornejos_users.id) as victories'))
-            ->join('tornejos_users', 'users.id', '=', 'tornejos_users.user_id')
-            ->where('tornejos_users.guanyador', 1) 
-            ->where('users.role', 'participant') 
-            ->groupBy('users.id', 'users.name')
-            ->orderByDesc('victories')
-            ->get();
+        try {
+            $ranking = DB::table('users')
+                ->select('users.id', 'users.name', DB::raw('COUNT(tornejos_users.id) as victories'))
+                ->join('tornejos_users', 'users.id', '=', 'tornejos_users.user_id')
+                ->where('tornejos_users.guanyador', 1) 
+                ->where('users.role', 'participant') 
+                ->groupBy('users.id', 'users.name')
+                ->orderByDesc('victories')
+                ->get();
 
-        return response()->json($ranking);
-    } catch (\Exception $e) {
-        return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json($ranking);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
-    }
-
 
     public function getRankingTornejos()
     {
-    try {
-        $ranking = DB::table('tornejos')
-            ->select('tornejos.id', 'tornejos.nom', DB::raw('
-                COALESCE((SELECT COUNT(*) FROM tornejos_equips WHERE tornejos_equips.torneig_id = tornejos.id), 0) +
-                COALESCE((SELECT COUNT(*) FROM tornejos_users WHERE tornejos_users.torneig_id = tornejos.id), 0)
-                as total_inscrits
-            '))
-            ->orderByDesc('total_inscrits')
-            ->get();
+        try {
+            $ranking = DB::table('tornejos')
+                ->select('tornejos.id', 'tornejos.nom', DB::raw('
+                    COALESCE((SELECT COUNT(*) FROM tornejos_equips WHERE tornejos_equips.torneig_id = tornejos.id), 0) +
+                    COALESCE((SELECT COUNT(*) FROM tornejos_users WHERE tornejos_users.torneig_id = tornejos.id), 0)
+                    as total_inscrits
+                '))
+                ->orderByDesc('total_inscrits')
+                ->get();
 
-        return response()->json($ranking);
-    } catch (\Exception $e) {
-        return response()->json(['error' => $e->getMessage()], 500);
-    }
+            return response()->json($ranking);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }  
-
 
     public function getJugadors()
     {

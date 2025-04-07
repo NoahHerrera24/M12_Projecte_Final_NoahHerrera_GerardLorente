@@ -10,30 +10,32 @@ import { IUser } from '../interfaces/iuser';
 })
 export class DadesTornejosService {
 
+  private readonly baseUrl: string = 'http://127.0.0.1:8000/api';
+
   constructor(private _http: HttpClient) { }
 
   public getTornejos(): Observable<HttpResponse<ITorneig[]>> {
-    return this._http.get<ITorneig[]>('/api/tornejos', { observe: 'response' });
+    return this._http.get<ITorneig[]>(`${this.baseUrl}/tornejos`, { observe: 'response' });
   }
 
   public updateTorneig(id: any, dada: any): Observable<HttpResponse<any>> {
-    return this._http.put<any>(`api/torneig/${id}`, dada, { observe: 'response' });
+    return this._http.put<any>(`${this.baseUrl}/torneig/${id}`, dada, { observe: 'response' });
   }
 
   public getTorneig(id: any): Observable<HttpResponse<ITorneig>> {
-    return this._http.get<ITorneig>(`/api/torneig/get/${id}`, { observe: 'response' });
+    return this._http.get<ITorneig>(`${this.baseUrl}/torneig/get/${id}`, { observe: 'response' });
   }
 
   public deleteTorneig(id: number): Observable<HttpResponse<any>> {
-    return this._http.delete<any>(`api/torneig/delete/${id}`, { observe: 'response' });
+    return this._http.delete<any>(`${this.baseUrl}/torneig/delete/${id}`, { observe: 'response' });
   }
 
   public createTorneig(dada: any): Observable<HttpResponse<any>> {
-    return this._http.post<any>('/api/torneig/create', dada, { observe: 'response' });
+    return this._http.post<any>(`${this.baseUrl}/torneig/create`, dada, { observe: 'response' });
   }
 
   public getJugadors(): Observable<HttpResponse<IUser[]>> {
-    return this._http.get<IUser[]>('/api/jugadors', { observe: 'response' });
+    return this._http.get<IUser[]>(`${this.baseUrl}/jugadors`, { observe: 'response' });
   }
 
 }
