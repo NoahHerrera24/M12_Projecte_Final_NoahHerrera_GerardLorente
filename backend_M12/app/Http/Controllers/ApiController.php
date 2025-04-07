@@ -104,13 +104,34 @@ class ApiController extends Controller
     {
         $equips = Equip::all();
 
+        foreach ($equips as $equip) {
+            $equip->logo = url(env('RUTA_IMATGES', 'uploads/imatges') . '/' . $equip->logo);
+        }
+
         return response()->json($equips);
     }
+
+/*   public function getEquip($id)
+    {
+        $equip = Equip::find($id);
+        return response()->json($equip);
+    } */
 
     public function getEquip($id)
     {
         $equip = Equip::find($id);
-        return response()->json($equip);
+
+        if (!$equip) {
+            return response()->json(['error' => 'Equip not found'], 404);
+        }
+
+        $pathToFile = public_path(env('RUTA_IMATGES') . '/' . $equip->logo);
+
+        if (!file_exists($pathToFile)) {
+            return response()->json(['error' => 'Image not found'], 404);
+        }
+
+        return response()->download($pathToFile);
     }
 
     public function createEquip(Request $request)
@@ -124,20 +145,21 @@ class ApiController extends Controller
         $equip->data_fundacio = $request->input('data_fundacio');
         $equip->entrenador = $request->input('entrenador');
         $equip->descripcio = $request->input('descripcio');
-        $equip->actiu = $request->input('actiu');
+        $equip->actiu = filter_var($request->input('actiu'), FILTER_VALIDATE_BOOLEAN) ? 1 : 0; // Convertir a 1 o 0
+
+        if ($request->has('guanyador')) {
+            $equip->guanyador = $request->input('guanyador');
+        }
 
         if ($request->file('logo')) {
             $file = $request->file('logo');
-
-            $nom = $request->input('nom');
             $idAleatori = uniqid();
             $extensio = $file->getClientOriginalExtension();
-            $filename = "{$nom}_{$idAleatori}.{$extensio}";
-            $rutaImatges = public_path(env('RUTA_IMATGES', 'uploads/imatges'));
-
-            $file->move($rutaImatges, $filename);
-
+            $filename = "{$equip->nom}_{$idAleatori}.{$extensio}";
+            $file->move(public_path(env('RUTA_IMATGES')), $filename);
             $equip->logo = $filename;
+
+
         }
 
         $equip->save();
@@ -153,36 +175,41 @@ class ApiController extends Controller
             return response()->json(['error' => 'Equip no trobat'], 404);
         }
 
-        if (isset($request->nom)) {
-            $equip->nom = $request->nom;
+        if ($request->has('nom')) {
+            $equip->nom = $request->input('nom');
         }
 
-        if (isset($request->colors_representatius)) {
-            $equip->colors_representatius = $request->colors_representatius;
+        if ($request->has('colors_representatius')) {
+            $equip->colors_representatius = $request->input('colors_representatius');
         }
 
-        if (isset($request->idioma_equip)) {
-            $equip->idioma_equip = $request->idioma_equip;
+        if ($request->has('idioma_equip')) {
+            $equip->idioma_equip = $request->input('idioma_equip');
         }
 
-        if (isset($request->patrocinadors)) {
-            $equip->patrocinadors = $request->patrocinadors;
+        if ($request->has('patrocinadors')) {
+            $equip->patrocinadors = $request->input('patrocinadors');
         }
 
-        if (isset($request->data_fundacio)) {
-            $equip->data_fundacio = $request->data_fundacio;
+        if ($request->has('data_fundacio')) {
+            $equip->data_fundacio = $request->input('data_fundacio');
         }
 
-        if (isset($request->entrenador)) {
-            $equip->entrenador = $request->entrenador;
+        if ($request->has('entrenador')) {
+            $equip->entrenador = $request->input('entrenador');
         }
 
-        if (isset($request->descripcio)) {
-            $equip->descripcio = $request->descripcio;
+        if ($request->has('descripcio')) {
+            $equip->descripcio = $request->input('descripcio');
         }
 
-        if (isset($request->actiu)) {
-            $equip->actiu = $request->actiu;
+        if ($request->has('actiu')) {
+            $equip->actiu = $request->input('actiu');
+        }
+
+        // Solo asignar 'guanyador' si está presente en la solicitud
+        if ($request->has('guanyador')) {
+            $equip->guanyador = $request->input('guanyador');
         }
 
         if ($request->file('logo')) {
@@ -212,11 +239,57 @@ class ApiController extends Controller
         return $equip;
     }
 
+    public function getEquipsWithGuanyador()
+    {
+        $equips = Equip::with(['tornejos' => function ($query) {
+            $query->select('tornejos.id', 'tornejos.nom', 'tornejos_equips.guanyador');
+        }])->get();
+
+        return response()->json($equips);
+    }
+
+    public function assignTorneigToEquip(Request $request, $equipId, $torneigId)
+    {
+        $equip = Equip::find($equipId);
+        $torneig = Torneig::find($torneigId);
+
+        if (!$equip || !$torneig) {
+            return response()->json(['error' => 'Equip o Torneig no trobat'], 404);
+        }
+
+        // Asociar el torneo con el equipo y establecer el valor del campo pivote 'guanyador'
+        $equip->tornejos()->attach($torneigId, ['guanyador' => $request->input('guanyador', false)]);
+
+        return response()->json(['message' => 'Torneig assignat al equip amb èxit'], 200);
+    }
+
+    public function updateGuanyador(Request $request, $equipId, $torneigId)
+    {
+        $equip = Equip::find($equipId);
+
+        if (!$equip) {
+            return response()->json(['error' => 'Equip no trobat'], 404);
+        }
+
+        // Actualizar el valor del campo pivote 'guanyador'
+        $equip->tornejos()->updateExistingPivot($torneigId, ['guanyador' => $request->input('guanyador', false)]);
+
+        return response()->json(['message' => 'Guanyador actualitzat amb èxit'], 200);
+    }
+
+ 
+
     //// TICKETS QUEIXA:
 
     public function getTicketsQueixa()
     {
         $ticketsQueixa = TicketQueixa::all();
+
+        // Decodificar el campo 'proves' para cada ticket
+        $ticketsQueixa->transform(function ($ticket) {
+            $ticket->proves = $ticket->proves ? json_decode($ticket->proves) : [];
+            return $ticket;
+        });
 
         return response()->json($ticketsQueixa);
     }
@@ -224,64 +297,74 @@ class ApiController extends Controller
     public function getTicketQueixa($id)
     {
         $ticketQueixa = TicketQueixa::find($id);
+
+        if (!$ticketQueixa) {
+            return response()->json(['error' => 'Ticket de Queixa no trobat'], 404);
+        }
+
+        // Decodificar el campo 'proves' si no es nulo
+        $ticketQueixa->proves = $ticketQueixa->proves ? json_decode($ticketQueixa->proves) : [];
+
         return response()->json($ticketQueixa);
     }
 
     public function createTicketQueixa(Request $request)
     {
-    $ticketQueixa = new TicketQueixa();
-    $ticketQueixa->descripcio = $request->input('descripcio');
-    $ticketQueixa->estat = $request->input('estat');
+        $ticketQueixa = new TicketQueixa();
+        $ticketQueixa->descripcio = $request->input('descripcio');
+        $ticketQueixa->estat = $request->input('estat');
 
-    $files = [];
-    if ($request->hasFile('proves')) {
-        foreach ($request->file('proves') as $file) {
-            $path = $file->store(
-                str_starts_with($file->getMimeType(), 'image') ? env('RUTA_IMATGES') : env('RUTA_VIDEOS'),
-                'public'
-            );
-            $files[] = $path;
+        $files = [];
+        if ($request->hasFile('proves')) {
+            foreach ($request->file('proves') as $file) {
+                $path = $file->store(
+                    str_starts_with($file->getMimeType(), 'image') ? env('RUTA_IMATGES') :
+                    (str_starts_with($file->getMimeType(), 'video') ? env('RUTA_VIDEOS') : env('RUTA_PDFS')),
+                    'public'
+                );
+                $files[] = $path;
+            }
         }
+
+        $ticketQueixa->proves = json_encode($files);
+        $ticketQueixa->save();
+
+        return response()->json($ticketQueixa, 201);
     }
-
-    $ticketQueixa->proves = json_encode($files);
-    $ticketQueixa->save();
-
-    return response()->json($ticketQueixa, 201);
-    }   
 
     public function updateTicketQueixa(Request $request, $id)
     {
-    $ticketQueixa = TicketQueixa::find($id);
+        $ticketQueixa = TicketQueixa::find($id);
 
-    if (!$ticketQueixa) {
-        return response()->json(['error' => 'Ticket de Queixa no trobat'], 404);
-    }
-
-    if ($request->has('descripcio')) {
-        $ticketQueixa->descripcio = $request->input('descripcio');
-    }
-
-    if ($request->has('estat')) {
-        $ticketQueixa->estat = $request->input('estat');
-    }
-
-    $files = json_decode($ticketQueixa->proves, true) ?? [];
-
-    if ($request->hasFile('proves')) {
-        foreach ($request->file('proves') as $file) {
-            $path = $file->store(
-                str_starts_with($file->getMimeType(), 'image') ? env('RUTA_IMATGES') : env('RUTA_VIDEOS'),
-                'public'
-            );
-            $files[] = $path;
+        if (!$ticketQueixa) {
+            return response()->json(['error' => 'Ticket de Queixa no trobat'], 404);
         }
-    }
 
-    $ticketQueixa->proves = json_encode($files);
-    $ticketQueixa->save();
+        if ($request->has('descripcio')) {
+            $ticketQueixa->descripcio = $request->input('descripcio');
+        }
 
-    return response()->json($ticketQueixa, 200);
+        if ($request->has('estat')) {
+            $ticketQueixa->estat = $request->input('estat');
+        }
+
+        $files = json_decode($ticketQueixa->proves, true) ?? [];
+
+        if ($request->hasFile('proves')) {
+            foreach ($request->file('proves') as $file) {
+                $path = $file->store(
+                    str_starts_with($file->getMimeType(), 'image') ? env('RUTA_IMATGES') :
+                    (str_starts_with($file->getMimeType(), 'video') ? env('RUTA_VIDEOS') : env('RUTA_PDFS')),
+                    'public'
+                );
+                $files[] = $path;
+            }
+        }
+
+        $ticketQueixa->proves = json_encode($files);
+        $ticketQueixa->save();
+
+        return response()->json($ticketQueixa, 200);
     }
 
     public function deleteTicketQueixa($id)

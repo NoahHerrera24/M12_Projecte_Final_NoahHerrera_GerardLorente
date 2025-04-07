@@ -9,14 +9,32 @@
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['welcome']">Home</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['equip-list']">Equips</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="equipDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+          Equips
+        </a>
+        <div class="dropdown-menu" aria-labelledby="equipDropdown">
+          <a class="dropdown-item" [routerLink]="['equip-list']">Listar Equips</a>
+          <a class="dropdown-item" [routerLink]="['equip-create']">Crear Equip</a>
+        </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['torneig-list']">Torneigs</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="torneigDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+          Torneigs
+        </a>
+        <div class="dropdown-menu" aria-labelledby="torneigDropdown">
+          <a class="dropdown-item" [routerLink]="['torneig-list']">Listar Torneigs</a>
+          <a class="dropdown-item" [routerLink]="['torneig-create']">Crear Torneig</a>
+        </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['ticket-queixa-list']">Tickets de Queixa</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="ticketDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+          Tickets de Queixa
+        </a>
+        <div class="dropdown-menu" aria-labelledby="ticketDropdown">
+          <a class="dropdown-item" [routerLink]="['ticket-queixa-list']">Listar Tickets de Queixa</a>
+          <a class="dropdown-item" [routerLink]="['ticket-queixa-create']">Crear Ticket de Queixa</a>
+        </div>
       </li>
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['ranking-equips']">Ranking Equips</a>

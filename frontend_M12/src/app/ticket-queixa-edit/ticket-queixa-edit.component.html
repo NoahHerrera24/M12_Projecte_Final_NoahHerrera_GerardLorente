@@ -12,6 +12,8 @@
         <div *ngFor="let preview of filePreviews">
           <img *ngIf="isImage(preview)" [src]="preview" alt="Previsualització" width="100">
           <video *ngIf="isVideo(preview)" [src]="preview" controls width="200"></video>
+          <embed *ngIf="isPdf(preview)" [src]="preview" type="application/pdf" width="200" height="200">
+          <a *ngIf="isPdf(preview)" [href]="preview" target="_blank">Veure PDF</a>
         </div>
       </div>
     </div>

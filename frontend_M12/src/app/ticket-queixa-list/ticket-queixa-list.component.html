@@ -31,6 +31,8 @@
                 <div *ngFor="let prova of ticketQueixa.proves">
                   <img *ngIf="isImage(prova)" [src]="prova" alt="Prova d'imatge" width="100">
                   <video *ngIf="isVideo(prova)" [src]="prova" controls width="200"></video>
+                  <embed *ngIf="isPdf(prova)" [src]="prova" type="application/pdf" width="200" height="200">
+                  <a *ngIf="isPdf(prova)" [href]="prova" target="_blank">Veure PDF</a>
                 </div>
               </td>
               <td>{{ticketQueixa.estat}}</td>

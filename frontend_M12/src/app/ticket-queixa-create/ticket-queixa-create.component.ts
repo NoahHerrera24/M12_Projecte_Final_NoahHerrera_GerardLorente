@@ -47,6 +47,10 @@ export class TicketQueixaCreateComponent implements OnInit {
     return fileUrl.match(/\.(mp4|webm|ogg)$/i) !== null;
   }
 
+  isPdf(fileUrl: string): boolean {
+    return fileUrl.toLowerCase().endsWith('.pdf');
+  }
+
   onSubmit(): void {
     const formData = new FormData();
     formData.append('descripcio', this.myForm.get('descripcio')?.value);

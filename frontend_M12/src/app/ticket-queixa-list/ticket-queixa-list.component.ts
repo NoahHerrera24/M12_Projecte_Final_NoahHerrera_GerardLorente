@@ -23,9 +23,10 @@ export class TicketQueixaListComponent implements OnInit {
     this.ticketsQueixaService.getTicketsQueixa().subscribe({
       next: (resp) => {
         if (resp.body) {
+          // Asegúrate de que el campo 'proves' sea un array
           this.ticketsQueixa = resp.body.map(ticket => ({
             ...ticket,
-            proves: Array.isArray(ticket.proves) ? ticket.proves : []
+            proves: Array.isArray(ticket.proves) ? ticket.proves : JSON.parse(ticket.proves || '[]')
           }));
         }
       },
@@ -52,5 +53,9 @@ export class TicketQueixaListComponent implements OnInit {
 
   isVideo(fileUrl: string): boolean {
     return fileUrl.match(/\.(mp4|webm|ogg)$/i) !== null;
+  }
+
+  isPdf(fileUrl: string): boolean {
+    return fileUrl.toLowerCase().endsWith('.pdf');
   }
 }

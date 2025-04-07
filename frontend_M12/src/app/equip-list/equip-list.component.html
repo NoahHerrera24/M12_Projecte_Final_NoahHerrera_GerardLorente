@@ -2,6 +2,7 @@
   <div class="panel-heading">
     {{ titolLlistat }}
   </div>
+
   <div *ngIf="equips.length == 0">
     <h4>No hi ha equips</h4>
   </div>
@@ -45,8 +46,8 @@
           <td>{{ equip.entrenador || 'Sense entrenador' }}</td>
           <td><img [src]="equip.logo" alt="logo equip" height="30%" width="30%"></td>
           <td>{{ equip.descripcio }}</td>
-          <td>{{ equip.actiu ? 'Sí' : 'No' }}</td>
-          <td>{{ equip.guanyador ? 'Sí' : 'No' }}</td>
+          <td>{{ equip.actiu ? 'Actiu' : 'No Actiu' }}</td>
+          <td>{{ equip.guanyador ? 'Guanyador' : 'No Guanyador' }}</td>
           <td>
             <a [routerLink]="['/equip-edit', equip.id]" class="btn btn-primary">Editar</a>
             <a (click)="deleteEquip(equip.id)" class="btn btn-danger">Eliminar</a>

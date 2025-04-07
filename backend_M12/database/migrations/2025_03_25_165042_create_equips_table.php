@@ -21,8 +21,13 @@ return new class extends Migration
             $table->string('entrenador')->nullable();
             $table->string('logo')->nullable();
             $table->string('descripcio');
-            $table->boolean('actiu');
+            $table->boolean('actiu')->default(false); // Agregar valor predeterminado
+
             $table->timestamps();
+        });
+
+        Schema::table('equips', function (Blueprint $table) {
+            $table->boolean('actiu')->default(false)->change(); // Cambiar el tipo de dato y establecer un valor predeterminado
         });
     }
 
@@ -31,6 +36,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('equips', function (Blueprint $table) {
+            $table->boolean('actiu')->change(); // Revertir el cambio si es necesario
+        });
+
         Schema::dropIfExists('equips');
     }
 };

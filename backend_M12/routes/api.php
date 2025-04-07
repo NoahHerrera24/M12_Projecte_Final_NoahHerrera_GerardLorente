@@ -32,6 +32,11 @@ Route::post('equip/{id}', [ApiController::class, 'updateEquip']);
 
 Route::delete('equip/delete/{id}', [ApiController::class, 'deleteEquip']);
 
+Route::get('/equips-with-guanyador', [ApiController::class, 'getEquipsWithGuanyador']);
+
+Route::post('/equips/{equipId}/tornejos/{torneigId}/assign', [ApiController::class, 'assignTorneigToEquip']);
+Route::put('/equips/{equipId}/tornejos/{torneigId}/update-guanyador', [ApiController::class, 'updateGuanyador']);
+
 //// TICKETS_QUEIXA
 
 Route::get('tickets-queixa', [ApiController::class, 'getTicketsQueixa']);

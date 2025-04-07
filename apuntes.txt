@@ -1,0 +1,149 @@
+/*server*/
+composer create-project --prefer-dist laravel/laravel projecte_m7_server
+(composer install para el vendor)
+/*cliente*/
+npm install (generar node_modules)
+ng new projecte_client_m7 --no-standalone
+css
+si
+si
+
+/*crear migraciones server*/
+php artisan make:migration creadors
+
+/*despues de hacer la migracion para subirla server*/
+php artisan migrate
+
+/*rehacer migraciones server*/
+php artisan migrate:refresh
+
+/*iniciar servidor php*/
+sudo php artisan serve
+
+/*iniciar cliente*/
+ng serve -o
+
+/*generar componentes cliente*/
+ng g c nombre
+
+/*interficies cliente*/
+(necesario crear una carpeta)
+ng g interface IAutor 
+
+/*service en cliente*/
+(necesario crear una carpeta)
+ng generate service dadesAutors
+
+/*quitar candado a carpetas encaso de bloqueo*/
+sudo chmod -R 777 interfaces services
+
+/*pipe*/
+ng g pipe AutorListFilter
+          
+/*carpetas importantes server*/
+
+routes
+database
+app/controllers
+app/models
+bootstrap (archivo app.php)
+
+archivo env
+
+/*carpetas importantes client*/
+
+src 
+app
+
+/*linea json archivo: angular.json linea 73*/
+ "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          },
+
+
+/*archivos client*/
+app-routing.module.ts
+app.component.ts
+app.module.ts
+
+php artisan db:seed --class=MuntanyesAlpinistesSeeder
+
+
+ Schema::create('alpinistes', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            
+            $table->string('nom');
+            $table->integer('edat')->nullable();
+            $table->string('nacionalitat')->nullable();
+            $table->string('imatge')->nullable();
+        });
+            
+             Schema::create('alpinista_muntanya', function (Blueprint $table) {
+            
+            $table->id();
+            $table->timestamps();
+
+            $table->foreignId('muntanya_id')->references('id')->on('muntanyes')->onDelete('cascade');
+            $table->foreignId('alpinista_id')->references('id')->on('alpinistes')->onDelete('cascade');            
+            $table->date('data_pujada')->nullable(); // Data en què l’alpinista va pujar la muntanya
+        });
+            
+            
+                  Schema::create('muntanyes', function (Blueprint $table) {
+            
+            $table->id();
+            $table->timestamps();
+
+            $table->string('nom')->unique();            
+            $table->integer('altura')->nullable(); // Altura en metres
+            $table->string('ubicacio')->nullable(); // País o regió
+        });
+            
+            
+            export interface IAlpinista {
+
+    id: number;
+    nom: string;
+    edat: number;
+    nacionalitat: string;
+    imatge: string | null;
+    montana:IMontana;
+    muntanya_id: number;
+    data: string;
+            
+    import { IAlpinista } from "./ialpinista";
+
+export interface IMontana {
+
+    id: number;
+    nom: string;
+    altura: number;
+    ubicacio: string;
+    alpinista: IAlpinista;
+    alpinista_id: number;
+
+}
+        
+php artisan make:migration biblioteca_llibre
+
+php artisan db:seed UserSeeder
+php artisan make:seeder UserSeeder            
+
+php artisan make:migration add_user_id_to_bibliotecas_table --table=bibliotecas            
+
+php artisan make:controller FestivalController
+php artisan make:model Artista
+las views del laravel se crean a mano
+
+return $this->belongsToMany(Concert::class); muchos conciertos
+return $this->belongsTo(Concert::class); un concierto
+
+   return $this->belongsToMany(Concert::class)
+        ->withPivot('exemplars'); con tabla exemplars
+        
+        php artisan db:seed
+
+

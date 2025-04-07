@@ -21,6 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EquipListFilterPipe } from './equip-list/equip-list-filter.pipe';
 import { TicketQueixaListFilterPipe } from './ticket-queixa-list/ticket-queixa-list-filter.pipe';
 import { TorneigListFilterPipe } from './torneig-list/torneig-list-filter.pipe';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { TorneigListFilterPipe } from './torneig-list/torneig-list-filter.pipe';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BsDropdownModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
