@@ -18,7 +18,7 @@ export class DadesEquipsService {
   }
   
   public updateEquip(id: any, dada: any): Observable<HttpResponse<any>> {
-    return this._http.put<any>(`${this.baseUrl}/equip/${id}`, dada, { observe: 'response' });
+    return this._http.post<any>(`${this.baseUrl}/equip/${id}`, dada, { observe: 'response' });
   }
 
   public getEquip(id: any): Observable<HttpResponse<IEquip>> {

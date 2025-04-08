@@ -166,7 +166,15 @@ class ApiController extends Controller
             $idAleatori = uniqid();
             $extensio = $file->getClientOriginalExtension();
             $filename = "{$equip->nom}_{$idAleatori}.{$extensio}";
-            $file->move(public_path(env('RUTA_IMATGES')), $filename);
+            $rutaImatges = public_path(env('RUTA_IMATGES', 'uploads/imatges'));
+
+            // Verifica que el directorio existe y tiene permisos de escritura
+            if (!file_exists($rutaImatges)) {
+                mkdir($rutaImatges, 0755, true);
+            }
+
+            $file->move($rutaImatges, $filename);
+
             $equip->logo = $filename;
         }
 
@@ -228,6 +236,11 @@ class ApiController extends Controller
             $extensio = $file->getClientOriginalExtension();
             $filename = "{$nom}_{$idAleatori}.{$extensio}";
             $rutaImatges = public_path(env('RUTA_IMATGES', 'uploads/imatges'));
+
+            // Verifica que el directorio existe y tiene permisos de escritura
+            if (!file_exists($rutaImatges)) {
+                mkdir($rutaImatges, 0755, true);
+            }
 
             $file->move($rutaImatges, $filename);
 

@@ -68,7 +68,12 @@ export class EquipEditComponent implements OnInit {
   onFileChange(event: any): void {
     if (event.target.files.length > 0) {
       this.selectedFile = event.target.files[0];
-      this.myForm.patchValue({ logo: this.selectedFile ? this.selectedFile.name : this.imatgeActual });
+      console.log('Archivo seleccionado:', this.selectedFile); // Verifica el archivo seleccionado
+
+      // Add a null check for selectedFile
+      if (this.selectedFile) {
+        this.myForm.patchValue({ logo: this.selectedFile.name });
+      }
     }
   }
 
@@ -82,8 +87,7 @@ export class EquipEditComponent implements OnInit {
       formData.append('data_fundacio', this.myForm.get('data_fundacio')?.value);
       formData.append('entrenador', this.myForm.get('entrenador')?.value);
       formData.append('descripcio', this.myForm.get('descripcio')?.value);
-      formData.append('actiu', this.myForm.get('actiu')?.value);
-      formData.append('guanyador', this.myForm.get('guanyador')?.value);
+      formData.append('actiu', this.myForm.get('actiu')?.value ? '1' : '0');
 
       if (this.selectedFile) {
         formData.append('logo', this.selectedFile);
@@ -91,9 +95,24 @@ export class EquipEditComponent implements OnInit {
         formData.append('logo', this.imatgeActual);
       }
 
+      // Verifica el contenido de FormData
+      for (const pair of formData.entries()) {
+        console.log(`${pair[0]}: ${pair[1]}`);
+      }
+
       this.dadesEquipsService.updateEquip(this.id, formData).subscribe({
         next: () => {
-          this.router.navigate(['/equip-list']);
+          // Realiza una petición adicional para obtener los datos actualizados del equipo
+          this.dadesEquipsService.getEquip(this.id).subscribe({
+            next: (data) => {
+              this.imatgeActual = data.body?.logo || ''; // Actualiza la imagen actual
+              console.log('Imagen actualizada:', this.imatgeActual);
+              this.router.navigate(['/equip-list']); // Navega después de actualizar
+            },
+            error: (error) => {
+              console.error('Error al obtener los datos actualizados del equipo:', error);
+            }
+          });
         },
         error: (error) => {
           this.errorMessage = 'Error en actualitzar l\'equip. Si us plau, torna-ho a intentar.';

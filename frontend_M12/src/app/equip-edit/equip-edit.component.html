@@ -25,23 +25,21 @@
       <label for="entrenador">Entrenador:</label>
       <input class="form-control" formControlName="entrenador" id="entrenador">
     </div>
+    <div>
+      <strong>Imatge Actual:</strong>
+      <img *ngIf="imatgeActual" [src]="imatgeActual" alt="Imatge Actual" style="width: 260px; display: block; margin-bottom: 10px;">
+    </div>
     <div class="form-group">
-      <label for="logo">Logo:</label>
-      <input type="file" class="form-control" (change)="onFileChange($event)" id="logo">
+      <label for="imatge">Imatge:</label>
+      <input type="file" class="form-control" (change)="onFileChange($event)" id="imatge">
     </div>
     <div class="form-group">
       <label for="descripcio">Descripcio:</label>
       <input class="form-control" formControlName="descripcio" id="descripcio">
     </div>
     <div class="form-group">
-      <label for="actiu">Actiu:</label>
       <input type="checkbox" formControlName="actiu" id="actiu">
       <span>{{ myForm.get('actiu')?.value ? 'Actiu' : 'No Actiu' }}</span>
-    </div>
-    <div class="form-group">
-      <label for="guanyador">Guanyador:</label>
-      <input type="checkbox" formControlName="guanyador" id="guanyador">
-      <span>{{ myForm.get('guanyador')?.value ? 'Guanyador' : 'No Guanyador' }}</span>
     </div>
     <button type="submit" class="btn btn-primary">Guardar</button>
   </form>

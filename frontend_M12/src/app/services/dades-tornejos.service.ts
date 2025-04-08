@@ -19,7 +19,7 @@ export class DadesTornejosService {
   }
 
   public updateTorneig(id: any, dada: any): Observable<HttpResponse<any>> {
-    return this._http.put<any>(`${this.baseUrl}/torneig/${id}`, dada, { observe: 'response' });
+    return this._http.post<any>(`${this.baseUrl}/torneig/${id}`, dada, { observe: 'response' });
   }
 
   public getTorneig(id: any): Observable<HttpResponse<ITorneig>> {

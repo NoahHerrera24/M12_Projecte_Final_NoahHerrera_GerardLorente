@@ -18,7 +18,7 @@ export class DadesTicketsQueixaService {
   }
   
   public updateTicketQueixa(id: any, dada: any): Observable<HttpResponse<any>> {
-    return this._http.put<any>(`${this.baseUrl}/ticket-queixa/${id}`, dada, { observe: 'response' });
+    return this._http.post<any>(`${this.baseUrl}/ticket-queixa/${id}`, dada, { observe: 'response' });
   }
 
   public getTicketQueixa(id: any): Observable<HttpResponse<ITicketQueixa>> {
