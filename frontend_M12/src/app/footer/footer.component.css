@@ -1,0 +1,54 @@
+.footer {
+  display: flex;
+  justify-content: space-around; /* Espaciado uniforme entre las secciones */
+  align-items: center; /* Centra verticalmente los elementos */
+  padding: 20px;
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Degradado estilo gaming */
+  color: #fff;
+  position: relative;
+  width: 100%;
+  bottom: 0;
+  text-align: center;
+}
+
+.footer-logo .logo {
+  width: 100px;
+}
+
+.footer-social {
+  text-align: center;
+}
+
+.footer-social h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.social-icons img {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.3s ease;
+}
+
+.social-icons img:hover {
+  transform: scale(1.2); /* Efecto de zoom al pasar el ratón */
+}
+
+.footer-info {
+  text-align: left;
+}
+
+.footer-info .school-image {
+  width: 100px;
+  margin-bottom: 10px;
+}
+
+.footer-info p {
+  margin: 5px 0;
+}

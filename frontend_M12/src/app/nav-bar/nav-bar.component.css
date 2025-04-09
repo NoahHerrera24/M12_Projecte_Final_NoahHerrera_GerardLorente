@@ -8,11 +8,48 @@
 
 .navbar .nav-link {
   font-weight: bold;
-  font-size: 1.2rem; /* Aumenta el tamaño del texto */
-  background: linear-gradient(90deg, #ff0000, #00ff00, #0000ff, #ff0000); /* Colores más saturados */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: rgbText 1.5s infinite linear; /* Aumenta la velocidad de la animación */
+  font-size: 1rem;
+  color: #fff; /* Color base del texto */
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Efecto de brillo tenue */
+  transition: text-shadow 0.3s ease-in-out, color 0.3s ease-in-out; /* Transición suave */
+}
+
+.navbar .nav-item:nth-child(1) .nav-link {
+  color: white; /* Blanco */
+}
+
+.navbar .nav-item:nth-child(2) .nav-link {
+  color: lawngreen; /* Verde */
+}
+
+.navbar .nav-item:nth-child(3) .nav-link {
+  color: gold; /* Dorado */
+}
+
+.navbar .nav-item:nth-child(4) .nav-link {
+  color: red; /* Rojo */
+}
+
+.navbar .nav-item:nth-child(5) .nav-link {
+  color: #00a2ff; /* Azul */
+}
+
+.navbar .nav-item:nth-child(6) .nav-link {
+  color: cyan; /* Cian */
+}
+
+.navbar .nav-item:nth-child(7) .nav-link {
+  color: rgb(255, 153, 0); /* Naranja */
+}
+
+.navbar .nav-link:hover {
+  text-shadow: 
+    0 0 10px currentColor, 
+    0 0 20px currentColor, 
+    0 0 30px currentColor, 
+    0 0 40px currentColor, 
+    0 0 50px currentColor; /* Efecto de neón */
+  transition: text-shadow 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 .navbar img {
@@ -49,3 +86,5 @@ body {
   height: 100vh;
   
 }
+
+

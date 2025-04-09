@@ -22,6 +22,7 @@ import { EquipListFilterPipe } from './equip-list/equip-list-filter.pipe';
 import { TicketQueixaListFilterPipe } from './ticket-queixa-list/ticket-queixa-list-filter.pipe';
 import { TorneigListFilterPipe } from './torneig-list/torneig-list-filter.pipe';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     NavBarComponent,
     EquipListFilterPipe,
     TicketQueixaListFilterPipe,
-    TorneigListFilterPipe
+    TorneigListFilterPipe,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

@@ -24,29 +24,97 @@ body {
 .contenedor {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start; /* Alinea el contenido hacia la parte superior */
   align-items: center;
-  height: 100vh; /* Centra el contenido verticalmente */
+  height: 100vh; /* Mantiene el contenedor ocupando toda la pantalla */
   text-align: center;
   position: relative; /* Asegura que el contenido esté encima de la imagen */
   z-index: 1; /* Coloca el contenido por encima de la imagen */
-  
+  padding-top: 10vh; /* Ajusta la distancia desde la parte superior */
 }
 
 .item {
-  margin: 1rem 0; 
+  font-size: 4rem; /* Tamaño del texto */
+  font-weight: bold;
+  color: red; /* Color base del texto */
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Brillo tenue inicial */
+  transition: text-shadow 0.3s ease-in-out, color 0.3s ease-in-out; /* Transición suave */
 }
 
-.item h1 {
-  font-size: 700px; 
-  font-weight: bold; 
-  color: #333; 
+.item:hover {
+  text-shadow: 
+    0 0 10px white, 
+    0 0 20px red, 
+    0 0 30px red, 
+    0 0 40px red, 
+    0 0 50px rgba(252, 53, 53, 0.568);
 }
 
+.button-container {
+  margin-top: 20px; /* Espacio entre el título y los botones */
+  display: flex;
+  gap: 20px; /* Espaciado entre los botones */
+}
 
+.neon-button {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+  background: transparent;
+  border: 2px solid #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  transition: text-shadow 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
 
-/* .item img {
-  max-width: 100%; 
-  height: auto;
-  margin-top: 1rem;
-} */
+.neon-button:hover {
+  text-shadow: 
+    0 0 10px #00ffcc, 
+    0 0 20px #00ffcc, 
+    0 0 30px #00ffcc, 
+    0 0 40px #00ffcc;
+  box-shadow: 
+    0 0 10px #00ffcc, 
+    0 0 20px #00ffcc, 
+    0 0 30px #00ffcc, 
+    0 0 40px #00ffcc;
+}
+
+.neon-button-1 {
+  border-color: gold; 
+  color: gold;
+}
+
+.neon-button-1:hover {
+  text-shadow: 
+    0 0 10px #FF5733, 
+    0 0 20px #FF5733, 
+    0 0 30px #FF5733, 
+    0 0 40px #FF5733;
+  box-shadow: 
+    0 0 10px #FF5733, 
+    0 0 20px #FF5733, 
+    0 0 30px #FF5733, 
+    0 0 40px #FF5733;
+}
+
+.neon-button-2 {
+  border-color: white; /* Verde */
+  color: white;
+}
+
+.neon-button-2:hover {
+  text-shadow: 
+    0 0 10px #33FF57, 
+    0 0 20px #33FF57, 
+    0 0 30px #33FF57, 
+    0 0 40px #33FF57;
+  box-shadow: 
+    0 0 10px #33FF57, 
+    0 0 20px #33FF57, 
+    0 0 30px #33FF57, 
+    0 0 40px #33FF57;
+}
+
