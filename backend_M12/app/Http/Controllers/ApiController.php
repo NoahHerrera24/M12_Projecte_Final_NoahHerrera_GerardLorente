@@ -112,6 +112,12 @@ class ApiController extends Controller
         return response()->json($equips);
     }
 
+/*   public function getEquip($id)
+    {
+        $equip = Equip::find($id);
+        return response()->json($equip);
+    } */
+
     public function getEquip($id)
     {
         $equip = Equip::find($id);
@@ -140,8 +146,8 @@ class ApiController extends Controller
             $headers = ['Content-Type' => mime_content_type($path)];
             return response()->file($path, $headers);
         }
-        
-        return response()->json(['error' => 'Imagen no encontrada'], 404);
+
+        return response()->download($path);
     }
 
     public function createEquip(Request $request)
@@ -304,14 +310,13 @@ class ApiController extends Controller
     {
         $ticketsQueixa = TicketQueixa::all();
 
-        // Decodificar el campo 'proves' para cada ticket
-        $ticketsQueixa->transform(function ($ticket) {
-            $ticket->proves = $ticket->proves ? json_decode($ticket->proves) : [];
-            return $ticket;
-        });
+        foreach ($ticketsQueixa as $ticketQueixa) {
+            $ticketQueixa->foto = url('/api/ticket-queixa/getimg/' . $ticketQueixa->id);
+        }
 
         return response()->json($ticketsQueixa);
     }
+
 
     public function getTicketQueixa($id)
     {
@@ -321,34 +326,60 @@ class ApiController extends Controller
             return response()->json(['error' => 'Ticket de Queixa no trobat'], 404);
         }
 
-        // Decodificar el campo 'proves' si no es nulo
-        $ticketQueixa->proves = $ticketQueixa->proves ? json_decode($ticketQueixa->proves) : [];
+        $ticketQueixa->foto = url('/api/ticket-queixa/getimg/' . $ticketQueixa->id);
 
         return response()->json($ticketQueixa);
     }
 
-    public function createTicketQueixa(Request $request)
+    public function getTicketQueixaImg($id)
     {
-        $ticketQueixa = new TicketQueixa();
-        $ticketQueixa->descripcio = $request->input('descripcio');
-        $ticketQueixa->estat = $request->input('estat');
-
-        $files = [];
-        if ($request->hasFile('proves')) {
-            foreach ($request->file('proves') as $file) {
-                $path = $file->store(
-                    str_starts_with($file->getMimeType(), 'image') ? env('RUTA_IMATGES') :
-                    (str_starts_with($file->getMimeType(), 'video') ? env('RUTA_VIDEOS') : env('RUTA_PDFS')),
-                    'public'
-                );
-                $files[] = $path;
-            }
+        $ticketQueixa = TicketQueixa::find($id);
+        
+        if (!$ticketQueixa || !$ticketQueixa->foto) {
+            return response()->json(['error' => 'Imagen no encontrada'], 404);
+        }
+        
+        $path = public_path(env('RUTA_IMATGES') . '/' . $ticketQueixa->foto);
+        
+        if (file_exists($path)) {
+            $headers = ['Content-Type' => mime_content_type($path)];
+            return response()->file($path, $headers);
         }
 
-        $ticketQueixa->proves = json_encode($files);
-        $ticketQueixa->save();
+        return response()->download($path);
+    }
 
-        return response()->json($ticketQueixa, 201);
+    public function createTicketQueixa(Request $request)
+    {
+    if (!$request->hasFile('foto') && !$request->hasFile('video')) {
+        return response()->json(['error' => 'Has de pujar almenys una imatge o un vídeo.'], 422);
+    }
+
+    $ticketQueixa = new TicketQueixa();
+    $ticketQueixa->descripcio = $request->input('descripcio');
+    $ticketQueixa->estat = $request->input('estat');
+
+    if ($request->file('foto')) {
+        $file = $request->file('foto');
+        $idAleatori = uniqid();
+        $extensio = $file->getClientOriginalExtension();
+        $filename = "foto_{$idAleatori}.{$extensio}";
+        $file->move(public_path(env('RUTA_IMATGES')), $filename);
+        $ticketQueixa->foto = $filename;
+    }
+
+    if ($request->file('video')) {
+        $file = $request->file('video');
+        $idAleatori = uniqid();
+        $extensio = $file->getClientOriginalExtension();
+        $filename = "video_{$idAleatori}.{$extensio}";
+        $file->move(public_path(env('RUTA_VIDEOS')), $filename);
+        $ticketQueixa->video = $filename;
+    }
+
+    $ticketQueixa->save();
+
+    return response()->json($ticketQueixa, 201);
     }
 
     public function updateTicketQueixa(Request $request, $id)
@@ -367,24 +398,29 @@ class ApiController extends Controller
             $ticketQueixa->estat = $request->input('estat');
         }
 
-        $files = json_decode($ticketQueixa->proves, true) ?? [];
-
-        if ($request->hasFile('proves')) {
-            foreach ($request->file('proves') as $file) {
-                $path = $file->store(
-                    str_starts_with($file->getMimeType(), 'image') ? env('RUTA_IMATGES') :
-                    (str_starts_with($file->getMimeType(), 'video') ? env('RUTA_VIDEOS') : env('RUTA_PDFS')),
-                    'public'
-                );
-                $files[] = $path;
-            }
+        if ($request->file('foto')) {
+            $file = $request->file('foto');
+            $idAleatori = uniqid();
+            $extensio = $file->getClientOriginalExtension();
+            $filename = "foto_{$idAleatori}.{$extensio}";
+            $file->move(public_path('uploads/imatges'), $filename);
+            $ticketQueixa->foto = $filename;
         }
 
-        $ticketQueixa->proves = json_encode($files);
+        if ($request->file('video')) {
+            $file = $request->file('video');
+            $idAleatori = uniqid();
+            $extensio = $file->getClientOriginalExtension();
+            $filename = "video_{$idAleatori}.{$extensio}";
+            $file->move(public_path('uploads/videos'), $filename);
+            $ticketQueixa->video = $filename;
+        }
+
         $ticketQueixa->save();
 
         return response()->json($ticketQueixa, 200);
     }
+
 
     public function deleteTicketQueixa($id)
     {

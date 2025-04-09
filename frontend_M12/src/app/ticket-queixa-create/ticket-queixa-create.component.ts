@@ -17,6 +17,10 @@ export class TicketQueixaCreateComponent implements OnInit {
   errorMessage: string = '';
   filePreviews: string[] = [];
   selectedFiles: File[] = [];
+  fotoFile?: File;
+  videoFile?: File;
+  fotoPreview?: string;
+  videoPreview?: string;
 
   constructor(
     private ticketQueixaService: DadesTicketsQueixaService,
@@ -34,9 +38,20 @@ export class TicketQueixaCreateComponent implements OnInit {
     });
   }
 
-  onFileChange(event: any): void {
-    this.selectedFiles = Array.from(event.target.files);
-    this.filePreviews = this.selectedFiles.map(file => URL.createObjectURL(file));
+  onFotoChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.fotoFile = file;
+      this.fotoPreview = URL.createObjectURL(file);
+    }
+  }
+  
+  onVideoChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.videoFile = file;
+      this.videoPreview = URL.createObjectURL(file);
+    }
   }
 
   isImage(fileUrl: string): boolean {
@@ -47,23 +62,16 @@ export class TicketQueixaCreateComponent implements OnInit {
     return fileUrl.match(/\.(mp4|webm|ogg)$/i) !== null;
   }
 
-  isPdf(fileUrl: string): boolean {
-    return fileUrl.toLowerCase().endsWith('.pdf');
-  }
-
   onSubmit(): void {
     const formData = new FormData();
     formData.append('descripcio', this.myForm.get('descripcio')?.value);
     formData.append('estat', 'Ticket de Queixa inicialitzat');
-
-    this.selectedFiles.forEach(file => {
-      formData.append('proves[]', file);
-    });
-
+  
+    if (this.fotoFile) formData.append('foto', this.fotoFile);
+    if (this.videoFile) formData.append('video', this.videoFile);
+  
     this.ticketQueixaService.createTicketQueixa(formData).subscribe({
-      next: () => {
-        this.router.navigate(['/ticket-queixa-list']);
-      },
+      next: () => this.router.navigate(['/ticket-queixa-list']),
       error: (error) => {
         this.errorMessage = error.message;
         console.error('Error:', error);

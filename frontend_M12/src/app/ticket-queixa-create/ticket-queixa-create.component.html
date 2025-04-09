@@ -6,16 +6,14 @@
       <input class="form-control" formControlName="descripcio" id="descripcio">
     </div>
     <div class="form-group">
-      <label for="proves">Proves:</label>
-      <input type="file" class="form-control" id="proves" (change)="onFileChange($event)" multiple>
-      <div class="preview-container" *ngIf="filePreviews.length">
-        <div *ngFor="let preview of filePreviews">
-          <img *ngIf="isImage(preview)" [src]="preview" alt="Previsualització" width="100">
-          <video *ngIf="isVideo(preview)" [src]="preview" controls width="200"></video>
-          <embed *ngIf="isPdf(preview)" [src]="preview" type="application/pdf" width="200" height="200">
-          <a *ngIf="isPdf(preview)" [href]="preview" target="_blank">Veure PDF</a>
-        </div>
-      </div>
+      <label for="foto">Foto:</label>
+      <input type="file" class="form-control" id="foto" (change)="onFotoChange($event)" accept="image/*">
+      <img *ngIf="fotoPreview" [src]="fotoPreview" alt="Foto" width="100">
+    </div> 
+    <div class="form-group">
+      <label for="video">Vídeo:</label>
+      <input type="file" class="form-control" id="video" (change)="onVideoChange($event)" accept="video/*">
+      <video *ngIf="videoPreview" [src]="videoPreview" controls width="200"></video>
     </div>
     <div class="form-group">
         <label for="estat">Estat:</label>

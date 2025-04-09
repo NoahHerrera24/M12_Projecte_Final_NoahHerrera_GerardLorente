@@ -48,14 +48,14 @@ class DatabaseSeeder extends Seeder
             'data_fi' => '2025-05-15',
         ]);
       
-
+/*
         TicketQueixa::create([
             'id' => 1,
             'descripcio' => 'Hi ha hagut un problema amb l\'assignació de l\'equip.',
             'proves' => json_encode(['document1.pdf', 'document2.jpg']),
             'estat' => 'Obert',
         ]);
-
+*/
     }
 }
 

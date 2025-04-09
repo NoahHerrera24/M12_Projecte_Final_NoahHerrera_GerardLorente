@@ -1,6 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Next-Level League</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" 
+<!--   <a class="navbar-brand" href="#">Next-Level Tournament League</a>
+ -->  
+ <img src="../assets/logo_pagina_web.png" alt="equip" style="width: 70px; height: 70px; margin-right: 8px;">
+
+ <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" 
   aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -9,7 +12,9 @@
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['welcome']">Home</a>
       </li>
-      <li class="nav-item dropdown">
+  
+      <li class="nav-item dropdown d-flex align-items-center">
+        <img src="../assets/equipo.png" alt="equip" style="width: 40px; height: 33px; margin-right: 8px;">
         <a class="nav-link dropdown-toggle" href="#" id="equipDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
           Equips
         </a>
@@ -18,7 +23,8 @@
           <a class="dropdown-item" [routerLink]="['equip-create']">Crear Equip</a>
         </div>
       </li>
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown d-flex align-items-center">
+        <img src="../assets/copa.png" alt="copa" style="width: 40px; height: 33px; margin-right: 8px;">
         <a class="nav-link dropdown-toggle" href="#" id="torneigDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
           Torneigs
         </a>
@@ -27,7 +33,8 @@
           <a class="dropdown-item" [routerLink]="['torneig-create']">Crear Torneig</a>
         </div>
       </li>
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown d-flex align-items-center">
+        <img src="../assets/ticket.png" alt="ticket" style="width: 40px; height: 33px; margin-right: 8px;">
         <a class="nav-link dropdown-toggle" href="#" id="ticketDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
           Tickets de Queixa
         </a>
@@ -36,14 +43,20 @@
           <a class="dropdown-item" [routerLink]="['ticket-queixa-create']">Crear Ticket de Queixa</a>
         </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['ranking-equips']">Ranking Equips</a>
+      <li class="nav-item d-flex align-items-center">
+        <img src="../assets/equipos_ranking.png" alt="ranking" style="width: 70px; height: 33px; margin-right: 8px;">
+        <a class="nav-link" [routerLink]="['ranking-equips']">
+          Ranking Equips</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['ranking-tornejos']">Ranking Torneigs</a>
+      <li class="nav-item d-flex align-items-center">
+        <img src="../assets/ranking.png" alt="ranking" style="width: 40px; height: 33px; margin-right: 8px;">
+        <a class="nav-link" [routerLink]="['ranking-tornejos']">
+          Ranking Torneigs</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['ranking-participants']">Ranking Participants</a>
+      <li class="nav-item d-flex align-items-center">
+        <img src="../assets/ranking_personas.png" alt="ranking" style="width: 40px; height: 33px; margin-right: 8px;">
+        <a class="nav-link" [routerLink]="['ranking-participants']">
+          Ranking Participants</a>
       </li>
     </ul>
   </div>

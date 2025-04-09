@@ -1,0 +1,51 @@
+.navbar {
+  background-color: transparent !important; /* Fondo transparente */
+  border: none; /* Sin bordes */
+  box-shadow: none; /* Sin sombra */
+  position: relative; /* Asegura que no se superponga */
+  z-index: 1; /* Ajusta el nivel de superposición si es necesario */
+}
+
+.navbar .nav-link {
+  font-weight: bold;
+  font-size: 1.2rem; /* Aumenta el tamaño del texto */
+  background: linear-gradient(90deg, #ff0000, #00ff00, #0000ff, #ff0000); /* Colores más saturados */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rgbText 1.5s infinite linear; /* Aumenta la velocidad de la animación */
+}
+
+.navbar img {
+  width: 32px; /* Aumenta el tamaño de las imágenes */
+  height: 32px; /* Aumenta el tamaño de las imágenes */
+  margin-right: 8px;
+  border-radius: 4px; /* Bordes redondeados */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra para destacar */
+  border: 2px solid rgba(255, 255, 255, 0.8); /* Borde blanco semitransparente */
+  background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco semitransparente */
+}
+
+.navbar img:hover {
+  transform: scale(1.1); /* Efecto de zoom al pasar el ratón */
+  transition: transform 0.2s ease-in-out; /* Transición suave */
+}
+
+@keyframes rgbText {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 200%; /* Hace que el gradiente se mueva más */
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url('/assets/portada.jpeg'); /* Imagen de fondo */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  
+}

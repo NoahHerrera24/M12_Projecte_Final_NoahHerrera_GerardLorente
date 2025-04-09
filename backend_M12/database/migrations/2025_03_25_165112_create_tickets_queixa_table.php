@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('tickets_queixa', function (Blueprint $table) {
             $table->id();
             $table->string('descripcio');
-            $table->json('proves');
+            $table->string('foto')->nullable();
+            $table->string('video')->nullable();
             $table->string('estat');
             $table->timestamps();
         });

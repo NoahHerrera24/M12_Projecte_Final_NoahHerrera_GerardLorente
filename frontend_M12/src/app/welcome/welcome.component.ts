@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './welcome.component.css'
 })
 export class WelcomeComponent {
-  titol:string = "Benvingut a Next-Level Tourment League";
+  titol:string = "Benvingut a Next-Level Tournament League";
   
 }

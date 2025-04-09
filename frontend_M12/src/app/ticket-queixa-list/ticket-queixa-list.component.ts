@@ -22,13 +22,7 @@ export class TicketQueixaListComponent implements OnInit {
   loadTicketsQueixa(): void {
     this.ticketsQueixaService.getTicketsQueixa().subscribe({
       next: (resp) => {
-        if (resp.body) {
-          // Asegúrate de que el campo 'proves' sea un array
-          this.ticketsQueixa = resp.body.map(ticket => ({
-            ...ticket,
-            proves: Array.isArray(ticket.proves) ? ticket.proves : JSON.parse(ticket.proves || '[]')
-          }));
-        }
+        this.ticketsQueixa = resp.body || [];
       },
       error: (err) => {
         console.error('Error en obtenir les dades dels tickets de queixa:', err);
@@ -47,15 +41,4 @@ export class TicketQueixaListComponent implements OnInit {
     });
   }
 
-  isImage(fileUrl: string): boolean {
-    return fileUrl.match(/\.(jpeg|jpg|gif|png)$/i) !== null;
-  }
-
-  isVideo(fileUrl: string): boolean {
-    return fileUrl.match(/\.(mp4|webm|ogg)$/i) !== null;
-  }
-
-  isPdf(fileUrl: string): boolean {
-    return fileUrl.toLowerCase().endsWith('.pdf');
-  }
 }

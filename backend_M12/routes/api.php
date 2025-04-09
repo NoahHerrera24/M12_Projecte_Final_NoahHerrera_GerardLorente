@@ -3,10 +3,33 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Models\User;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+Route::post('/register', [RegisteredUserController::class, 'store']);
+
+Route::post('/login', function (Request $request) {
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required'
+    ]);
+
+    $user = User::where('email', $request->email)->first();
+
+    if (!$user || !Hash::check($request->password, $user->password)) {
+        return response()->json(['message' => 'Credenciales inválidas'], 401);
+    }
+
+    Auth::login($user); // Solo funcionará si usas Sanctum + web middleware correctamente
+
+    return response()->json(['message' => 'Login correcto', 'user' => $user]);
+});
+
+Route::delete('logout', [ApiController::class, 'logout'])->middleware('auth:sanctum');
 
 //// TORNEJOS
 
@@ -34,13 +57,11 @@ Route::delete('equip/delete/{id}', [ApiController::class, 'deleteEquip']);
 
 Route::get('equip/getimg/{id}', [ApiController::class, 'getEquipImg']);
 
-
 Route::get('/equips-with-guanyador', [ApiController::class, 'getEquipsWithGuanyador']);
 
 Route::post('/equips/{equipId}/tornejos/{torneigId}/assign', [ApiController::class, 'assignTorneigToEquip']);
+
 Route::put('/equips/{equipId}/tornejos/{torneigId}/update-guanyador', [ApiController::class, 'updateGuanyador']);
-
-
 
 //// TICKETS_QUEIXA
 
@@ -53,6 +74,8 @@ Route::post('ticket-queixa/create', [ApiController::class, 'createTicketQueixa']
 Route::post('ticket-queixa/{id}', [ApiController::class, 'updateTicketQueixa']);
 
 Route::delete('ticket-queixa/delete/{id}', [ApiController::class, 'deleteTicketQueixa']);
+
+Route::get('ticket-queixa/getimg/{id}', [ApiController::class, 'getTicketQueixaImg']);
 
 //// RANKINGS
 
