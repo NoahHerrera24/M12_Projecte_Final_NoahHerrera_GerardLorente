@@ -9,6 +9,8 @@
   width: 100%;
   bottom: 0;
   text-align: center;
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+
 }
 
 .footer-logo .logo {
@@ -40,13 +42,36 @@
   transform: scale(1.2); /* Efecto de zoom al pasar el ratón */
 }
 
+.social-item span {
+  display: inline-block; /* Asegura que el span se comporte como un badge */
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
+  color: #fff; /* Color del texto */
+  padding: 5px 10px; /* Espaciado interno */
+  border-radius: 12px; /* Bordes redondeados */
+  font-size: 0.9rem; /* Tamaño del texto */
+  font-weight: bold; /* Texto en negrita */
+  text-align: center; /* Centra el texto */
+  margin-top: 5px; /* Espacio entre la imagen y el badge */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Sombra para destacar */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave */
+}
+
+.social-item span:hover {
+  transform: scale(1.1); /* Efecto de zoom al pasar el ratón */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Sombra más intensa */
+}
+
 .footer-info {
   text-align: left;
 }
 
 .footer-info .school-image {
-  width: 100px;
-  margin-bottom: 10px;
+  width: 100px; /* Ajusta el tamaño de las imágenes */
+  margin-right: 10px; /* Espaciado lateral entre las imágenes */
+}
+
+.footer-info .school-image:last-child {
+  margin-right: 0; /* Elimina el margen derecho de la última imagen */
 }
 
 .footer-info p {

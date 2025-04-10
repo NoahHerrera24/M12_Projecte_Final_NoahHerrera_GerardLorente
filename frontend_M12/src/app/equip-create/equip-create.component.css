@@ -1,0 +1,97 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
+    /* Fondo degradado */
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+}
+
+.title-container {
+    display: flex;
+    align-items: center; /* Alinea el título y la imagen verticalmente */
+    justify-content: center; /* Centra el contenido horizontalmente */
+    gap: 10px; /* Espaciado entre el título y la imagen */
+    margin-bottom: 20px; /* Espaciado inferior */
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+    text-shadow:
+        0 0 10px #0f0c29,
+        0 0 20px #302b63,
+        0 0 30px #24243e;
+}
+
+.Equip {
+    width: 50px; /* Ajusta el tamaño de la imagen */
+    height: auto; /* Mantén la proporción de la imagen */
+    border: 2px solid rgba(255, 255, 255, 0.8); /* Borde blanco semitransparente */
+    background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco semitransparente */
+}
+
+.form-container {
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
+
+}
+
+.form-group label {
+    color: white;
+    font-weight: bold;
+}
+
+.neon-input {
+    background: transparent;
+    border: 2px solid #fff;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.neon-input:focus {
+    border-color: #00ffcc;
+    box-shadow: 0 0 10px #00ffcc;
+    outline: none;
+}
+
+.checkbox-label {
+    color: white;
+    font-weight: bold;
+}
+
+.neon-button {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
+    border: 2px solid white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.neon-button:hover {
+    background: linear-gradient(90deg, #302b63, #24243e, #0f0c29);
+    box-shadow: 0 0 20px #00ffcc;
+}

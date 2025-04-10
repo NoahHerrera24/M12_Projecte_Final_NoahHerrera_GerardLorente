@@ -1,27 +1,43 @@
-<h3 class="fill-remaining-space">Nou Ticket Queixa</h3>
-<div class="container">
-  <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="descripcio">Descripcio:</label>
-      <input class="form-control" formControlName="descripcio" id="descripcio">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear Ticket</title>
+</head>
+<body>
+  <div class="container">
+    <div class="title-container">
+      <img src="../assets/ticket.png" alt="Ticket" class="Ticket">
+      <h3 class="title">Nou Ticket</h3>
     </div>
-    <div class="form-group">
-      <label for="foto">Foto:</label>
-      <input type="file" class="form-control" id="foto" (change)="onFotoChange($event)" accept="image/*">
-      <img *ngIf="fotoPreview" [src]="fotoPreview" alt="Foto" width="100">
-    </div> 
-    <div class="form-group">
-      <label for="video">Vídeo:</label>
-      <input type="file" class="form-control" id="video" (change)="onVideoChange($event)" accept="video/*">
-      <video *ngIf="videoPreview" [src]="videoPreview" controls width="200"></video>
-    </div>
-    <div class="form-group">
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="form-container">
+      <div class="form-group">
+        <label for="descripcio">Descripcio:</label>
+        <input class="form-control neon-input" formControlName="descripcio" id="descripcio">
+      </div>
+      <div class="form-group">
+        <label for="foto">Foto:</label>
+        <input type="file" class="form-control neon-input" id="foto" (change)="onFotoChange($event)" accept="image/*">
+        <img *ngIf="fotoPreview" [src]="fotoPreview" alt="Foto" class="preview-image">
+      </div> 
+      <div class="form-group">
+        <label for="video">Vídeo:</label>
+        <input type="file" class="form-control neon-input" id="video" (change)="onVideoChange($event)" accept="video/*">
+        <video *ngIf="videoPreview" [src]="videoPreview" controls class="preview-video"></video>
+      </div>
+      <div class="form-group">
         <label for="estat">Estat:</label>
-        <input class="form-control" formControlName="estat" id="estat" [value]="'Ticket de Queixa inicialitzat'" readonly>
-    </div>
-    <button type="submit" class="btn btn-primary">Enviar</button>
-  </form>
-</div>
-<div class="alert alert-danger" *ngIf="errorMessage">
-  {{ errorMessage }}
-</div>
+        <input class="form-control neon-input" formControlName="estat" id="estat" [value]="'Ticket de Queixa inicialitzat'" readonly>
+      </div>
+      <button type="submit" class="btn neon-button">Enviar</button>
+    </form>
+  </div>
+  <div class="alert alert-danger" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+</body>
+</html>
+
+
+

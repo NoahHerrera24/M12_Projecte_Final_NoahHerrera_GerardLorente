@@ -1,56 +1,70 @@
-<h3 class="fill-remaining-space">Nou Torneig</h3>
-<div class="container">
-    <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)">
-        <div class="form-group">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear Torneig</title>
+</head>
+<body>
+  <div class="container">
+    <div class="title-container">
+      <h3 class="title">Nou Torneig</h3>
+      <img src="../assets/copa.png" alt="Torneig" class="Torneig">
+    </div>
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)" class="form-container">
+    <div class="form-group">
       <label for="nom">Nom:</label>
-      <input class="form-control" formControlName="nom" id="nom">
+      <input class="form-control neon-input" formControlName="nom" id="nom">
     </div>
     <div class="form-group">
       <label for="regles">Regles:</label>
-      <textarea class="form-control" formControlName="regles" id="regles"></textarea>
+      <textarea class="form-control neon-input" formControlName="regles" id="regles"></textarea>
     </div>
     <div class="form-group">
       <label for="premis">Premi:</label>
-      <input class="form-control" formControlName="premis" id="premis">
+      <input class="form-control neon-input" formControlName="premis" id="premis">
     </div>
     <div class="form-group">
       <label for="categoria">Categoria:</label>
-      <input class="form-control" formControlName="categoria" id="categoria">
+      <input class="form-control neon-input" formControlName="categoria" id="categoria">
     </div>
     <div class="form-group">
       <label for="format">Format:</label>
-      <input class="form-control" formControlName="format" id="format">
+      <input class="form-control neon-input" formControlName="format" id="format">
     </div>
     <div class="form-group">
       <label for="data_inici">Data d'Inici:</label>
-      <input type="date" class="form-control" formControlName="data_inici" id="data_inici">
+      <input type="date" class="form-control neon-input" formControlName="data_inici" id="data_inici">
     </div>
     <div class="form-group">
       <label for="data_fi">Data de Fi:</label>
-      <input type="date" class="form-control" formControlName="data_fi" id="data_fi">
+      <input type="date" class="form-control neon-input" formControlName="data_fi" id="data_fi">
     </div>
     <div class="form-group">
       <label for="equips">Equip:</label>
-      <select class="form-control" formControlName="equips" id="equips" multiple>
+      <select class="form-control neon-input" formControlName="equips" id="equips" multiple>
         <option *ngFor="let equip of equips" [value]="equip.id">
-        {{ equip.nom }}{{ equip.colors_representatius }}{{ equip.idioma_equip }} 
-        {{ equip.patrocinadors }}{{ equip.data_fundacio }}{{ equip.entrenador }}{{ equip.logo }} 
-        {{ equip.descripcio }}{{ equip.actiu }} {{ equip.guanyador }}
+          {{ equip.nom }}{{ equip.colors_representatius }}{{ equip.idioma_equip }}
+          {{ equip.patrocinadors }}{{ equip.data_fundacio }}{{ equip.entrenador }}{{ equip.logo }}
+          {{ equip.descripcio }}{{ equip.actiu }} {{ equip.guanyador }}
         </option>
       </select>
     </div>
     <div class="form-group">
       <label for="user">User:</label>
-      <select class="form-control" formControlName="user" id="user" multiple>
+      <select class="form-control neon-input" formControlName="user" id="user" multiple>
         <option *ngFor="let user of users" [value]="user.id">
           {{ user.name }} {{ user.email }} {{ user.foto }}
-
         </option>
       </select>
     </div>
-    <button type="submit" class="btn btn-primary">Enviar</button>
+    <button type="submit" class="btn neon-button">Enviar</button>
   </form>
 </div>
 <div *ngIf="errorMessage" class="alert alert-danger">
   {{ errorMessage }}
 </div>
+</body>
+</html>
+
+

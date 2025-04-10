@@ -3,7 +3,25 @@
   border: none; /* Sin bordes */
   box-shadow: none; /* Sin sombra */
   position: relative; /* Asegura que no se superponga */
-  z-index: 1; /* Ajusta el nivel de superposición si es necesario */
+  z-index: 1000; /* Asegura que el navbar esté por encima de otros elementos */
+  display: flex;
+  justify-content: center; /* Centra el contenido horizontalmente */
+  align-items: center; /* Centra el contenido verticalmente */
+  padding: 0 20px; /* Espaciado lateral */
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+}
+
+.navbar-nav {
+  display: flex;
+  justify-content: center; /* Centra los elementos dentro del navbar */
+  align-items: center;
+  gap: 20px; /* Espaciado entre los elementos */
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
 }
 
 .navbar .nav-link {
@@ -55,11 +73,13 @@
 .navbar img {
   width: 32px; /* Aumenta el tamaño de las imágenes */
   height: 32px; /* Aumenta el tamaño de las imágenes */
-  margin-right: 8px;
+  margin-right: 8px; /* Espaciado entre el logo y el texto */
   border-radius: 4px; /* Bordes redondeados */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra para destacar */
   border: 2px solid rgba(255, 255, 255, 0.8); /* Borde blanco semitransparente */
   background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco semitransparente */
+  margin-left: 5%;
+
 }
 
 .navbar img:hover {
@@ -85,6 +105,22 @@ body {
   background-repeat: no-repeat;
   height: 100vh;
   
+}
+
+.dropdown-menu {
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Degradado estilo gaming */
+  color: #fff; /* Color de las letras */
+  border: none; /* Elimina el borde del dropdown */
+}
+
+.dropdown-item {
+  color: #fff; /* Color de las letras */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */
+}
+
+.dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Fondo semitransparente al pasar el ratón */
+  color: #fff; /* Mantén las letras blancas */
 }
 
 

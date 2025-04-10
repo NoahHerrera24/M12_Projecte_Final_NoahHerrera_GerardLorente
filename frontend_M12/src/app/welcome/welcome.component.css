@@ -1,8 +1,7 @@
-body {
+body, html {
   margin: 0;
   padding: 0;
-  height: 100vh;
-  overflow: hidden; /* Evita el scroll si la imagen es más grande que la pantalla */
+  height: 100%; /* Asegura que el body ocupe toda la pantalla */
   background-color: transparent;
 }
 
@@ -24,30 +23,31 @@ body {
 .contenedor {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* Alinea el contenido hacia la parte superior */
+  justify-content: center; /* Centra el contenido verticalmente */
   align-items: center;
-  height: 100vh; /* Mantiene el contenedor ocupando toda la pantalla */
+  min-height: calc(100vh - 200px); /* Resta la altura del footer */
   text-align: center;
   position: relative; /* Asegura que el contenido esté encima de la imagen */
   z-index: 1; /* Coloca el contenido por encima de la imagen */
-  padding-top: 10vh; /* Ajusta la distancia desde la parte superior */
 }
 
 .item {
   font-size: 4rem; /* Tamaño del texto */
   font-weight: bold;
-  color: red; /* Color base del texto */
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Brillo tenue inicial */
+  color: white; /* Color del texto */
+  text-shadow: 
+    0 0 10px #0f0c29, /* Primera capa de sombra (color oscuro) */
+    0 0 20px #302b63, /* Segunda capa de sombra (color intermedio) */
+    0 0 30px #24243e; /* Tercera capa de sombra (color más claro) */
   transition: text-shadow 0.3s ease-in-out, color 0.3s ease-in-out; /* Transición suave */
 }
 
 .item:hover {
   text-shadow: 
-    0 0 10px white, 
-    0 0 20px red, 
-    0 0 30px red, 
-    0 0 40px red, 
-    0 0 50px rgba(252, 53, 53, 0.568);
+    0 0 15px #0f0c29, 
+    0 0 25px #302b63, 
+    0 0 35px #24243e, 
+    0 0 45px #24243e; /* Aumenta el brillo al pasar el ratón */
 }
 
 .button-container {
@@ -83,8 +83,9 @@ body {
 }
 
 .neon-button-1 {
-  border-color: gold; 
-  color: gold;
+  border-color: linear-gradient(90deg, #0f0c29, #302b63, #24243e); 
+  color: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
 }
 
 .neon-button-1:hover {
@@ -101,20 +102,75 @@ body {
 }
 
 .neon-button-2 {
-  border-color: white; /* Verde */
-  color: white;
+  border-color: linear-gradient(90deg, #0f0c29, #302b63, #24243e); 
+  color: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
 }
 
 .neon-button-2:hover {
   text-shadow: 
-    0 0 10px #33FF57, 
-    0 0 20px #33FF57, 
-    0 0 30px #33FF57, 
-    0 0 40px #33FF57;
+    0 0 10px orange, 
+    0 0 20px orange, 
+    0 0 30px orange, 
+    0 0 40px orange;
   box-shadow: 
-    0 0 10px #33FF57, 
-    0 0 20px #33FF57, 
-    0 0 30px #33FF57, 
-    0 0 40px #33FF57;
+    0 0 10px orange, 
+    0 0 20px orange, 
+    0 0 30px orange, 
+    0 0 40px orange;
 }
 
+.footer {
+  display: flex;
+  justify-content: space-around; /* Espaciado uniforme entre las secciones */
+  align-items: center; /* Centra verticalmente los elementos */
+  padding: 20px;
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Degradado estilo gaming */
+  color: #fff;
+  position: relative; /* Posición relativa para que no esté pegado al borde */
+  width: 100%;
+  margin-top: 50px; /* Espacio entre el contenido principal y el footer */
+  text-align: center;
+}
+
+.footer-logo .logo {
+  width: 100px;
+}
+
+.footer-social {
+  text-align: center;
+}
+
+.footer-social h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.social-icons img {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.3s ease;
+}
+
+.social-icons img:hover {
+  transform: scale(1.2); /* Efecto de zoom al pasar el ratón */
+}
+
+.footer-info {
+  text-align: left;
+}
+
+.footer-info .school-image {
+  width: 100px;
+  margin-bottom: 10px;
+}
+
+.footer-info p {
+  margin: 5px 0;
+}
