@@ -1,59 +1,60 @@
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    {{ titolLlistat }}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Llistar Equips</title>
+</head>
+<body>
+
+  <div class="panel panel-primary">
+    <div class="title-container">
+      <h3 class="title">{{ titolLlistat }}</h3>
+      <img src="../assets/equipo.png" alt="Equip" class="Equip">
+    </div>
+  
+    <div *ngIf="equips.length == 0">
+      <h4>No hi ha equips</h4>
+    </div>
+    <div *ngIf="equips.length > 0" class="table-responsive">
+      <!-- Caixa de filtrat -->
+      <div class="filter-container">
+        <h3 class="filter-title">Filtrar per:</h3>
+        <input
+          type="text"
+          [(ngModel)]="listFilter"
+          placeholder="Escriu per filtrar equips"
+          class="filter-input"
+        />
+      </div>
+  
+      <div *ngIf="equips.length > 0" class="card-container">
+        <div class="card" *ngFor="let equip of equips | equipListFilter:listFilter">
+          <img [src]="equip.logo" alt="logo equip" class="card-image">
+          <div class="card-content">
+            <p><strong>Nom Equip:</strong> {{ equip.nom }}</p>
+            <p><strong>Colors Representatius:</strong> {{ equip.colors_representatius }}</p>
+            <p><strong>Idioma Equip:</strong> {{ equip.idioma_equip }}</p>
+            <p><strong>Patrocinadors:</strong> {{ equip.patrocinadors }}</p>
+            <p><strong>Data Fundació:</strong> {{ equip.data_fundacio }}</p>
+            <p><strong>Entrenador:</strong> {{ equip.entrenador || 'Sense entrenador' }}</p>
+            <p><strong>Descripció:</strong> {{ equip.descripcio }}</p>
+            <p><strong>Actiu:</strong> {{ equip.actiu ? 'Actiu' : 'No Actiu' }}</p>
+            <p><strong>Guanyador:</strong> {{ equip.guanyador ? 'Guanyador' : 'No Guanyador' }}</p>
+            <div class="card-actions">
+              <a [routerLink]="['/equip-edit', equip.id]" class="btn neon-button">Editar</a>
+              <a (click)="deleteEquip(equip.id)" class="btn neon-button-danger">Eliminar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div *ngIf="equips.length == 0">
-    <h4>No hi ha equips</h4>
-  </div>
-  <div *ngIf="equips.length > 0" class="table-responsive">
-    <!-- Caixa de filtrat -->
-    <div class="row">
-      <div class="col-md-2">
-        Filtrat per:
-      </div>
-      <div class="col-md-4">
-        <input type="text" [(ngModel)]="listFilter" placeholder="Filtra equips">
-      </div>
-    </div>
-    <div class="col-md-2">
-      <h3>Filtrat per: {{ listFilter }}</h3>
-    </div>
-    <!-- Fi caixa filtrat -->
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Colors Representatius</th>
-          <th>Idioma Equip</th>
-          <th>Patrocinadors</th>
-          <th>Data Fundació</th>
-          <th>Entrenador</th>
-          <th>Logo</th>
-          <th>Descripció</th>
-          <th>Actiu</th>
-          <th>Guanyador</th>
-          <th>Accions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let equip of equips | equipListFilter:listFilter">
-          <td>{{ equip.nom }}</td>
-          <td>{{ equip.colors_representatius }}</td>
-          <td>{{ equip.idioma_equip }}</td>
-          <td>{{ equip.patrocinadors }}</td>
-          <td>{{ equip.data_fundacio }}</td>
-          <td>{{ equip.entrenador || 'Sense entrenador' }}</td>
-          <td><img [src]="equip.logo" alt="logo equip" height="100%" width="100%"></td>
-          <td>{{ equip.descripcio }}</td>
-          <td>{{ equip.actiu ? 'Actiu' : 'No Actiu' }}</td>
-          <td>{{ equip.guanyador ? 'Guanyador' : 'No Guanyador' }}</td>
-          <td>
-            <a [routerLink]="['/equip-edit', equip.id]" class="btn btn-primary">Editar</a>
-            <a (click)="deleteEquip(equip.id)" class="btn btn-danger">Eliminar</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+</body>
+</html>
+
+
+
+

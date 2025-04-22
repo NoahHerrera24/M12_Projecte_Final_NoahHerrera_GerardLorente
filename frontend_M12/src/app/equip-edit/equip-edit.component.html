@@ -1,47 +1,51 @@
-<h3 class="fill-remaining-space">Editar Equip</h3>
 <div class="container">
-  <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <div class="title-container">
+    <h3 class="title">Editar Equip</h3>
+    <img src="../assets/equipo.png" alt="Equip" class="Equip">
+  </div>
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="form-container">
     <div class="form-group">
       <label for="nom">Nom:</label>
-      <input class="form-control" formControlName="nom" id="nom">
+      <input class="form-control neon-input" formControlName="nom" id="nom">
     </div>
     <div class="form-group">
       <label for="colors_representatius">Colors Representatius:</label>
-      <input class="form-control" formControlName="colors_representatius" id="colors_representatius">
+      <input class="form-control neon-input" formControlName="colors_representatius" id="colors_representatius">
     </div>
     <div class="form-group">
       <label for="idioma_equip">Idioma Equip:</label>
-      <input class="form-control" formControlName="idioma_equip" id="idioma_equip">
+      <input class="form-control neon-input" formControlName="idioma_equip" id="idioma_equip">
     </div>
     <div class="form-group">
       <label for="patrocinadors">Patrocinadors:</label>
-      <input class="form-control" formControlName="patrocinadors" id="patrocinadors">
+      <input class="form-control neon-input" formControlName="patrocinadors" id="patrocinadors">
     </div>
     <div class="form-group">
       <label for="data_fundacio">Data Fundacio:</label>
-      <input type="date" formControlName="data_fundacio" id="data_fundacio">
+      <input type="date" class="form-control neon-input" formControlName="data_fundacio" id="data_fundacio">
     </div>
     <div class="form-group">
       <label for="entrenador">Entrenador:</label>
-      <input class="form-control" formControlName="entrenador" id="entrenador">
+      <input class="form-control neon-input" formControlName="entrenador" id="entrenador">
     </div>
     <div>
-      <strong>Imatge Actual:</strong>
-      <img *ngIf="imatgeActual" [src]="imatgeActual" alt="Imatge Actual" style="width: 260px; display: block; margin-bottom: 10px;">
+      <strong id="str">Imatge Actual:</strong>
+      <br>
+      <img *ngIf="imatgeActual" [src]="imatgeActual" alt="Imatge Actual" class="preview-image">
     </div>
     <div class="form-group">
       <label for="imatge">Imatge:</label>
-      <input type="file" class="form-control" (change)="onFileChange($event)" id="imatge">
+      <input type="file" class="form-control neon-input" (change)="onFileChange($event)" id="imatge">
     </div>
     <div class="form-group">
       <label for="descripcio">Descripcio:</label>
-      <input class="form-control" formControlName="descripcio" id="descripcio">
+      <input class="form-control neon-input" formControlName="descripcio" id="descripcio">
     </div>
     <div class="form-group">
       <input type="checkbox" formControlName="actiu" id="actiu">
-      <span>{{ myForm.get('actiu')?.value ? 'Actiu' : 'No Actiu' }}</span>
+      <span class="checkbox-label">{{ myForm.get('actiu')?.value ? 'Actiu' : 'No Actiu' }}</span>
     </div>
-    <button type="submit" class="btn btn-primary">Guardar</button>
+    <button type="submit" class="neon-button">Guardar</button>
   </form>
 </div>
 <div *ngIf="errorMessage" class="alert alert-danger">

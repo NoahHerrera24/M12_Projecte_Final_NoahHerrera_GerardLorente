@@ -1,0 +1,170 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
+    color: white; /* Asegura que el texto sea visible */
+    font-family: Arial, sans-serif; /* Fuente predeterminada */
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap; /* Permite que las tarjetas se ajusten en varias filas */
+  gap: 10px; /* Espaciado entre las tarjetas */
+  justify-content: center; /* Centra las tarjetas horizontalmente */
+  padding: 10px;
+}
+
+.card {
+  display: flex;
+  flex-direction: row; /* Mantiene el diseño horizontal */
+  align-items: center;
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); /* Sombra */
+  overflow: hidden;
+  width: calc(50% - 10px); /* Ajusta el ancho para que quepan dos tarjetas por fila */
+  height: 100%; /* Ajusta la altura de las tarjetas */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.card:hover {
+  transform: scale(1.05); /* Efecto de zoom al pasar el ratón */
+  box-shadow: 0 0 30px rgba(0, 255, 204, 0.8); /* Sombra más intensa */
+}
+
+.card-image {
+    width: 60%; /* Ancho fijo para la imagen */
+    height: 100%; /* La imagen ocupará toda la altura de la tarjeta */
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
+    border-right: 2px solid rgba(255, 255, 255, 0.8); /* Línea separadora */
+  }
+
+
+.card-content {
+  padding: 15px;
+  text-align: left; /* Alinea el texto a la izquierda */
+  flex: 1; /* Permite que el contenido ocupe el espacio restante */
+  font-size: 0.8rem; /* Reduce el tamaño general del texto */
+}
+
+.card-title {
+  font-size: 1rem; /* Reduce el tamaño del título */
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.card-details {
+  font-size: 0.7rem; /* Reduce el tamaño de los valores */
+  line-height: 1.2; /* Espaciado entre líneas */
+  margin-bottom: 5px;
+}
+
+.card-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px; /* Espaciado entre los botones */
+  justify-content: flex-start; /* Alinea los botones a la izquierda */
+}
+
+.neon-button {
+  font-size: 0.7rem; /* Reduce el tamaño de los botones */
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
+  border: 2px solid white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.neon-button:hover {
+  background: linear-gradient(90deg, #302b63, #24243e, #0f0c29);
+  box-shadow: 0 0 20px #00ffcc;
+}
+
+.neon-button-danger {
+  font-size: 0.7rem; /* Reduce el tamaño de los botones de peligro */
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(90deg, #ff0000, #cc0000, #990000);
+  border: 2px solid white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.neon-button-danger:hover {
+  background: linear-gradient(90deg, #cc0000, #990000, #660000);
+  box-shadow: 0 0 20px #ff0000;
+}
+
+.filter-container {
+  display: flex;
+  align-items: center; /* Alinea el título y el input verticalmente */
+  gap: 10px; /* Espaciado entre el título y el input */
+  margin-bottom: 20px; /* Espaciado inferior */
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
+  padding: 10px;
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 0 10px rgba(0, 255, 204, 0.5); /* Sombra */
+}
+
+.filter-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  margin: 0; /* Elimina el margen adicional */
+}
+
+.filter-input {
+  padding: 10px;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  background: transparent;
+  color: white;
+  width: 300px;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.filter-input:focus {
+  border-color: #00ffcc;
+  box-shadow: 0 0 10px #00ffcc;
+  outline: none;
+}
+
+.title-container {
+  display: flex;
+  align-items: center; /* Alinea el título y la imagen verticalmente */
+  justify-content: center; /* Centra el contenido horizontalmente */
+  gap: 10px; /* Espaciado entre el título y la imagen */
+  margin-bottom: 20px; /* Espaciado inferior */
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: white;
+  text-shadow:
+    0 0 10px #0f0c29,
+    0 0 20px #302b63,
+    0 0 30px #24243e;
+}
+
+.Equip {
+  width: 50px; /* Ajusta el tamaño de la imagen */
+  height: auto; /* Mantén la proporción de la imagen */
+  border: 2px solid rgba(255, 255, 255, 0.8); /* Borde blanco semitransparente */
+  background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco semitransparente */
+  border-radius: 5px; /* Bordes redondeados */
+}
