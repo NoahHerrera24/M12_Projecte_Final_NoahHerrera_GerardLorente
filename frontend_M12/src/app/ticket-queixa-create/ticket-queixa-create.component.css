@@ -99,8 +99,8 @@ img, video {
 }
 
 .Ticket {
-    width: 50px; /* Ajusta el tamaño de la imagen */
-    height: auto; /* Mantén la proporción de la imagen */
+    width: 55px; /* Ajusta el tamaño de la imagen */
+    height: 43px; /* Mantén la proporción de la imagen */
     border: 2px solid rgba(255, 255, 255, 0.8); /* Borde blanco semitransparente */
     background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco semitransparente */
     border-radius: 5px; /* Bordes redondeados */
@@ -108,10 +108,10 @@ img, video {
 
 .title-container {
     display: flex;
-    align-items: center; /* Alinea el título y la imagen verticalmente */
+    align-items: flex-start; /* Alinea la imagen y el título hacia la parte superior */
     justify-content: center; /* Centra el contenido horizontalmente */
     gap: 10px; /* Espaciado entre el título y la imagen */
-    margin-bottom: 20px; /* Espaciado inferior */
+    margin-bottom: 10px; /* Espaciado inferior */
 }
 
 .title {
@@ -122,4 +122,22 @@ img, video {
         0 0 10px #0f0c29,
         0 0 20px #302b63,
         0 0 30px #24243e;
+}
+
+.preview-video {
+    max-width: 100%; /* Asegura que el video no exceda el ancho del contenedor */
+    max-height: 300px; /* Limita la altura máxima del video */
+    border: 2px solid rgba(255, 255, 255, 0.8); /* Borde blanco semitransparente */
+    border-radius: 5px; /* Bordes redondeados */
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.5); /* Sombra */
+    margin-top: 10px; /* Espaciado superior */
+}
+
+.preview-image {
+    max-width: 100%; /* Asegura que la imagen no exceda el ancho del contenedor */
+    max-height: 300px; /* Limita la altura máxima de la imagen */
+    border: 2px solid rgba(255, 255, 255, 0.8); /* Borde blanco semitransparente */
+    border-radius: 5px; /* Bordes redondeados */
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.5); /* Sombra */
+    margin-top: 10px; /* Espaciado superior */
 }
