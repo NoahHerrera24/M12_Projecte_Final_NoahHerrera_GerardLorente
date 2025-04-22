@@ -1,69 +1,39 @@
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    {{ titolLlistat }}
-  </div>
+<div class="torneig-container">
+  <h2 class="torneig-title">{{ titolLlistat }}</h2>
+
   <div *ngIf="torneigs.length == 0">
     <h4>No hi ha tornejos</h4>
   </div>
-  <div *ngIf="torneigs.length > 0" class="table-responsive">
-    <!-- Caixa de filtrat -->
-    <div class="row">
-      <div class="col-md-2">
-        Filtrat per:
+
+  <div *ngIf="torneigs.length > 0" class="torneig-list">
+    <div class="torneig-card" *ngFor="let torneig of torneigs | torneigListFilter:listFilter">
+      <div class="torneig-header">
+        <h3 class="torneig-nom">{{ torneig.nom }}</h3>
       </div>
-      <div class="col-md-4">
-        <input type="text" [(ngModel)]="listFilter" placeholder="Filtra tornejos">
+      <div class="torneig-body">
+        <p><strong>Regles:</strong> {{ torneig.regles }}</p>
+        <p><strong>Premis:</strong> {{ torneig.premis }}</p>
+        <p><strong>Categoria:</strong> {{ torneig.categoria }}</p>
+        <p><strong>Format:</strong> {{ torneig.format }}</p>
+        <p><strong>Data d'Inici:</strong> {{ torneig.data_inici }}</p>
+        <p><strong>Data de Fi:</strong> {{ torneig.data_fi }}</p>
+        <p><strong>Equips:</strong></p>
+        <ul>
+          <li *ngFor="let equip of torneig.equips">
+            {{ equip.nom }} ({{ equip.colors_representatius }})
+          </li>
+        </ul>
+        <p><strong>Jugadors:</strong></p>
+        <ul>
+          <li *ngFor="let user of torneig.jugadors">
+            {{ user.name }} ({{ user.email }})
+          </li>
+        </ul>
+      </div>
+      <div class="torneig-actions">
+        <button [routerLink]="['/torneig-edit', torneig.id]" class="btn neon-button">Editar</button>
+        <button (click)="deleteTorneig(torneig.id)" class="btn neon-button-danger">Eliminar</button>
       </div>
     </div>
-    <div class="col-md-2">
-      <h3>Filtrat per: {{ listFilter }}</h3>
-    </div>
-    <!-- Fi caixa filtrat -->
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Regles</th>
-          <th>Premis</th>
-          <th>Categoria</th>
-          <th>Format</th>
-          <th>Data d'Inici</th>
-          <th>Data de Fi</th>
-          <th>Equips</th>
-          <th>Jugadors</th>
-          <th>Accions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let torneig of torneigs | torneigListFilter:listFilter">
-          <td>{{ torneig.nom }}</td>
-          <td>{{ torneig.regles }}</td>
-          <td>{{ torneig.premis }}</td>
-          <td>{{ torneig.categoria }}</td>
-          <td>{{ torneig.format }}</td>
-          <td>{{ torneig.data_inici }}</td>
-          <td>{{ torneig.data_fi }}</td>
-          <td>
-            <ul>
-              <li *ngFor="let equip of torneig.equips">
-                {{ equip.nom }}{{ equip.colors_representatius }}
-                {{ equip.idioma_equip }}{{ equip.patrocinadors }}{{ equip.data_fundacio }}
-                {{ equip.entrenador }}{{ equip.logo }}{{ equip.descripcio }}
-                {{ equip.actiu }}{{ equip.guanyador }}              
-            </li>
-            </ul>
-          </td>
-          <td>
-            <ul>
-              <li *ngFor="let user of torneig.jugadors">{{ user.name }} {{ user.email }} {{ user.foto }}  </li>
-            </ul>
-          </td>
-          <td>
-            <a [routerLink]="['/torneig-edit', torneig.id]" class="btn btn-primary">Editar</a>
-            <a (click)="deleteTorneig(torneig.id)" class="btn btn-danger">Eliminar</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </div>

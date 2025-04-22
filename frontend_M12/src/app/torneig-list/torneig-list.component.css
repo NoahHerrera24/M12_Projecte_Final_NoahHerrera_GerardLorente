@@ -1,0 +1,107 @@
+.torneig-container {
+  text-align: center;
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); /* Sombra */
+}
+
+.torneig-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px #0f0c29, 0 0 20px #302b63, 0 0 30px #24243e;
+}
+
+.torneig-list {
+  display: flex;
+  flex-wrap: wrap; /* Permite que las tarjetas se ajusten en varias filas */
+  gap: 20px; /* Espaciado entre las tarjetas */
+  justify-content: center; /* Centra las tarjetas horizontalmente */
+}
+
+.torneig-card {
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); /* Sombra */
+  padding: 15px;
+  width: 300px; /* Ancho fijo para las tarjetas */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.torneig-card:hover {
+  transform: scale(1.05); /* Efecto de zoom al pasar el ratón */
+  box-shadow: 0 0 30px rgba(0, 255, 204, 0.8); /* Sombra más intensa */
+}
+
+.torneig-header {
+  margin-bottom: 10px;
+}
+
+.torneig-nom {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.torneig-body {
+  margin-bottom: 15px;
+  text-align: left; /* Alinea el texto a la izquierda */
+}
+
+.torneig-body p {
+  margin: 5px 0;
+}
+
+.torneig-body ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.torneig-actions {
+  display: flex;
+  gap: 10px; /* Espaciado entre los botones */
+  justify-content: center;
+}
+
+.neon-button {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
+  border: 2px solid white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.neon-button:hover {
+  background: linear-gradient(90deg, #302b63, #24243e, #0f0c29);
+  box-shadow: 0 0 20px #00ffcc;
+}
+
+.neon-button-danger {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(90deg, #ff0000, #cc0000, #990000);
+  border: 2px solid white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.neon-button-danger:hover {
+  background: linear-gradient(90deg, #cc0000, #990000, #660000);
+  box-shadow: 0 0 20px #ff0000;
+}

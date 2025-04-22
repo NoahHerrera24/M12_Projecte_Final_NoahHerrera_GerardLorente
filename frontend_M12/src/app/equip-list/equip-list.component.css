@@ -18,18 +18,32 @@ body, html {
 
 .card {
   display: flex;
-  flex-direction: row; /* Mantiene el diseño horizontal */
+  flex-direction: column; /* Cambia la dirección a vertical */
   align-items: center;
   background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
   color: white;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); /* Sombra */
   overflow: hidden;
-  width: calc(50% - 10px); /* Ajusta el ancho para que quepan dos tarjetas por fila */
-  height: 100%; /* Ajusta la altura de las tarjetas */
+  width: calc(50% - 20px); /* Ajusta el ancho para que quepan dos tarjetas por fila */
+  margin-bottom: 20px; /* Espaciado inferior entre tarjetas */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.card-header {
+  background: rgba(0, 0, 0, 0.7); /* Fondo semitransparente para el título */
+  width: 100%; /* Asegura que el título ocupe todo el ancho de la tarjeta */
+  text-align: center;
+  padding: 10px;
+}
+
+.card-title {
+  font-size: 1.2rem; /* Ajusta el tamaño del título */
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  text-align: center;
+}
 
 .card:hover {
   transform: scale(1.05); /* Efecto de zoom al pasar el ratón */
@@ -48,14 +62,6 @@ body, html {
   padding: 15px;
   text-align: left; /* Alinea el texto a la izquierda */
   flex: 1; /* Permite que el contenido ocupe el espacio restante */
-  font-size: 0.8rem; /* Reduce el tamaño general del texto */
-}
-
-.card-title {
-  font-size: 1rem; /* Reduce el tamaño del título */
-  font-weight: bold;
-  margin-bottom: 5px;
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
 .card-details {

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,9 +30,11 @@
   
       <div *ngIf="equips.length > 0" class="card-container">
         <div class="card" *ngFor="let equip of equips | equipListFilter:listFilter">
+          <div class="card-header">
+            <h3 class="card-title">{{ equip.nom }}</h3>
+          </div>
           <img [src]="equip.logo" alt="logo equip" class="card-image">
           <div class="card-content">
-            <p><strong>Nom Equip:</strong> {{ equip.nom }}</p>
             <p><strong>Colors Representatius:</strong> {{ equip.colors_representatius }}</p>
             <p><strong>Idioma Equip:</strong> {{ equip.idioma_equip }}</p>
             <p><strong>Patrocinadors:</strong> {{ equip.patrocinadors }}</p>

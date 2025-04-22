@@ -1,46 +1,28 @@
-<div class="panel panel-primary">
-    <div *ngIf="ticketsQueixa.length==0">
-      <h4>No hi ha tickets de queixa</h4>
-    </div>
-    <br/>
-    <div class="row">
-        <div class="col-md-2">
-          Filtrat per:
+<div class="ticket-container">
+  <h2 class="ticket-title">Llistat de Tickets de Queixa</h2>
+
+  <div *ngIf="ticketsQueixa.length == 0">
+    <h4>No hi ha tickets de queixa</h4>
+  </div>
+
+  <div *ngIf="ticketsQueixa.length > 0" class="ticket-list">
+    <div class="ticket-card" *ngFor="let ticketQueixa of ticketsQueixa | ticketQueixaListFilter:listFilter">
+      <div class="ticket-header">
+        <h3 class="ticket-descripcio">{{ ticketQueixa.descripcio }}</h3>
+      </div>
+      <div class="ticket-body">
+        <div *ngIf="ticketQueixa.foto" class="ticket-image">
+          <img [src]="ticketQueixa.foto" alt="Foto del Ticket">
         </div>
-        <div class="col-md-4">
-          <input type="text" [(ngModel)]="listFilter">
+        <div *ngIf="ticketQueixa.video" class="ticket-video">
+          <video [src]="'http://localhost:8000/uploads/videos/' + ticketQueixa.video" controls></video>
         </div>
+        <p><strong>Estat:</strong> {{ ticketQueixa.estat }}</p>
+      </div>
+      <div class="ticket-actions">
+        <button [routerLink]="['/ticket-queixa-edit', ticketQueixa.id]" class="btn neon-button">Editar</button>
+        <button (click)="deleteTicketQueixa(ticketQueixa.id)" class="btn neon-button-danger">Eliminar</button>
+      </div>
     </div>
-    <div class="col-md-2">
-        <h3>Filtrat per: {{listFilter}}</h3>
-    </div>
-    <div *ngIf="ticketsQueixa.length>0" class="table-responsive">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Descripcio</th>
-              <th>Foto</th>
-              <th>Video</th>
-              <th>Estat</th>
-              <th>Accions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let ticketQueixa of ticketsQueixa | ticketQueixaListFilter:listFilter">
-              <td>{{ticketQueixa.descripcio}}</td>
-              <td>
-                <img *ngIf="ticketQueixa.foto" [src]="ticketQueixa.foto" alt="" width="100">
-              </td>
-              <td>
-                <video *ngIf="ticketQueixa.video" [src]="'http://localhost:8000/uploads/videos/' + ticketQueixa.video" controls width="200"></video>
-              </td>
-              <td>{{ticketQueixa.estat}}</td>
-              <td>
-                <button [routerLink]="['/ticket-queixa-edit', ticketQueixa.id]" class="btn btn-primary">Editar</button>
-                <button (click)="deleteTicketQueixa(ticketQueixa.id)" class="btn btn-danger">Eliminar</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-    </div>
+  </div>
 </div>
