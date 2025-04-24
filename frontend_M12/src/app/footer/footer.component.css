@@ -8,6 +8,8 @@
   text-align: center;
   width: 100%;
   box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); /* Sombra */
+  gap: 100px; /* Espacio entre los elementos */
+  margin-top: auto;
 }
 
 .footer-logo .logo {

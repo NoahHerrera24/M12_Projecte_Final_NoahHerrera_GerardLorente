@@ -1,38 +1,4 @@
 
-<<<<<<< HEAD
-  <div *ngIf="torneigs.length == 0">
-    <h4>No hi ha tornejos</h4>
-  </div>
-
-  <div *ngIf="torneigs.length > 0" class="torneig-list">
-    <div class="torneig-card" *ngFor="let torneig of torneigs | torneigListFilter:listFilter">
-      <div class="torneig-header">
-        <h3 class="torneig-nom">{{ torneig.nom }}</h3>
-      </div>
-      <div class="torneig-body">
-        <p><strong>Regles:</strong> {{ torneig.regles }}</p>
-        <p><strong>Premis:</strong> {{ torneig.premis }}</p>
-        <p><strong>Categoria:</strong> {{ torneig.categoria }}</p>
-        <p><strong>Format:</strong> {{ torneig.format }}</p>
-        <p><strong>Data d'Inici:</strong> {{ torneig.data_inici }}</p>
-        <p><strong>Data de Fi:</strong> {{ torneig.data_fi }}</p>
-        <p><strong>Equips:</strong></p>
-        <ul>
-          <li *ngFor="let equip of torneig.equips">
-            {{ equip.nom }}
-          </li>
-        </ul>
-        <p><strong>Jugadors:</strong></p>
-        <ul>
-          <li *ngFor="let user of torneig.jugadors">
-            {{ user.name }}
-          </li>
-        </ul>
-      </div>
-      <div class="torneig-actions">
-        <button [routerLink]="['/torneig-edit', torneig.id]" class="btn neon-button">Editar</button>
-        <button (click)="deleteTorneig(torneig.id)" class="btn neon-button-danger">Eliminar</button>
-=======
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,7 +43,6 @@
           <button [routerLink]="['/torneig-edit', torneig.id]" class="btn neon-button">Editar</button>
           <button (click)="deleteTorneig(torneig.id)" class="btn neon-button-danger">Eliminar</button>
         </div>
->>>>>>> 8d534c3a108d371bcab4deead4cafa066b78e933
       </div>
     </div>
   </div>
