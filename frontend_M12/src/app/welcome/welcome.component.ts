@@ -14,14 +14,7 @@ export class WelcomeComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   logout(): void {
-    this.authService.logout().subscribe({
-      next: () => {
-        console.log('Sessió tancada correctament');
-        this.router.navigate(['/login']); 
-      },
-      error: (err) => {
-        console.error('Error al tancar sessió:', err);
-      }
-    });
+    this.authService.logout();
   }
+  
 }

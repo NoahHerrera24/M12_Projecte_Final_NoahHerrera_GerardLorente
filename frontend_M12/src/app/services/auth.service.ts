@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 
 @Injectable({
@@ -10,7 +11,7 @@ import { tap } from 'rxjs/operators';
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {} 
 
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
   public isLoggedIn$ = this.isLoggedInSubject.asObservable();
@@ -34,16 +35,14 @@ export class AuthService {
     );
   }
 
-  logout(): Observable<any> {
-    return this.getCsrfToken().pipe(
-      switchMap(() =>
-        this.http.delete('/api/logout', { withCredentials: true }).pipe(
-          tap(() => {
-            this.setLoginState(false);
-          })
-        )
-      )
-    );
+  remove() {
+    return localStorage.removeItem('user');
+  }
+
+  logout(): void {
+    this.remove();
+    this.setLoginState(false);
+    this.router.navigateByUrl('/login');
   }
 
   getUser(): Observable<any> {

@@ -1,11 +1,18 @@
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
-    color: white; /* Asegura que el texto sea visible */
-    font-family: Arial, sans-serif; /* Fuente predeterminada */
+html {
+  color: white; /* Asegura que el texto sea visible */
+  font-family: Arial, sans-serif; /* Fuente predeterminada */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
+}
+
+.container {
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
 }
 
 .card-container {
