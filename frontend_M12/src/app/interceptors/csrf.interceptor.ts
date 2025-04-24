@@ -1,19 +1,23 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable()
 export class CsrfInterceptor implements HttpInterceptor {
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const csrfToken = this.getCookie('XSRF-TOKEN');
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
-    if (csrfToken) {
-      const clonedRequest = req.clone({
-        setHeaders: {
-          'X-XSRF-TOKEN': csrfToken
-        }
-      });
-      return next.handle(clonedRequest);
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (isPlatformBrowser(this.platformId)) {
+      const csrfToken = this.getCookie('XSRF-TOKEN');
+      if (csrfToken) {
+        const clonedRequest = req.clone({
+          setHeaders: {
+            'X-XSRF-TOKEN': csrfToken
+          }
+        });
+        return next.handle(clonedRequest);
+      }
     }
     return next.handle(req);
   }
