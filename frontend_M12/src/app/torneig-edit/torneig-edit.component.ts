@@ -58,7 +58,7 @@ export class TorneigEditComponent implements OnInit {
     this.torneigService.getJugadors().subscribe({
       next: (resp: HttpResponse<IUser[]>) => {
         if (resp.body) {
-          this.users = resp.body;
+          this.users = resp.body.filter(user => user.role === 'participant');
         }
       },
       error: (err: any) => {
@@ -89,9 +89,36 @@ export class TorneigEditComponent implements OnInit {
     }
   }
 
+  onEquipToggle(equipId: number): void {
+    const equipsControl = this.myForm.get('equips');
+    const currentValue = equipsControl?.value || [];
+    if (currentValue.includes(equipId)) {
+      equipsControl?.setValue(currentValue.filter((id: number) => id !== equipId));
+    } else {
+      equipsControl?.setValue([...currentValue, equipId]);
+    }
+  }  
+  
+  onUserToggle(userId: number): void {
+    const usersControl = this.myForm.get('users');
+    const currentValue = usersControl?.value || [];
+    if (currentValue.includes(userId)) {
+      usersControl?.setValue(currentValue.filter((id: number) => id !== userId));
+    } else {
+      usersControl?.setValue([...currentValue, userId]);
+    }
+  }    
+
   onSubmit(): void {
     if (this.id) {
-      this.torneigService.updateTorneig(this.id, this.myForm.value).subscribe({
+      const formValue = this.myForm.value;
+      const payload = {
+        ...formValue,
+        jugadors: formValue.users 
+      };
+      delete payload.users;
+  
+      this.torneigService.updateTorneig(this.id, payload).subscribe({
         next: () => {
           this.router.navigate(['/torneig-list']);
         },
@@ -101,5 +128,6 @@ export class TorneigEditComponent implements OnInit {
         }
       });
     }
-  }
+  }  
+
 }

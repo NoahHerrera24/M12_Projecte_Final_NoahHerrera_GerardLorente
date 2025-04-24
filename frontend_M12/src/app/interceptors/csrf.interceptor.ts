@@ -28,4 +28,5 @@ export class CsrfInterceptor implements HttpInterceptor {
     if (parts.length === 2) return parts.pop()?.split(';').shift() || null;
     return null;
   }
+  
 }
