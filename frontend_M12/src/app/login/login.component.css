@@ -1,0 +1,83 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
+
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Asegura que ocupe toda la altura de la pantalla */
+}
+
+.login-container {
+  flex: 1; /* Ocupa el espacio disponible */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra verticalmente */
+  align-items: center; /* Centra horizontalmente */
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
+  color: #fff; /* Texto blanco para contraste */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Sombra para destacar */
+  max-width: 400px;
+  margin: auto; /* Centrado horizontal */
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.login-form label {
+  font-weight: bold;
+}
+
+.login-form input {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  border: 2px solid #fff;
+  color: white;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-form input:focus {
+  border-color: #00ffcc;
+  box-shadow: 0 0 10px #00ffcc;
+  outline: none;
+}
+
+.login-form button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #24243e;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-form button:hover {
+  background-color: #302b63;
+}
+
+footer {
+  background-color: #24243e;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  margin-top: auto; /* Empuja el footer hacia abajo */
+  width: 100%;
+}

@@ -16,18 +16,10 @@
       {{titol}}
     </h1>
     <div class="button-container">
-      <button class="neon-button neon-button-1">Iniciar Sessió</button>
-      <button class="neon-button neon-button-2">Registrar-se</button>
+      <button class="neon-button neon-button-1" [routerLink]="['/login']">Iniciar Sessió</button>
+      <button class="neon-button neon-button-2" [routerLink]="['/register']">Registrar-se</button>
+      <button class="neon-button neon-button-3" (click)="logout()">Tancar Sessió</button>
     </div>
   </div>
-
-
-
-
-  
 </body>
 </html>
-
-
-
-

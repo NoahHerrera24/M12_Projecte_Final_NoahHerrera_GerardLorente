@@ -18,6 +18,8 @@ export class TorneigCreateComponent implements OnInit {
   errorMessage: string = '';
   equips: IEquip[] = [];
   users: IUser[] = [];
+  selectedEquips: number[] = [];
+  selectedUsers: number[] = [];
 
   constructor(
     private torneigService: DadesTornejosService,
@@ -26,7 +28,6 @@ export class TorneigCreateComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.myForm = new FormGroup({
-      // Defineix els controls del formulari aquí
     });
   }
 
@@ -61,12 +62,31 @@ export class TorneigCreateComponent implements OnInit {
         }
       },
       error: (error: any) => {
-        console.error('Error al obtener los jugadores', error);
+        console.error('Error al obtindre els jugadors', error);
       }
     });
   }
 
+  onEquipToggle(equipId: number, isChecked: boolean) {
+    if (isChecked) {
+      this.selectedEquips.push(equipId);
+    } else {
+      this.selectedEquips = this.selectedEquips.filter(id => id !== equipId);
+    }
+  }
+  
+  onUserToggle(userId: number, isChecked: boolean) {
+    if (isChecked) {
+      this.selectedUsers.push(userId);
+    } else {
+      this.selectedUsers = this.selectedUsers.filter(id => id !== userId);
+    }
+  }
+
   onSubmit(torneig: any) {
+    torneig.equips = this.selectedEquips;
+    torneig.jugadors = this.selectedUsers;
+  
     this.torneigService.createTorneig(torneig).subscribe({
       next: () => {
         this.router.navigate(['/torneig-list']);
@@ -75,5 +95,6 @@ export class TorneigCreateComponent implements OnInit {
         this.errorMessage = error.message;
       }
     });
-  }
+  }  
+
 }

@@ -60,6 +60,13 @@ return [
             'report' => false,
         ],
 
+        'imatges' => [
+            'driver' => 'local',
+            'root' => public_path('uploads/imatges'),
+            'url' => env('APP_URL') . '/uploads/imatges',
+            'visibility' => 'public',
+        ],
+
     ],
 
     /*

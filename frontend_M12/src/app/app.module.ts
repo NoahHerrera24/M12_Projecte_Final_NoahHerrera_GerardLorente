@@ -16,11 +16,14 @@ import { RankingTorneigListComponent } from './ranking-torneig-list/ranking-torn
 import { RankingParticipantListComponent } from './ranking-participant-list/ranking-participant-list.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EquipListFilterPipe } from './equip-list/equip-list-filter.pipe';
 import { TicketQueixaListFilterPipe } from './ticket-queixa-list/ticket-queixa-list-filter.pipe';
 import { TorneigListFilterPipe } from './torneig-list/torneig-list-filter.pipe';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { CsrfInterceptor } from './interceptors/csrf.interceptor';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { FooterComponent } from './footer/footer.component';
 
@@ -44,6 +47,8 @@ import { FooterComponent } from './footer/footer.component';
     EquipListFilterPipe,
     TicketQueixaListFilterPipe,
     TorneigListFilterPipe,
+    LoginComponent,
+    RegisterComponent,
     FooterComponent
   ],
   imports: [
@@ -54,7 +59,12 @@ import { FooterComponent } from './footer/footer.component';
     ReactiveFormsModule,
     BsDropdownModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CsrfInterceptor, 
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

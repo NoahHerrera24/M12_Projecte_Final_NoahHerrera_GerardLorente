@@ -13,10 +13,13 @@ import { TicketQueixaCreateComponent } from './ticket-queixa-create/ticket-queix
 import { RankingTorneigListComponent } from './ranking-torneig-list/ranking-torneig-list.component';
 import { RankingParticipantListComponent } from './ranking-participant-list/ranking-participant-list.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 export const routes: Routes = [
     { path: 'welcome', component: WelcomeComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
     { path: 'equip-list', component: EquipListComponent },
     { path: 'equip-edit/:id', component: EquipEditComponent },
     { path: 'equip-create', component: EquipCreateComponent },

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Models\User;
 
 Route::get('/user', function (Request $request) {
@@ -24,12 +25,12 @@ Route::post('/login', function (Request $request) {
         return response()->json(['message' => 'Credenciales inválidas'], 401);
     }
 
-    Auth::login($user); // Solo funcionará si usas Sanctum + web middleware correctamente
+    Auth::login($user);
 
     return response()->json(['message' => 'Login correcto', 'user' => $user]);
 });
 
-Route::delete('logout', [ApiController::class, 'logout'])->middleware('auth:sanctum');
+Route::delete('logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth:sanctum');
 
 //// TORNEJOS
 

@@ -21,14 +21,13 @@ class ApiController extends Controller
 
     public function getTornejos()
     {
-        $tornejos = Torneig::all();
-
+        $tornejos = Torneig::with(['equips', 'jugadors'])->get();
         return response()->json($tornejos);
     }
 
     public function getTorneig($id)
     {
-        $torneig = Torneig::find($id);
+        $torneig = Torneig::with(['equips', 'jugadors'])->find($id);
         return response()->json($torneig);
     }
 
@@ -45,6 +44,16 @@ class ApiController extends Controller
         $torneig->data_fi = $request->input('data_fi');
 
         $torneig->save();
+
+        if ($request->has('equips')) {
+            $torneig->equips()->sync($request->input('equips'));
+        }
+    
+        if ($request->has('jugadors')) {
+            $torneig->jugadors()->sync($request->input('jugadors'));
+        }
+    
+        $torneig = Torneig::with(['equips', 'jugadors'])->find($torneig->id);
 
         return response()->json($torneig, 201);
     }
@@ -87,15 +96,33 @@ class ApiController extends Controller
 
         $torneig->save();
 
+        if ($request->has('equips')) {
+            $torneig->equips()->sync($request->input('equips'));
+        }
+    
+        if ($request->has('jugadors')) {
+            $torneig->jugadors()->sync($request->input('jugadors'));
+        }
+    
+        $torneig = Torneig::with(['equips', 'jugadors'])->find($id);
+
         return response()->json($torneig, 200);
     }
 
     public function deleteTorneig($id)
     {
         $torneig = Torneig::find($id);
+
+        if (!$torneig) {
+            return response()->json(['error' => 'Torneig no trobat'], 404);
+        }
+    
+        $torneig->equips()->detach();
+        $torneig->jugadors()->detach();
+
         $torneig->delete();
 
-        return $torneig;
+        return response()->json(['message' => 'Torneig eliminat correctament']);
     }
 
     //// EQUIPS:
