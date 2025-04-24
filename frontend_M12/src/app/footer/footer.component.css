@@ -1,16 +1,13 @@
 .footer {
   display: flex;
-  justify-content: space-around; /* Espaciado uniforme entre las secciones */
-  align-items: center; /* Centra verticalmente los elementos */
+  justify-content: center; /* Centra el contenido horizontalmente */
+  align-items: center; /* Centra el contenido verticalmente */
   padding: 20px;
-  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Degradado estilo gaming */
-  color: #fff;
-  position: relative;
-  width: 100%;
-  bottom: 0;
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
+  color: white;
   text-align: center;
-  box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
-
+  width: 100%;
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); /* Sombra */
 }
 
 .footer-logo .logo {

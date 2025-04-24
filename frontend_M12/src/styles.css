@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+
+
+router-outlet{
+
+width: 100%;
+height: 100%;
+
+}
+app-footer{
+
+margin-top: auto;
+
+}
+
+
+

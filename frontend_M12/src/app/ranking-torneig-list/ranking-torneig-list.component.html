@@ -1,37 +1,52 @@
-<div class="ranking-container">
-  <h2 class="ranking-title">Ranking de Tornejos amb Més Participants</h2>
 
-
-  <!-- Podio -->
-  <div class="podium">
-    <div class="podium-item second">
-      <img src="../assets/plata.png" alt="Medalla Plata" class="podium-image">
-      <h3>#2</h3>
-      <p>{{ rankingTornejos[1]?.nom }}</p>
-      <span>{{ rankingTornejos[1]?.num_participants }} participants</span>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raning Torneig</title>
+</head>
+<body>
+  <div class="ranking-container">
+    <h2 class="ranking-title">Ranking de Tornejos amb Més Participants</h2>
+  
+  
+    <!-- Podio -->
+    <div class="podium">
+      <div class="podium-item second">
+        <img src="../assets/plata.png" alt="Medalla Plata" class="podium-image">
+        <h3>#2</h3>
+        <p>{{ rankingTornejos[1]?.nom }}</p>
+        <span>{{ rankingTornejos[1]?.num_participants }} participants</span>
+      </div>
+      <div class="podium-item first">
+        <img src="../assets/oro.png" alt="Medalla Oro" class="podium-image">
+        <h3>#1</h3>
+        <p>{{ rankingTornejos[0]?.nom }}</p>
+        <span>{{ rankingTornejos[0]?.num_participants }} participants</span>
+      </div>
+      <div class="podium-item third">
+        <img src="../assets/bronce.png" alt="Medalla Bronce" class="podium-image2">
+        <h3>#3</h3>
+        <p>{{ rankingTornejos[2]?.nom }}</p>
+        <span>{{ rankingTornejos[2]?.num_participants }} participants</span>
+      </div>
     </div>
-    <div class="podium-item first">
-      <img src="../assets/oro.png" alt="Medalla Oro" class="podium-image">
-      <h3>#1</h3>
-      <p>{{ rankingTornejos[0]?.nom }}</p>
-      <span>{{ rankingTornejos[0]?.num_participants }} participants</span>
-    </div>
-    <div class="podium-item third">
-      <img src="../assets/bronce.png" alt="Medalla Bronce" class="podium-image2">
-      <h3>#3</h3>
-      <p>{{ rankingTornejos[2]?.nom }}</p>
-      <span>{{ rankingTornejos[2]?.num_participants }} participants</span>
+  
+    <!-- Ranking -->
+    <ul class="ranking-list">
+      <li *ngFor="let torneig of rankingTornejos.slice(3); let i = index">
+        <strong>#{{ i + 4 }} {{ torneig.nom }}</strong> - {{ torneig.num_participants }} participants
+      </li>
+    </ul>
+  
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
     </div>
   </div>
+</body>
 
-  <!-- Ranking -->
-  <ul class="ranking-list">
-    <li *ngFor="let torneig of rankingTornejos.slice(3); let i = index">
-      <strong>#{{ i + 4 }} {{ torneig.nom }}</strong> - {{ torneig.num_participants }} participants
-    </li>
-  </ul>
 
-  <div *ngIf="errorMessage" class="alert alert-danger">
-    {{ errorMessage }}
-  </div>
-</div>
+</html>
+
+

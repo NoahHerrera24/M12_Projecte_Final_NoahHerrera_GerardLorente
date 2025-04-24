@@ -1,12 +1,11 @@
-body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
+
+body{
+
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e) !important; /* Fondo degradado */
+
 
 }
+
 
 .page-container {
   display: flex;
@@ -23,9 +22,9 @@ body, html {
   text-align: center;
   padding: 20px;
   border-radius: 10px;
-  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
+/*   background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); */ /* Fondo degradado */
   color: #fff; /* Texto blanco para contraste */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Sombra para destacar */
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); */ /* Sombra para destacar */ 
   max-width: 400px;
   margin: auto; /* Centrado horizontal */
 }
