@@ -6,9 +6,13 @@
   <title>Document</title>
 </head>
 <body>
+
   <div class="page-container">
     <div class="register-container">
-      <h2>Registre</h2>
+      <div class="title-container">
+        <h2>Registre</h2>
+        <br>
+      </div>
       <form (submit)="register()" enctype="multipart/form-data" class="register-form">
         <input type="text" placeholder="Nombre" [(ngModel)]="user.name" name="name" required>
         <input type="email" placeholder="Email" [(ngModel)]="user.email" name="email" required>

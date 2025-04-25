@@ -1,39 +1,54 @@
-body{
-  margin: 0;
-  padding: 0;
-  height: 100%;
+body {
   display: flex;
-  flex-direction: column;
-  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e) !important; /* Fondo degradado */
+  flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
+  justify-content: flex-start; /* Mantiene el contenido en la parte superior */
+  min-height: 100vh; /* Ocupa toda la altura de la pantalla */
+  text-align: center;
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
+  color: white;
 
 }
 
+.title-container{
 
+  display: flex;
+  align-items: center; /* Alinea el título y la imagen verticalmente */
+  justify-content: center; /* Centra el contenido horizontalmente */
+  margin-top: 7%;
+
+}
 .page-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Asegura que ocupe toda la altura de la pantalla */
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  min-width: 20%;
+  text-align: center;
+  border-radius: 10px;
+  margin-top: 4%;
 }
 
 .login-container {
-  flex: 1; /* Ocupa el espacio disponible */
   display: flex;
   flex-direction: column;
   justify-content: center; /* Centra verticalmente */
   align-items: center; /* Centra horizontalmente */
   text-align: center;
-  padding: 20px;
   border-radius: 10px;
   color: #fff; /* Texto blanco para contraste */
-  max-width: 400px;
+  max-width: 150px;
   margin: auto; /* Centrado horizontal */
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  width: 100%;
+  gap: 25px;
+  width: 30%;
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); /* Sombra */
 }
 
 .login-form label {
@@ -72,11 +87,3 @@ body{
   background-color: #302b63;
 }
 
-footer {
-  background-color: #24243e;
-  color: #fff;
-  text-align: center;
-  padding: 10px 0;
-  margin-top: auto; /* Empuja el footer hacia abajo */
-  width: 100%;
-}

@@ -1,10 +1,12 @@
-body,
-html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
+body {
+   
+    display: flex;
+    flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
+    justify-content: flex-start; /* Mantiene el contenido en la parte superior */
+    min-height: 100vh; /* Ocupa toda la altura de la pantalla */
+    text-align: center;
     background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
+    color: white;
 }
 
 .container {
@@ -14,8 +16,8 @@ html {
     align-items: center;
     min-height: 100vh;
     text-align: center;
-    background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
-    box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); /* Sombra */
+    background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); 
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); 
     border-radius: 10px;
     padding: 20px;
     width: 80%;
@@ -52,9 +54,7 @@ html {
     padding: 20px;
     width: 80%;
     max-width: 600px;
-    background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
     border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); /* Sombra */
 }
 
 .form-group label {

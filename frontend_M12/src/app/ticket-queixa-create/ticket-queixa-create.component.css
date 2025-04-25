@@ -1,10 +1,12 @@
-body,
-html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
+body{
+    
+    display: flex;
+    flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
+    justify-content: flex-start; /* Mantiene el contenido en la parte superior */
+    min-height: 100vh; /* Ocupa toda la altura de la pantalla */
+    text-align: center;
     background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
+    color: white;
 }
 
 .container {
@@ -12,14 +14,13 @@ html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 70vh;
     text-align: center;
     background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
     box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); /* Sombra */
     border-radius: 10px;
-    padding: 20px;
     width: 80%;
-    max-width: 600px;
+    max-width: 500px;
 }
 
 h3 {
@@ -99,7 +100,7 @@ img, video {
 }
 
 .Ticket {
-    width: 55px; /* Ajusta el tamaño de la imagen */
+    width: 60px; /* Ajusta el tamaño de la imagen */
     height: 43px; /* Mantén la proporción de la imagen */
     border: 2px solid rgba(255, 255, 255, 0.8); /* Borde blanco semitransparente */
     background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco semitransparente */
@@ -112,6 +113,7 @@ img, video {
     justify-content: center; /* Centra el contenido horizontalmente */
     gap: 10px; /* Espaciado entre el título y la imagen */
     margin-bottom: 10px; /* Espaciado inferior */
+    margin-top: 20px;
 }
 
 .title {

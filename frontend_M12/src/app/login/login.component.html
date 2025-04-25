@@ -7,10 +7,13 @@
   <link rel="stylesheet" href="login.component.css">
 </head>
 <body>
+ 
   <div class="page-container">
-    <div class="login-container">
-      <h2>Login</h2>
+    
       <form (submit)="login()" class="login-form">
+        <div class="title-container">
+          <h2>Login</h2>
+        </div>
         <label>Email:</label>
         <input type="email" [(ngModel)]="user.email" name="email" required />
     
@@ -20,7 +23,7 @@
         <button type="submit">Ingresar</button>
       </form>
       <p *ngIf="error" style="color: red;">{{ error }}</p>
-    </div>
+    
  
   </div>
 </body>

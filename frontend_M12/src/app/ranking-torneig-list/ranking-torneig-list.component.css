@@ -103,11 +103,11 @@
   text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
-.footer {
-  margin-top: auto; /* Empuja el footer hacia abajo */
+/* .footer {
+  margin-top: auto; 
   padding: 20px;
-  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); 
   color: white;
   text-align: center;
-  box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); /* Sombra */
-}
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); 
+} */

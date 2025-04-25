@@ -1,11 +1,12 @@
-body,
-html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
+body {
+ 
+    display: flex;
+    flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
+    justify-content: flex-start; /* Mantiene el contenido en la parte superior */
+    min-height: 100vh; /* Ocupa toda la altura de la pantalla */
+    text-align: center;
     background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
-}
+    color: white;}
 
 #str{
 
@@ -20,8 +21,7 @@ html {
     align-items: center;
     min-height: 100vh;
     text-align: center;
-    background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
-    box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); /* Sombra */
+   
     border-radius: 10px;
     padding: 20px;
     width: 80%;
@@ -48,7 +48,7 @@ html {
 
 
 .Ticket {
-    width: 55px; /* Ajusta el tamaño de la imagen */
+    width: 60px; /* Ajusta el tamaño de la imagen */
     height: 44px; /* Mantén la proporción de la imagen */
     border: 2px solid rgba(255, 255, 255, 0.8); /* Borde blanco semitransparente */
     background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco semitransparente */
