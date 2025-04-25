@@ -64,6 +64,8 @@ body {
     height: 100%; /* La imagen ocupará toda la altura de la tarjeta */
     object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
     border-right: 2px solid rgba(255, 255, 255, 0.8); /* Línea separadora */
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); /* Sombra */
+
   }
 
 

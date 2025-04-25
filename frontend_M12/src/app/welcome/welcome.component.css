@@ -90,15 +90,15 @@ body, html {
 
 .neon-button-1:hover {
   text-shadow: 
-    0 0 10px #FF5733, 
-    0 0 20px #FF5733, 
-    0 0 30px #FF5733, 
-    0 0 40px #FF5733;
+    0 0 10px #0084ff, 
+    0 0 20px #0084ff, 
+    0 0 30px #0084ff, 
+    0 0 40px #0084ff;
   box-shadow: 
-    0 0 10px #FF5733, 
-    0 0 20px #FF5733, 
-    0 0 30px #FF5733, 
-    0 0 40px #FF5733;
+    0 0 10px #0084ff, 
+    0 0 20px #0084ff, 
+    0 0 30px #0084ff, 
+    0 0 40px #0084ff;
 }
 
 .neon-button-2 {
@@ -109,15 +109,15 @@ body, html {
 
 .neon-button-2:hover {
   text-shadow: 
-    0 0 10px orange, 
-    0 0 20px orange, 
-    0 0 30px orange, 
-    0 0 40px orange;
+    0 0 10px #FF5733, 
+    0 0 20px #FF5733, 
+    0 0 30px #FF5733, 
+    0 0 40px #FF5733;
   box-shadow: 
-    0 0 10px orange, 
-    0 0 20px orange, 
-    0 0 30px orange, 
-    0 0 40px orange;
+    0 0 10px #FF5733, 
+    0 0 20px #FF5733, 
+    0 0 30px #FF5733, 
+    0 0 40px #FF5733;
 }
 
 .neon-button-3 {
