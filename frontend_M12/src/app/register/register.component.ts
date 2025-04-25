@@ -39,11 +39,15 @@ export class RegisterComponent {
       formData.append('foto', this.selectedFile);
     }
   
-    this.authService.register(formData).subscribe(response => {
-      console.log('Usuario registrado', response);
-      this.router.navigate(['/welcome']);
-    }, error => {
-      console.error('Error en el registro', error);
+    this.authService.register(formData).subscribe({
+      next: (response) => {
+        console.log('Usuario registrado', response);
+        this.authService.setLoginState(true);
+        this.router.navigate(['/welcome']);
+      },
+      error: (error) => {
+        console.error('Error en el registro', error);
+      }
     });
   }
   

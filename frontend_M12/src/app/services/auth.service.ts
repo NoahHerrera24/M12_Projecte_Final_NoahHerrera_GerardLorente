@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +41,7 @@ export class AuthService {
   logout(): void {
     this.remove();
     this.setLoginState(false);
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('/welcome');
   }
 
   getUser(): Observable<any> {

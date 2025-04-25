@@ -10,8 +10,15 @@ import { Router } from '@angular/router';
 })
 export class WelcomeComponent {
   titol: string = 'Benvingut a Next-Level Tournament League';
+  isLoggedIn = false;
 
   constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit() {
+    this.authService.isLoggedIn$.subscribe(status => {
+      this.isLoggedIn = status;
+    });
+  }
 
   logout(): void {
     this.authService.logout();

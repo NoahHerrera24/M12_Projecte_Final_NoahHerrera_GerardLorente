@@ -16,10 +16,22 @@
       {{titol}}
     </h1>
     <div class="button-container">
-      <button class="neon-button neon-button-1" [routerLink]="['/login']">Iniciar Sessió</button>
-      <button class="neon-button neon-button-2" [routerLink]="['/register']">Registrar-se</button>
-      <button class="neon-button neon-button-3" (click)="logout()">Tancar Sessió</button>
+      <button 
+        class="neon-button neon-button-1" 
+        [routerLink]="['/login']" 
+        *ngIf="!isLoggedIn">Iniciar Sessió</button>
+    
+      <button 
+        class="neon-button neon-button-2" 
+        [routerLink]="['/register']"
+        *ngIf="!isLoggedIn">Registrar-se</button>
+    
+      <button 
+        class="neon-button neon-button-3" 
+        (click)="logout()"
+        *ngIf="isLoggedIn">Tancar Sessió</button>
     </div>
   </div>
+  
 </body>
 </html>
