@@ -28,6 +28,8 @@ body{
     justify-content: center; /* Centra el contenido horizontalmente */
     gap: 10px; /* Espaciado entre el título y la imagen */
     margin-bottom: 20px; /* Espaciado inferior */
+    margin-top: 2%;
+
 }
 
 .title {

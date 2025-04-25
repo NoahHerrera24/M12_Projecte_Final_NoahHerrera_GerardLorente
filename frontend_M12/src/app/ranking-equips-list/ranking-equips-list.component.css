@@ -1,0 +1,22 @@
+body {
+
+    display: flex;
+    flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
+    justify-content: flex-start; /* Mantiene el contenido en la parte superior */
+    min-height: 100vh; /* Ocupa toda la altura de la pantalla */
+    text-align: center;
+    background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
+    color: white;
+
+
+}
+
+.ranking-title {
+    display: flex;
+    align-items: center; /* Alinea el título y la imagen verticalmente */
+    justify-content: center; /* Centra el contenido horizontalmente */
+    gap: 10px; /* Espaciado entre el título y la imagen */
+    margin-bottom: 20px; /* Espaciado inferior */
+    margin-top: 2%;
+
+}

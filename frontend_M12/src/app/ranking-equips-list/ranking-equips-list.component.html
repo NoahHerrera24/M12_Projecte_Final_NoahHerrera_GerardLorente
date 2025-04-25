@@ -1,4 +1,15 @@
-<h2>Ranking d'Equips amb Mes Victories</h2>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ranking Equips Victories</title>
+</head>
+<body>
+  <h2 class="ranking-title">Ranking d'Equips amb Mes Victories</h2>
+
 <ul>
   <li *ngFor="let equip of rankingEquips; let i = index">
     <strong>#{{ i + 1 }} {{ equip.nom }}</strong> - {{ equip.victories }} victories
@@ -8,3 +19,6 @@
 <div *ngIf="errorMessage" class="alert alert-danger">
   {{ errorMessage }}
 </div>
+</body>
+</html>
+

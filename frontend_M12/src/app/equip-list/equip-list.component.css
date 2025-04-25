@@ -129,9 +129,9 @@ body {
   align-items: center; /* Alinea el título y el input verticalmente */
   gap: 10px; /* Espaciado entre el título y el input */
   margin-bottom: 20px; /* Espaciado inferior */
-  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
   padding: 10px;
   border-radius: 10px; /* Bordes redondeados */
+  margin-left: 21%;
 }
 
 .filter-title {
@@ -157,6 +157,7 @@ body {
   border-color: #00ffcc;
   box-shadow: 0 0 10px #00ffcc;
   outline: none;
+  
 }
 
 .title-container {
@@ -165,6 +166,7 @@ body {
   justify-content: center; /* Centra el contenido horizontalmente */
   gap: 10px; /* Espaciado entre el título y la imagen */
   margin-bottom: 20px; /* Espaciado inferior */
+  margin-top: 2%;
 }
 
 .title {
