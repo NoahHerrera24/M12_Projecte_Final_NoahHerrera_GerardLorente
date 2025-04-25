@@ -4,11 +4,14 @@ html {
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
+  display: flex;
+  flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
+  justify-content: flex-start; /* Mantiene el contenido en la parte superior */
+  min-height: 100vh; /* Ocupa toda la altura de la pantalla */
+  text-align: center;
   background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
+  color: white;
+
 }
 
 .container {
@@ -128,7 +131,6 @@ body {
   background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
   padding: 10px;
   border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0 0 10px rgba(0, 255, 204, 0.5); /* Sombra */
 }
 
 .filter-title {
