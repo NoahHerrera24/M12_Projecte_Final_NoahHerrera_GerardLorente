@@ -38,5 +38,12 @@ export class DadesTornejosService {
     return this._http.get<IUser[]>(`${this.baseUrl}/jugadors`, { observe: 'response' });
   }
 
-}
+  joinTorneig(torneigId: number, userId: number): Observable<any> {
+    return this._http.post(`${this.baseUrl}/torneig/${torneigId}/join`, { user_id: userId });
+  }
 
+  leaveTorneig(torneigId: number, userId: number): Observable<any> {
+    return this._http.post(`${this.baseUrl}/torneig/${torneigId}/leave`, { user_id: userId });
+  }  
+  
+}

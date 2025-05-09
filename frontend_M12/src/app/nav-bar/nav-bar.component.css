@@ -70,7 +70,7 @@
   transition: text-shadow 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
-.navbar img {
+.navbar img:not(:last-child) {
   width: 32px; /* Aumenta el tamaño de las imágenes */
   height: 32px; /* Aumenta el tamaño de las imágenes */
   margin-right: 8px; /* Espaciado entre el logo y el texto */
@@ -79,7 +79,6 @@
   border: 2px solid rgba(255, 255, 255, 0.8); /* Borde blanco semitransparente */
   background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco semitransparente */
   margin-left: 5%;
-
 }
 
 .navbar img:hover {

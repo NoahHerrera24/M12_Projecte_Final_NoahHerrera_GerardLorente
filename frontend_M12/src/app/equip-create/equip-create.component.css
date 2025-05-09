@@ -1,5 +1,4 @@
-body{
-
+body { 
     display: flex;
     flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
     justify-content: flex-start; /* Mantiene el contenido en la parte superior */
@@ -7,9 +6,6 @@ body{
     text-align: center;
     background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
     color: white;
-
-
-
 }
 
 .container {
@@ -29,7 +25,6 @@ body{
     gap: 10px; /* Espaciado entre el título y la imagen */
     margin-bottom: 20px; /* Espaciado inferior */
     margin-top: 2%;
-
 }
 
 .title {

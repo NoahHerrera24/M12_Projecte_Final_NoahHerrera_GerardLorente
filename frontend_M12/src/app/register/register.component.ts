@@ -43,6 +43,7 @@ export class RegisterComponent {
       next: (response) => {
         console.log('Usuario registrado', response);
         this.authService.setLoginState(true);
+        this.authService.setUser(response);
         this.router.navigate(['/welcome']);
       },
       error: (error) => {

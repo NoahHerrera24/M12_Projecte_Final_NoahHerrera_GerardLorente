@@ -1,5 +1,4 @@
 export interface IEquip {
-
     id: number;
     nom: string;
     colors_representatius: string;
@@ -11,8 +10,4 @@ export interface IEquip {
     descripcio: string;
     actiu: boolean;
     guanyador?: boolean;
-
-
 }
-
-

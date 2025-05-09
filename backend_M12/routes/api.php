@@ -44,6 +44,10 @@ Route::post('torneig/{id}', [ApiController::class, 'updateTorneig']);
 
 Route::delete('torneig/delete/{id}', [ApiController::class, 'deleteTorneig']);
 
+Route::post('torneig/{torneigId}/join', [ApiController::class, 'joinTorneig']);
+
+Route::post('torneig/{torneigId}/leave', [ApiController::class, 'leaveTorneig']);
+
 //// EQUIPS
 
 Route::get('equips', [ApiController::class, 'getEquips']);
@@ -63,6 +67,10 @@ Route::get('/equips-with-guanyador', [ApiController::class, 'getEquipsWithGuanya
 Route::post('/equips/{equipId}/tornejos/{torneigId}/assign', [ApiController::class, 'assignTorneigToEquip']);
 
 Route::put('/equips/{equipId}/tornejos/{torneigId}/update-guanyador', [ApiController::class, 'updateGuanyador']);
+
+Route::post('equip/{equipId}/join', [ApiController::class, 'joinEquip']);
+
+Route::post('equip/{equipId}/leave', [ApiController::class, 'leaveEquip']);
 
 //// TICKETS_QUEIXA
 

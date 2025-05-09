@@ -66,14 +66,6 @@ export class TorneigCreateComponent implements OnInit {
       }
     });
   }
-
-  onEquipToggle(equipId: number, isChecked: boolean) {
-    if (isChecked) {
-      this.selectedEquips.push(equipId);
-    } else {
-      this.selectedEquips = this.selectedEquips.filter(id => id !== equipId);
-    }
-  }
   
   onUserToggle(userId: number, isChecked: boolean) {
     if (isChecked) {

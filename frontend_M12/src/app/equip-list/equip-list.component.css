@@ -65,9 +65,7 @@ body {
     object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
     border-right: 2px solid rgba(255, 255, 255, 0.8); /* Línea separadora */
     box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); /* Sombra */
-
   }
-
 
 .card-content {
   padding: 15px;
@@ -157,7 +155,6 @@ body {
   border-color: #00ffcc;
   box-shadow: 0 0 10px #00ffcc;
   outline: none;
-  
 }
 
 .title-container {

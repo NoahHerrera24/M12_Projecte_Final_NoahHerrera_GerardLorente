@@ -10,14 +10,9 @@ class Torneig extends Model
 
     protected $table = 'tornejos';
 
-    public function equips()
-    {
-        return $this->belongsToMany(Equip::class, 'tornejos_equips');
-    }
-
     public function jugadors()
     {
-        return $this->belongsToMany(User::class, 'tornejos_users');
+        return $this->belongsToMany(User::class, 'tornejos_users', 'torneig_id', 'user_id');
     }
 
 }

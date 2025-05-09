@@ -21,13 +21,13 @@ class ApiController extends Controller
 
     public function getTornejos()
     {
-        $tornejos = Torneig::with(['equips', 'jugadors'])->get();
+        $tornejos = Torneig::with(['jugadors.equip'])->get();
         return response()->json($tornejos);
     }
 
     public function getTorneig($id)
     {
-        $torneig = Torneig::with(['equips', 'jugadors'])->find($id);
+        $torneig = Torneig::with(['jugadors'])->find($id);
         return response()->json($torneig);
     }
 
@@ -44,16 +44,12 @@ class ApiController extends Controller
         $torneig->data_fi = $request->input('data_fi');
 
         $torneig->save();
-
-        if ($request->has('equips')) {
-            $torneig->equips()->sync($request->input('equips'));
-        }
     
         if ($request->has('jugadors')) {
             $torneig->jugadors()->sync($request->input('jugadors'));
         }
     
-        $torneig = Torneig::with(['equips', 'jugadors'])->find($torneig->id);
+        $torneig = Torneig::with(['jugadors'])->find($torneig->id);
 
         return response()->json($torneig, 201);
     }
@@ -95,16 +91,12 @@ class ApiController extends Controller
         }
 
         $torneig->save();
-
-        if ($request->has('equips')) {
-            $torneig->equips()->sync($request->input('equips'));
-        }
     
         if ($request->has('jugadors')) {
             $torneig->jugadors()->sync($request->input('jugadors'));
         }
     
-        $torneig = Torneig::with(['equips', 'jugadors'])->find($id);
+        $torneig = Torneig::with(['jugadors'])->find($id);
 
         return response()->json($torneig, 200);
     }
@@ -117,12 +109,74 @@ class ApiController extends Controller
             return response()->json(['error' => 'Torneig no trobat'], 404);
         }
     
-        $torneig->equips()->detach();
         $torneig->jugadors()->detach();
 
         $torneig->delete();
 
         return response()->json(['message' => 'Torneig eliminat correctament']);
+    }
+
+    public function getRankingTornejos()
+    {
+        try {
+            $ranking = DB::table('tornejos')
+                ->select('tornejos.id', 'tornejos.nom', DB::raw('
+                    COALESCE((SELECT COUNT(*) FROM tornejos_users WHERE tornejos_users.torneig_id = tornejos.id), 0)
+                    as total_inscrits
+                '))
+                ->orderByDesc('total_inscrits')
+                ->get();
+
+            return response()->json($ranking);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    
+    public function joinTorneig(Request $request, $torneigId)
+    {
+        $torneig = Torneig::find($torneigId);
+
+        if (!$torneig) {
+            return response()->json(['error' => 'Torneig no trobat'], 404);
+        }
+
+        $user = User::find($request->input('user_id'));
+
+        if (!$user) {
+            return response()->json(['error' => 'Usuari no trobat'], 404);
+        }
+
+        if ($torneig->jugadors()->where('user_id', $user->id)->exists()) {
+            return response()->json(['error' => 'Ja estàs inscrit en aquest torneig'], 400);
+        }
+
+        $torneig->jugadors()->attach($user->id);
+
+        return response()->json(['message' => 'T\'has inscrit correctament al torneig'], 200);
+    }
+
+    public function leaveTorneig(Request $request, $torneigId)
+    {
+        $torneig = Torneig::find($torneigId);
+
+        if (!$torneig) {
+            return response()->json(['error' => 'Torneig no trobat'], 404);
+        }
+
+        $user = User::find($request->input('user_id'));
+
+        if (!$user) {
+            return response()->json(['error' => 'Usuari no trobat'], 404);
+        }
+
+        if (!$torneig->jugadors()->where('user_id', $user->id)->exists()) {
+            return response()->json(['error' => 'No estàs inscrit en aquest torneig'], 400);
+        }
+
+        $torneig->jugadors()->detach($user->id);
+
+        return response()->json(['message' => 'Has sortit del torneig correctament'], 200);
     }
 
     //// EQUIPS:
@@ -293,7 +347,56 @@ class ApiController extends Controller
         return $equip;
     }
 
-    public function getEquipsWithGuanyador()
+    public function joinEquip(Request $request, $equipId)
+    {
+        $equip = Equip::find($equipId);
+
+        if (!$equip) {
+            return response()->json(['error' => 'Equip no trobat'], 404);
+        }
+
+        $user = User::find($request->input('user_id'));
+
+        if (!$user) {
+            return response()->json(['error' => 'Usuari no trobat'], 404);
+        }
+
+        if ($user->equip_id) {
+            return response()->json(['error' => 'Ja estàs associat a un equip'], 400);
+        }
+
+        $user->equip_id = $equipId;
+        $user->save();
+
+        return response()->json(['message' => 'T\'has unit correctament a l\'equip'], 200);
+    }
+
+    public function leaveEquip(Request $request, $equipId)
+    {
+        $equip = Equip::find($equipId);
+
+        if (!$equip) {
+            return response()->json(['error' => 'Equip no trobat'], 404);
+        }
+
+        $user = User::find($request->input('user_id'));
+
+        if (!$user) {
+            return response()->json(['error' => 'Usuari no trobat'], 404);
+        }
+
+        if ($user->equip_id != $equipId) {
+            return response()->json(['error' => 'No estàs en aquest equip'], 400);
+        }
+
+        $user->equip_id = null;
+        $user->save();
+
+        return response()->json(['message' => 'Has sortit de l\'equip correctament'], 200);
+    }
+
+
+    /**public function getEquipsWithGuanyador()
     {
         $equips = Equip::with(['tornejos' => function ($query) {
             $query->select('tornejos.id', 'tornejos.nom', 'tornejos_equips.guanyador');
@@ -330,6 +433,23 @@ class ApiController extends Controller
 
         return response()->json(['message' => 'Guanyador actualitzat amb èxit'], 200);
     }
+
+    public function getRankingEquips() 
+    {
+        try {
+            $ranking = DB::table('equips')
+                ->select('equips.id', 'equips.nom', DB::raw('COUNT(tornejos_equips.id) as victories'))
+                ->join('tornejos_equips', 'equips.id', '=', 'tornejos_equips.equip_id')
+                ->where('tornejos_equips.guanyador', 1) 
+                ->groupBy('equips.id', 'equips.nom')
+                ->orderByDesc('victories')
+                ->get();
+
+            return response()->json($ranking);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }**/
 
     //// TICKETS QUEIXA:
 
@@ -457,22 +577,7 @@ class ApiController extends Controller
         return $ticketQueixa;
     }
 
-    public function getRankingEquips() 
-    {
-        try {
-            $ranking = DB::table('equips')
-                ->select('equips.id', 'equips.nom', DB::raw('COUNT(tornejos_equips.id) as victories'))
-                ->join('tornejos_equips', 'equips.id', '=', 'tornejos_equips.equip_id')
-                ->where('tornejos_equips.guanyador', 1) 
-                ->groupBy('equips.id', 'equips.nom')
-                ->orderByDesc('victories')
-                ->get();
-
-            return response()->json($ranking);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
+    //// USERS:
 
     public function getRankingParticipants()
     {
@@ -490,25 +595,7 @@ class ApiController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
-    }
-
-    public function getRankingTornejos()
-    {
-        try {
-            $ranking = DB::table('tornejos')
-                ->select('tornejos.id', 'tornejos.nom', DB::raw('
-                    COALESCE((SELECT COUNT(*) FROM tornejos_equips WHERE tornejos_equips.torneig_id = tornejos.id), 0) +
-                    COALESCE((SELECT COUNT(*) FROM tornejos_users WHERE tornejos_users.torneig_id = tornejos.id), 0)
-                    as total_inscrits
-                '))
-                ->orderByDesc('total_inscrits')
-                ->get();
-
-            return response()->json($ranking);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }  
+    } 
 
     public function getJugadors()
     {

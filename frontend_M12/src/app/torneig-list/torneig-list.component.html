@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,26 +25,32 @@
           <p><strong>Format:</strong> {{ torneig.format }}</p>
           <p><strong>Data d'Inici:</strong> {{ torneig.data_inici }}</p>
           <p><strong>Data de Fi:</strong> {{ torneig.data_fi }}</p>
-          <p><strong>Equips:</strong></p>
-          <ul>
-            <li *ngFor="let equip of torneig.equips">
-              {{ equip.nom }} 
-            </li>
-          </ul>
           <p><strong>Jugadors:</strong></p>
           <ul>
             <li *ngFor="let user of torneig.jugadors">
-              {{ user.name }} 
+              {{ user.name }} ({{ user.equip?.nom }})
             </li>
           </ul>
         </div>
         <div class="torneig-actions">
-          <button [routerLink]="['/torneig-edit', torneig.id]" class="btn neon-button">Editar</button>
-          <button (click)="deleteTorneig(torneig.id)" class="btn neon-button-danger">Eliminar</button>
+          <button *ngIf="isLoggedIn && user?.role === 'administrador'" 
+                  [routerLink]="['/torneig-edit', torneig.id]" 
+                  class="btn neon-button">Editar</button>
+
+          <button *ngIf="isLoggedIn && user?.role === 'administrador'" 
+                  (click)="deleteTorneig(torneig.id)" 
+                  class="btn neon-button-danger">Eliminar</button>
+
+          <button *ngIf="isLoggedIn && user?.role === 'participant' && !isJoined(torneig.id)" 
+                  (click)="joinTorneig(torneig.id)"
+                  class="btn neon-button">Unir-se</button>          
+
+          <button *ngIf="isLoggedIn && user?.role === 'participant' && isJoined(torneig.id)" 
+                  (click)="leaveTorneig(torneig.id)" 
+                  class="btn neon-button-danger">Sortir-se</button>                             
         </div>
       </div>
     </div>
   </div>
 </body>
 </html>
-

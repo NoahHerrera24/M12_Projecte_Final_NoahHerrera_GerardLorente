@@ -33,4 +33,12 @@ export class DadesEquipsService {
     return this._http.post<any>(`${this.baseUrl}/equip/create`, dada, { observe: 'response' });
   }
 
+  joinEquip(equipId: number, userId: number): Observable<any> {
+    return this._http.post(`${this.baseUrl}/equip/${equipId}/join`, { user_id: userId });
+  }
+  
+  leaveEquip(equipId: number, userId: number): Observable<any> {
+    return this._http.post(`${this.baseUrl}/equip/${equipId}/leave`, { user_id: userId });
+  }  
+
 }

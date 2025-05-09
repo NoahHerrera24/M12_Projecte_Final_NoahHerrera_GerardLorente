@@ -44,20 +44,26 @@
             <p><strong>Actiu:</strong> {{ equip.actiu ? 'Actiu' : 'No Actiu' }}</p>
             <p><strong>Guanyador:</strong> {{ equip.guanyador ? 'Guanyador' : 'No Guanyador' }}</p>
             <div class="card-actions">
-              <a [routerLink]="['/equip-edit', equip.id]" class="btn neon-button">Editar</a>
-              <a (click)="deleteEquip(equip.id)" class="btn neon-button-danger">Eliminar</a>
+              <a *ngIf="isLoggedIn && user?.role === 'administrador'" 
+                 [routerLink]="['/equip-edit', equip.id]" 
+                 class="btn neon-button">Editar</a>
+
+              <a *ngIf="isLoggedIn && user?.role === 'administrador'" 
+                 (click)="deleteEquip(equip.id)" 
+                 class="btn neon-button-danger">Eliminar</a>
+
+              <a *ngIf="isLoggedIn && user?.role === 'participant' && (!user?.equip || user?.equip?.id !== equip.id)"
+                (click)="joinEquip(equip.id)" 
+                class="btn neon-button">Unir-se</a>
+
+              <a *ngIf="isLoggedIn && user?.role === 'participant' && user?.equip?.id === equip.id"
+                (click)="leaveEquip(equip.id)" 
+                class="btn neon-button-danger">Sortir-se</a>           
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  
-
 </body>
 </html>
-
-
-
-
