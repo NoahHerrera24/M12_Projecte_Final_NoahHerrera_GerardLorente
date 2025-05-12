@@ -12,6 +12,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/register', [RegisteredUserController::class, 'store']);
+Route::post('/check-email', [AuthenticatedSessionController::class, 'checkEmail']);
 
 Route::post('/login', function (Request $request) {
     $request->validate([

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DadesTicketsQueixaService } from '../services/dades-tickets-queixa.service';
 
@@ -32,8 +32,8 @@ export class TicketQueixaCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.myForm = this.formBuilder.group({
-      descripcio: [null],
-      proves: [null],
+      descripcio: [null, Validators.required],
+      proves: [null, Validators.required],
       estat: [{ value: 'Ticket de Queixa inicialitzat', disabled: true }]
     });
   }
@@ -45,7 +45,7 @@ export class TicketQueixaCreateComponent implements OnInit {
       this.fotoPreview = URL.createObjectURL(file);
     }
   }
-  
+
   onVideoChange(event: any): void {
     const file = event.target.files[0];
     if (file) {
@@ -63,13 +63,27 @@ export class TicketQueixaCreateComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if (this.myForm.invalid) {
+      this.errorMessage = 'Si us plau, completa tots els camps obligatoris.';
+      return;
+    }
+    if (!this.fotoFile && !this.videoFile) {
+      this.errorMessage = 'Has de pujar almenys una imatge o un vídeo.';
+      return;
+    }
+
     const formData = new FormData();
     formData.append('descripcio', this.myForm.get('descripcio')?.value);
     formData.append('estat', 'Ticket de Queixa inicialitzat');
-  
-    if (this.fotoFile) formData.append('foto', this.fotoFile);
-    if (this.videoFile) formData.append('video', this.videoFile);
-  
+
+    if (this.fotoFile) {
+      formData.append('foto', this.fotoFile);
+    }
+
+    if (this.videoFile) {
+      formData.append('video', this.videoFile);
+    }
+
     this.ticketQueixaService.createTicketQueixa(formData).subscribe({
       next: () => this.router.navigate(['/ticket-queixa-list']),
       error: (error) => {

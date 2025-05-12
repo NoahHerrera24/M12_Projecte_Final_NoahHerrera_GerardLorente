@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('idioma_equip');
             $table->string('patrocinadors');
             $table->date('data_fundacio');
-            $table->string('entrenador')->nullable();
-            $table->string('logo')->nullable();
+            $table->string('entrenador');
+            $table->string('logo');
             $table->string('descripcio');
             $table->boolean('actiu')->default(false); // Agregar valor predeterminado
 

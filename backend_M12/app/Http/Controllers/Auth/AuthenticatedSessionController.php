@@ -8,6 +8,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Models\User;
+
 
 class AuthenticatedSessionController extends Controller
 {
@@ -43,4 +45,13 @@ class AuthenticatedSessionController extends Controller
 
     return response()->json(['message' => 'Logout successful']);
     }
+
+    public function checkEmail(Request $request)
+    {
+        $email = $request->input('email');
+        $exists = User::where('email', $email)->exists();
+
+        return response()->json($exists);
+    }
+
 }

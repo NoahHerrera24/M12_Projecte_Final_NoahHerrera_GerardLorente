@@ -8,16 +8,16 @@ import { DadesTicketsQueixaService } from '../services/dades-tickets-queixa.serv
   standalone: false,
   templateUrl: './ticket-queixa-edit.component.html',
   styleUrl: './ticket-queixa-edit.component.css',
-
 })
 export class TicketQueixaEditComponent implements OnInit {
-
   myForm: FormGroup;
   errorMessage: string = '';
   id: string | null | undefined;
   selectedFile: File | null = null;
   fotoActual: string = '';
+  fotoFile: File | null = null; // Definición de fotoFile
   videoFile: File | null = null;
+  videoActual: string = ''; // Definición de videoActual
   videoPreview: string | null = null;
 
   constructor(
@@ -37,33 +37,34 @@ export class TicketQueixaEditComponent implements OnInit {
       foto: [null],
       video: [null],
     });
-  
+
     if (this.id) {
       this.ticketQueixaService.getTicketQueixa(this.id).subscribe({
         next: (data) => {
           this.fotoActual = data.body?.foto || '';
+          this.videoActual = data.body?.video || '';
           this.myForm.patchValue({
             descripcio: data.body?.descripcio || '',
             estat: data.body?.estat || '',
             foto: this.fotoActual,
-            video: data.body?.video || '',
+            video: this.videoActual,
           });
         },
         error: (error) => {
           this.errorMessage = error.message;
           console.error('Error:', error);
-        }
+        },
       });
     }
   }
 
   onFotoChange(event: any): void {
     if (event.target.files.length > 0) {
-      this.selectedFile = event.target.files[0];
-      console.log('Archivo seleccionado:', this.selectedFile); 
+      this.fotoFile = event.target.files[0];
+      console.log('Archivo de foto seleccionado:', this.fotoFile);
 
-      if (this.selectedFile) {
-        this.myForm.patchValue({ foto: this.selectedFile.name });
+      if (this.fotoFile) {
+        this.myForm.patchValue({ foto: this.fotoFile.name });
       }
     }
   }
@@ -73,17 +74,29 @@ export class TicketQueixaEditComponent implements OnInit {
     if (file) {
       this.videoFile = file;
       this.videoPreview = URL.createObjectURL(file);
+      console.log('Archivo de video seleccionado:', this.videoFile);
     }
   }
 
   onSubmit(): void {
+  
+    if (!this.myForm.valid) {
+      this.errorMessage = 'Si us plau, completa tots els camps obligatoris.';
+      return;
+    }
+
+    if (!this.fotoFile && !this.videoFile) {
+      this.errorMessage = 'Has de pujar almenys una imatge o un vídeo.';
+      return;
+    }
+
     if (this.id) {
       const formData = new FormData();
       formData.append('descripcio', this.myForm.get('descripcio')?.value);
       formData.append('estat', this.myForm.get('estat')?.value);
 
-      if (this.selectedFile) {
-        formData.append('foto', this.selectedFile);
+      if (this.fotoFile) {
+        formData.append('foto', this.fotoFile);
       } else {
         formData.append('foto', this.fotoActual);
       }
@@ -91,33 +104,36 @@ export class TicketQueixaEditComponent implements OnInit {
       if (this.videoFile) {
         formData.append('video', this.videoFile);
       } else {
-        formData.append('video', this.myForm.get('video')?.value || '');
+        formData.append('video', this.videoActual);
       }
 
       for (const pair of formData.entries()) {
         console.log(`${pair[0]}: ${pair[1]}`);
-      } 
-  
+      }
+
       this.ticketQueixaService.updateTicketQueixa(this.id, formData).subscribe({
         next: () => {
           this.ticketQueixaService.getTicketQueixa(this.id).subscribe({
             next: (data) => {
               this.fotoActual = data.body?.foto || '';
-              console.log('Imagen actualizada:', this.fotoActual);
-              this.router.navigate(['/ticket-queixa-list']); 
+              this.videoActual = data.body?.video || '';
+              console.log('Datos actualizados:', this.fotoActual, this.videoActual);
+              this.router.navigate(['/ticket-queixa-list']);
             },
             error: (error) => {
-              console.error('Error al obtener los datos actualizados del ticket de queja:', error);
-            }
+              console.error(
+                'Error al obtener los datos actualizados del ticket de queja:',
+                error
+              );
+            },
           });
         },
         error: (error) => {
-          this.errorMessage = 'Error en actualitzar el Ticket de Queixa. Si us plau, torna-ho a intentar.';
+          this.errorMessage =
+            'Error en actualitzar el Ticket de Queixa. Si us plau, torna-ho a intentar.';
           console.error('Error en actualitzar el Ticket de Queixa:', error);
-        }
+        },
       });
-
     }
   }
-
 }

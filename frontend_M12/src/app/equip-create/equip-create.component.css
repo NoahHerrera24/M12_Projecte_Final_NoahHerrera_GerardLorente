@@ -95,3 +95,11 @@ body {
     background: linear-gradient(90deg, #302b63, #24243e, #0f0c29);
     box-shadow: 0 0 20px #00ffcc;
 }
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-left: 10px;
+  box-shadow: red;
+}
+

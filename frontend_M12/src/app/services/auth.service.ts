@@ -55,6 +55,11 @@ export class AuthService {
     this.router.navigateByUrl('/welcome');
   }
 
+  // Método para verificar si el correo ya está registrado
+  checkEmail(email: string): Observable<boolean> {
+    return this.http.post<boolean>(`api/check-email`, { email });
+  }
+
   register(userData: FormData): Observable<any> {
     return this.http.post(`api/register`, userData);
   }

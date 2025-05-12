@@ -29,8 +29,8 @@ export class EquipCreateComponent implements OnInit {
       idioma_equip: [null, Validators.required],
       patrocinadors: [null, Validators.required],
       data_fundacio: [null, Validators.required],
-      entrenador: [null],
-      logo: [null],
+      entrenador: [null, Validators.required],
+      logo: [null, Validators.required],
       descripcio: [null, Validators.required],
       actiu: [false],
     });
@@ -43,6 +43,11 @@ export class EquipCreateComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if (this.myForm.invalid) {
+      this.errorMessage = 'Si us plau, completa tots els camps obligatoris.';
+      return;
+    }
+
     const formData = new FormData();
     formData.append('nom', this.myForm.get('nom')?.value);
     formData.append('colors_representatius', this.myForm.get('colors_representatius')?.value);
@@ -51,7 +56,7 @@ export class EquipCreateComponent implements OnInit {
     formData.append('data_fundacio', this.myForm.get('data_fundacio')?.value);
     formData.append('entrenador', this.myForm.get('entrenador')?.value);
     formData.append('descripcio', this.myForm.get('descripcio')?.value);
-    formData.append('actiu', this.myForm.get('actiu')?.value ? '1' : '0'); // Convertir a '1' o '0'
+    formData.append('actiu', this.myForm.get('actiu')?.value ? '1' : '0');
 
     if (this.selectedFile) {
       formData.append('logo', this.selectedFile);
@@ -62,7 +67,11 @@ export class EquipCreateComponent implements OnInit {
         this.router.navigate(['/equip-list']);
       },
       error: (error) => {
-        this.errorMessage = error.message;
+        if (error.status === 500) {
+          this.errorMessage = 'Hi ha hagut un error al servidor. Si us plau, torna-ho a intentar més tard.';
+        } else {
+          this.errorMessage = 'Error en crear l\'equip. Revisa els camps i torna-ho a intentar.';
+        }
         console.error('Error al crear el equipo:', error);
       }
     });

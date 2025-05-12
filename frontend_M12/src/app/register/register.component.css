@@ -36,7 +36,7 @@ background-color: transparent;
   background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); 
   color: #fff; /* Texto blanco para contraste */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); 
-  max-width: 400px;
+  max-width: 420px;
   margin: auto; /* Centrado horizontal */
   box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); /* Sombra */
 
@@ -85,5 +85,12 @@ background-color: transparent;
 
 .register-form button:hover {
   background-color: #302b63;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-left: 10px;
+  box-shadow: red;
 }
 

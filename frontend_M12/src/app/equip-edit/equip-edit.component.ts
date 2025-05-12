@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DadesEquipsService } from '../services/dades-equips.service';
 
@@ -26,16 +26,17 @@ export class EquipEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     this.id = this.route.snapshot.paramMap.get('id');
     this.myForm = this.fb.group({
-      nom: [null, Validators.required],
-      colors_representatius: [null, Validators.required],
-      idioma_equip: [null, Validators.required],
-      patrocinadors: [null, Validators.required],
-      data_fundacio: [null, Validators.required],
+      nom: [null],
+      colors_representatius: [null],
+      idioma_equip: [null],
+      patrocinadors: [null],
+      data_fundacio: [null],
       entrenador: [null],
       logo: [null],
-      descripcio: [null, Validators.required],
+      descripcio: [null],
       actiu: [false],
       guanyador: [false]
     });
@@ -78,6 +79,7 @@ export class EquipEditComponent implements OnInit {
   }
 
   onSubmit(): void {
+ 
     if (this.id) {
       const formData = new FormData();
       formData.append('nom', this.myForm.get('nom')?.value);

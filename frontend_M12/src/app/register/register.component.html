@@ -12,21 +12,68 @@
       <div class="title-container">
         <h2>Registre</h2>
         <br>
+
       </div>
       <form (submit)="register()" enctype="multipart/form-data" class="register-form">
-        <input type="text" placeholder="Nombre" [(ngModel)]="user.name" name="name" required>
-        <input type="email" placeholder="Email" [(ngModel)]="user.email" name="email" required>
-        <input type="password" placeholder="Contraseña" [(ngModel)]="user.password" name="password" required minlength="8">
-        <input type="password" placeholder="Confirmar Contraseña" [(ngModel)]="user.password_confirmation" name="password_confirmation" required>
-      
-        <select [(ngModel)]="user.role" name="role" required>
-          <option value="participant">Participant</option>
-          <option value="organitzador">Organitzador</option>
-          <option value="administrador">Administrador</option>
-        </select>
-      
-        <input type="file" (change)="onFileSelected($event)" name="foto" accept="image/*">
-      
+        <div class="form-group">
+          <br>
+
+          <input #nameInput="ngModel" type="text" placeholder="Nombre" [(ngModel)]="user.name" name="name" required>
+          <br>
+          <span class="error-message" *ngIf="nameInput.invalid && nameInput.touched">
+            El nombre es obligatorio.
+          </span>
+        </div>
+        <div class="form-group">
+          <input #emailInput="ngModel" type="email" placeholder="Email" [(ngModel)]="user.email" name="email" required>
+          <br>
+          <!-- Error para formato inválido -->
+          <span class="error-message" *ngIf="emailInput.invalid && emailInput.touched">
+            El correo electrónico debe tener un formato válido.
+          </span>
+          <!-- Error para correo ya registrado -->
+          <span class="error-message" *ngIf="emailExists">
+            Este correo ya está registrado. Por favor, usa otro.
+          </span>
+        </div>
+        <div class="form-group">
+          <input #passwordInput="ngModel" type="password" placeholder="Contraseña" [(ngModel)]="user.password" name="password" required minlength="8">
+          <br>
+
+          <span class="error-message" *ngIf="passwordInput.invalid && passwordInput.touched">
+            La contraseña es obligatoria.
+          </span>
+
+          <span class="error-message" *ngIf="user.password && user.password.length < 8 && passwordInput.touched">
+            La contraseña debe tener al menos 8 caracteres.
+          </span>
+        </div>
+        <div class="form-group">
+          <input #passwordConfirmationInput="ngModel" type="password" placeholder="Confirmar Contraseña" [(ngModel)]="user.password_confirmation" name="password_confirmation" required>
+          <br>
+
+          <span class="error-message" *ngIf="passwordConfirmationInput.invalid && passwordConfirmationInput.touched">
+            La confirmación de la contraseña es obligatoria.
+          </span>
+
+          <span class="error-message" *ngIf="user.password !== user.password_confirmation && passwordConfirmationInput.touched">
+            Las contraseñas no coinciden.
+          </span>
+        </div>
+        <div class="form-group">
+          <select #roleInput="ngModel" [(ngModel)]="user.role" name="role" required>
+            <option value="" disabled selected>Selecciona un rol</option>
+            <option value="participant">Participant</option>
+            <option value="organitzador">Organitzador</option>
+            <option value="administrador">Administrador</option>
+          </select>
+          <span class="error-message" *ngIf="roleInput.invalid && roleInput.touched">
+            El rol es obligatorio.
+          </span>
+        </div>
+        <div class="form-group">
+          <input type="file" (change)="onFileSelected($event)" name="foto" accept="image/*">
+        </div>
         <button type="submit">Registrarse</button>
       </form>
     </div>

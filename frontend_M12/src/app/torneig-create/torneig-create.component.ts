@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { DadesTornejosService } from '../services/dades-tornejos.service';
 import { DadesEquipsService } from '../services/dades-equips.service';
@@ -33,13 +33,13 @@ export class TorneigCreateComponent implements OnInit {
 
   ngOnInit() {
     this.myForm = this.formBuilder.group({
-      nom: [null],
-      regles: [null],
-      premis: [null],
-      categoria: [null],
-      format: [null],
-      data_inici: [null],
-      data_fi: [null],
+      nom: [null, Validators.required],
+      regles: [null, Validators.required],
+      premis: [null, Validators.required],
+      categoria: [null, Validators.required],
+      format: [null, Validators.required],
+      data_inici: [null, Validators.required],
+      data_fi: [null, Validators.required],
       equips: [[]],
       jugadors: [[]]
     });
@@ -76,6 +76,10 @@ export class TorneigCreateComponent implements OnInit {
   }
 
   onSubmit(torneig: any) {
+    if (this.myForm.invalid) {
+      this.errorMessage = 'Si us plau, completa tots els camps obligatoris.';
+      return;
+    }
     torneig.equips = this.selectedEquips;
     torneig.jugadors = this.selectedUsers;
   

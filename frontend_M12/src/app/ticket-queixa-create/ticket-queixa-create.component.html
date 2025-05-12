@@ -17,6 +17,9 @@
       <div class="form-group">
         <label for="descripcio">Descripcio:</label>
         <input class="form-control neon-input" formControlName="descripcio" id="descripcio">
+        <span class="error-message" *ngIf="myForm.get('descripcio')?.invalid && myForm.get('descripcio')?.touched">
+          La descripció és obligatòria.
+        </span>
       </div>
       <div class="form-group">
         <label for="foto">Foto:</label>
@@ -27,6 +30,11 @@
         <label for="video">Vídeo:</label>
         <input type="file" class="form-control neon-input" id="video" (change)="onVideoChange($event)" accept="video/*">
         <video *ngIf="videoPreview" [src]="videoPreview" controls class="preview-video"></video>
+      </div>
+      <div class="form-group">
+        <span class="error-message" *ngIf="!fotoFile && !videoFile && errorMessage === 'Has de pujar almenys una imatge o un vídeo.'">
+          {{ errorMessage }}
+        </span>
       </div>
       <div class="form-group">
         <label for="estat">Estat:</label>

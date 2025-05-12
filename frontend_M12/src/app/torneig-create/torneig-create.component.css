@@ -90,3 +90,11 @@ body {
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
     transition: background 0.3s ease, box-shadow 0.3s ease;
 }
+
+.error-message {
+    color: red; /* Aplica el color rojo al texto */
+    font-size: 0.9rem; /* Ajusta el tamaño del texto */
+    margin-top: 5px; /* Espaciado superior */
+    text-shadow: 0 0 5px rgba(255, 0, 0, 0.5); /* Efecto de brillo rojo */
+    font-weight: bold; /* Hace el texto más destacado */
+}

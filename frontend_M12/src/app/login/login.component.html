@@ -9,22 +9,34 @@
 <body>
  
   <div class="page-container">
-    
-      <form (submit)="login()" class="login-form">
-        <div class="title-container">
-          <h2>Login</h2>
-        </div>
-        <label>Email:</label>
-        <input type="email" [(ngModel)]="user.email" name="email" required />
-    
-        <label>Contraseña:</label>
-        <input type="password" [(ngModel)]="user.password" name="password" required />
-    
-        <button type="submit">Ingresar</button>
-      </form>
-      <p *ngIf="error" style="color: red;">{{ error }}</p>
-    
- 
+    <form (submit)="login()" class="login-form">
+      <div class="title-container">
+        <h2>Login</h2>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <br>
+        <input #emailInput="ngModel" type="email" [(ngModel)]="user.email" name="email" id="email" required />
+        <br>
+
+        <span class="error-message" *ngIf="emailInput.invalid && emailInput.touched">
+          El correo electrónico es obligatorio y debe tener un formato válido.
+        </span>
+      </div>
+      <div class="form-group">
+        <label for="password">Contraseña:</label>
+        <br>
+
+        <input #passwordInput="ngModel" type="password" [(ngModel)]="user.password" name="password" id="password" required minlength="8" />
+        <br>
+
+        <span class="error-message" *ngIf="passwordInput.invalid && passwordInput.touched">
+          La contraseña es obligatoria y debe tener al menos 8 caracteres.
+        </span>
+      </div>
+      <button type="submit">Ingresar</button>
+    </form>
+    <p *ngIf="error" style="color: red;">{{ error }}</p>
   </div>
 </body>
 </html>

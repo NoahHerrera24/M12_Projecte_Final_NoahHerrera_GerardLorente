@@ -15,32 +15,52 @@
     <div class="form-group">
       <label for="nom">Nom:</label>
       <input class="form-control neon-input" formControlName="nom" id="nom">
+      <span class="error-message" *ngIf="myForm.get('nom')?.invalid && myForm.get('nom')?.touched">
+        El nom és obligatori.
+      </span>
     </div>
     <div class="form-group">
       <label for="regles">Regles:</label>
       <textarea class="form-control neon-input" formControlName="regles" id="regles"></textarea>
+      <span class="error-message" *ngIf="myForm.get('regles')?.invalid && myForm.get('regles')?.touched">
+        Les regles són obligatòries.
+      </span>
     </div>
     <div class="form-group">
       <label for="premis">Premi:</label>
       <input class="form-control neon-input" formControlName="premis" id="premis">
+      <span class="error-message" *ngIf="myForm.get('premis')?.invalid && myForm.get('premis')?.touched">
+        El premi és obligatori.
+      </span>
     </div>
     <div class="form-group">
       <label for="categoria">Categoria:</label>
       <input class="form-control neon-input" formControlName="categoria" id="categoria">
+      <span class="error-message" *ngIf="myForm.get('categoria')?.invalid && myForm.get('categoria')?.touched">
+        La categoria és obligatòria.
+      </span>
     </div>
     <div class="form-group">
       <label for="format">Format:</label>
       <input class="form-control neon-input" formControlName="format" id="format">
+      <span class="error-message" *ngIf="myForm.get('format')?.invalid && myForm.get('format')?.touched">
+        El format és obligatori.
+      </span>
     </div>
     <div class="form-group">
       <label for="data_inici">Data d'Inici:</label>
       <input type="date" class="form-control neon-input" formControlName="data_inici" id="data_inici">
+      <span class="error-message" *ngIf="myForm.get('data_inici')?.invalid && myForm.get('data_inici')?.touched">
+        La data d'inici és obligatòria.
+      </span>
     </div>
     <div class="form-group">
       <label for="data_fi">Data de Fi:</label>
       <input type="date" class="form-control neon-input" formControlName="data_fi" id="data_fi">
+      <span class="error-message" *ngIf="myForm.get('data_fi')?.invalid && myForm.get('data_fi')?.touched">
+        La data de fi és obligatòria.
+      </span>
     </div>  
-    
     <button type="submit" class="btn neon-button">Enviar</button>
   </form>
 </div>

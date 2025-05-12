@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DadesTornejosService } from '../services/dades-tornejos.service';
 import { DadesEquipsService } from '../services/dades-equips.service';
@@ -110,6 +110,10 @@ export class TorneigEditComponent implements OnInit {
   }    
 
   onSubmit(): void {
+    if (this.myForm.invalid) {
+      this.errorMessage = 'Si us plau, completa tots els camps obligatoris.';
+      return;
+    }
     if (this.id) {
       const formValue = this.myForm.value;
       const payload = {
