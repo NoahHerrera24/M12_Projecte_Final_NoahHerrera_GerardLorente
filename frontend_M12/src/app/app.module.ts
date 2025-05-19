@@ -26,6 +26,7 @@ import { RegisterComponent } from './register/register.component';
 import { CsrfInterceptor } from './interceptors/csrf.interceptor';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { FooterComponent } from './footer/footer.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -49,15 +50,16 @@ import { FooterComponent } from './footer/footer.component';
     TorneigListFilterPipe,
     LoginComponent,
     RegisterComponent,
-    FooterComponent
+    FooterComponent,
+    ForgotPasswordComponent 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule,
+    FormsModule, 
     ReactiveFormsModule,
-    BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot(),
   ],
   providers: [
     {

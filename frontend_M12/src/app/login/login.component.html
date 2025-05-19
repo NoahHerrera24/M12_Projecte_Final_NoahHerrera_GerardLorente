@@ -37,6 +37,13 @@
       <button type="submit">Ingresar</button>
     </form>
     <p *ngIf="error" style="color: red;">{{ error }}</p>
+
+    <!-- Enlace para recuperar contraseña -->
+    <div class="forgot-password-link">
+      <a [routerLink]="['/forgot-password']" class="underline text-sm text-gray-600 hover:text-gray-900">
+        ¿Olvidaste tu contraseña?
+      </a>
+    </div>
   </div>
 </body>
 </html>

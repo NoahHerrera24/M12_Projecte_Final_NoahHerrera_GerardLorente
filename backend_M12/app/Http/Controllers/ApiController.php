@@ -12,6 +12,7 @@ use App\Models\Equip;
 use App\Models\TicketQueixa;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Password;
 
 class ApiController extends Controller
 {
@@ -603,5 +604,19 @@ class ApiController extends Controller
 
         return response()->json($participants);
     }
+/* 
+    public function forgotPassword(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
 
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        if ($status === Password::RESET_LINK_SENT) {
+            return response()->json(['message' => 'Enlace de recuperación enviado.'], 200);
+        }
+
+        return response()->json(['error' => 'No se pudo enviar el enlace de recuperación.'], 400);
+    } */
 }

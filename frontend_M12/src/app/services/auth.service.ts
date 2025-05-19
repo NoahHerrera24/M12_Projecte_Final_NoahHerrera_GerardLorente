@@ -75,5 +75,11 @@ export class AuthService {
   getUserRole(): string | null {
     return this.userSubject.value?.role || null;
   }
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post('/api/forgot-password', { email });
+  }
 
+  changePassword(data: { email: string; password: string; password_confirmation: string; resetToken: string }): Observable<any> {
+    return this.http.post('/api/change-password', data);
+  }
 }

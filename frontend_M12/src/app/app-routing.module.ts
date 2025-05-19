@@ -15,6 +15,7 @@ import { RankingParticipantListComponent } from './ranking-participant-list/rank
 import { WelcomeComponent } from './welcome/welcome.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 export const routes: Routes = [
     { path: 'welcome', component: WelcomeComponent },
@@ -32,6 +33,7 @@ export const routes: Routes = [
     { path: 'ticket-queixa-create', component: TicketQueixaCreateComponent },
     { path: 'ranking-tornejos', component: RankingTorneigListComponent },
     { path: 'ranking-participants', component: RankingParticipantListComponent },
+    { path: 'forgot-password', component: ForgotPasswordComponent },
     { path: '', redirectTo: 'welcome', pathMatch: 'full' },
     { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
 ];
