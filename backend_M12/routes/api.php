@@ -50,6 +50,10 @@ Route::post('torneig/{torneigId}/join', [ApiController::class, 'joinTorneig']);
 
 Route::post('torneig/{torneigId}/leave', [ApiController::class, 'leaveTorneig']);
 
+Route::get('torneig/{id}/participants', [ApiController::class, 'getParticipants']);
+    
+Route::post('torneig/{id}/declare-winner', [ApiController::class, 'declareWinner']);
+
 //// EQUIPS
 
 Route::get('equips', [ApiController::class, 'getEquips']);
@@ -76,7 +80,7 @@ Route::post('equip/{equipId}/leave', [ApiController::class, 'leaveEquip']);
 
 //// TICKETS_QUEIXA
 
-Route::get('tickets-queixa', [ApiController::class, 'getTicketsQueixa']);
+Route::post('tickets-queixa', [ApiController::class, 'getTicketsQueixa']);
 
 Route::get('ticket-queixa/get/{id}', [ApiController::class, 'getTicketQueixa']);
 
@@ -87,6 +91,16 @@ Route::post('ticket-queixa/{id}', [ApiController::class, 'updateTicketQueixa']);
 Route::delete('ticket-queixa/delete/{id}', [ApiController::class, 'deleteTicketQueixa']);
 
 Route::get('ticket-queixa/getimg/{id}', [ApiController::class, 'getTicketQueixaImg']);
+
+Route::get('ticket-queixa/tornejos-user/{userId}', [ApiController::class, 'getTornejosByUser']);
+
+Route::get('ticket-queixa/participants-torneig/{torneigId}/{userId}', [ApiController::class, 'getParticipantsByTorneig']);
+
+Route::get('ticket-queixa/user-culpable/{culpableId}', [ApiController::class, 'getUsuariCulpable']);
+
+Route::put('ticket-queixa/{torneigId}/expulsar/{userId}', [ApiController::class, 'expulsarJugador']);
+
+Route::put('ticket-queixa/{ticketId}/resoldre', [ApiController::class, 'actualitzarEstatQueixa']);
 
 //// RANKINGS
 

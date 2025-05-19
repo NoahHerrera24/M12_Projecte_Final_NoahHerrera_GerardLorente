@@ -17,6 +17,12 @@ return new class extends Migration
             $table->string('foto')->nullable();
             $table->string('video')->nullable();
             $table->string('estat');
+            $table->unsignedBigInteger('torneig_id')->nullable();
+            $table->foreign('torneig_id')->references('id')->on('tornejos')->onDelete('cascade');
+            $table->unsignedBigInteger('culpable_id')->nullable();
+            $table->foreign('culpable_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('usuari_id')->nullable();
+            $table->foreign('usuari_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

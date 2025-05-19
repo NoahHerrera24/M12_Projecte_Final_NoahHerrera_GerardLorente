@@ -12,7 +12,8 @@ class Torneig extends Model
 
     public function jugadors()
     {
-        return $this->belongsToMany(User::class, 'tornejos_users', 'torneig_id', 'user_id');
+        return $this->belongsToMany(User::class, 'tornejos_users', 'torneig_id', 'user_id')
+            ->withPivot('guanyador', 'expulsat');  
     }
 
 }

@@ -6,23 +6,55 @@
   </div>
 
   <div *ngIf="ticketsQueixa.length > 0" class="ticket-list">
-    <div class="ticket-card" *ngFor="let ticketQueixa of ticketsQueixa | ticketQueixaListFilter:listFilter">
+    <div class="ticket-card"
+      *ngFor="let ticketQueixa of ticketsQueixa | ticketQueixaListFilter:listFilter">
       <div class="ticket-header">
         <h3 class="ticket-descripcio">{{ ticketQueixa.descripcio }}</h3>
       </div>
       <div class="ticket-body">
         <div *ngIf="ticketQueixa.foto" class="ticket-image">
-          <img [src]="ticketQueixa.foto" alt="Foto del Ticket">
+          <img
+            [src]="'http://localhost:8000/uploads/imatges/' + ticketQueixa.foto"
+            alt="Foto del Ticket">
         </div>
         <div *ngIf="ticketQueixa.video" class="ticket-video">
-          <video [src]="'http://localhost:8000/uploads/videos/' + ticketQueixa.video" controls></video>
+          <video
+            [src]="'http://localhost:8000/uploads/videos/' + ticketQueixa.video"
+            controls></video>
         </div>
+
         <p><strong>Estat:</strong> {{ ticketQueixa.estat }}</p>
+        <p><strong>Torneig:</strong> {{ getNomTorneig(ticketQueixa.torneig_id)
+          }}</p>
+        <p><strong>Culpable:</strong> {{ ticketQueixa.culpable ?
+          ticketQueixa.culpable.name : 'Desconegut' }}</p>
       </div>
+
       <div class="ticket-actions">
-        <button [routerLink]="['/ticket-queixa-edit', ticketQueixa.id]" class="btn neon-button">Editar</button>
-        <button (click)="deleteTicketQueixa(ticketQueixa.id)" class="btn neon-button-danger">Eliminar</button>
+        <button *ngIf="user.role === 'participant'"
+          [routerLink]="['/ticket-queixa-edit', ticketQueixa.id]"
+          class="btn neon-button">Editar</button>
+        <button *ngIf="user.role === 'participant'"
+          (click)="deleteTicketQueixa(ticketQueixa.id)"
+          class="btn neon-button-danger">Eliminar</button>
+        <button
+          *ngIf="user.role === 'organitzador' && ticketQueixa.estat !== 'Ticket de Queixa Resolt'"
+          (click)="toggleGestionar(ticketQueixa.id)"
+          class="btn neon-button">
+          Gestionar
+        </button>
       </div>
+
+      <div *ngIf="gestionarVisible[ticketQueixa.id]" class="gestionar-box">
+        <br />
+        <p><strong>Acció a Realitzar:</strong></p>
+        <button
+          (click)="expulsarJugador(ticketQueixa, ticketQueixa.torneig_id, ticketQueixa.culpable_id)"
+          class="btn neon-button-danger">Expulsar Jugador</button>
+        <button (click)="descartarQueixa(ticketQueixa)"
+          class="btn neon-button">Descartar Queixa</button>
+      </div>
+      
     </div>
   </div>
 </div>

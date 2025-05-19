@@ -36,6 +36,23 @@
         <label for="estat">Estat:</label>
         <input class="form-control neon-input" formControlName="estat" id="estat" readonly>
       </div>
+
+      <div class="form-group">
+        <label for="tournament">Torneig:</label>
+        <select class="form-control neon-input" id="tournament" formControlName="torneig_id" (change)="onTournamentChange($event)">
+          <option value="">Selecciona un Torneig</option>
+          <option *ngFor="let torneig of tornejos" [value]="torneig.id">{{ torneig.nom }}</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="targetUser">Usuari Culpable:</label>
+        <select class="form-control neon-input" id="targetUser" formControlName="culpable_id" [disabled]="!users.length">
+          <option value="">Selecciona un Usuari</option>
+          <option *ngFor="let usuari of users" [value]="usuari.id">{{ usuari.name }}</option>
+        </select>       
+      </div>
+
       <button type="submit" class="neon-button">Enviar</button>
     </form>
     <div class="alert alert-danger" *ngIf="errorMessage">
@@ -44,7 +61,3 @@
   </div>
 </body>
 </html>
-
-
-
-

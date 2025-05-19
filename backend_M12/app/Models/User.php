@@ -58,4 +58,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Torneig::class, 'tornejos_users', 'user_id', 'torneig_id');
     }
 
+    public function ticketsQueixa()
+    {
+        return $this->hasMany(TicketQueixa::class, 'usuari_id');
+    }
+
 }

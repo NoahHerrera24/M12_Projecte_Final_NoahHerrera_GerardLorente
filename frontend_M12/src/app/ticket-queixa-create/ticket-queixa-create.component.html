@@ -1,53 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Crear Ticket</title>
-</head>
-<body>
-  <div class="title-container">
-    <h3 class="title">Nou Ticket</h3>
-    <img src="../assets/ticket.png" alt="Ticket" class="Ticket">
-
-  </div>
-  <div class="container">
-    
-    <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="form-container">
-      <div class="form-group">
-        <label for="descripcio">Descripcio:</label>
-        <input class="form-control neon-input" formControlName="descripcio" id="descripcio">
-        <span class="error-message" *ngIf="myForm.get('descripcio')?.invalid && myForm.get('descripcio')?.touched">
-          La descripció és obligatòria.
-        </span>
-      </div>
-      <div class="form-group">
-        <label for="foto">Foto:</label>
-        <input type="file" class="form-control neon-input" id="foto" (change)="onFotoChange($event)" accept="image/*">
-        <img *ngIf="fotoPreview" [src]="fotoPreview" alt="Foto" class="preview-image">
-      </div> 
-      <div class="form-group">
-        <label for="video">Vídeo:</label>
-        <input type="file" class="form-control neon-input" id="video" (change)="onVideoChange($event)" accept="video/*">
-        <video *ngIf="videoPreview" [src]="videoPreview" controls class="preview-video"></video>
-      </div>
-      <div class="form-group">
-        <span class="error-message" *ngIf="!fotoFile && !videoFile && errorMessage === 'Has de pujar almenys una imatge o un vídeo.'">
-          {{ errorMessage }}
-        </span>
-      </div>
-      <div class="form-group">
-        <label for="estat">Estat:</label>
-        <input class="form-control neon-input" formControlName="estat" id="estat" [value]="'Ticket de Queixa inicialitzat'" readonly>
-      </div>
-      <button type="submit" class="btn neon-button">Enviar</button>
-    </form>
-  </div>
-  <div class="alert alert-danger" *ngIf="errorMessage">
-    {{ errorMessage }}
-  </div>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Ticket</title>
+  </head>
+  <body>
+    <div class="title-container">
+      <h3 class="title">Nou Ticket</h3>
+      <img src="../assets/ticket.png" alt="Ticket" class="Ticket">
+    </div>
+    <div class="container">
+      <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="form-container">
+        <div class="form-group">
+          <label for="descripcio">Descripcio:</label>
+          <input class="form-control neon-input" formControlName="descripcio"
+            id="descripcio">
+          <span class="error-message"
+            *ngIf="myForm.get('descripcio')?.invalid && myForm.get('descripcio')?.touched">
+            La descripció és obligatòria.
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="foto">Foto:</label>
+          <input type="file" class="form-control neon-input" id="foto"
+            (change)="onFotoChange($event)" accept="image/*">
+          <img *ngIf="fotoPreview" [src]="fotoPreview" alt="Foto"
+            class="preview-image">
+        </div>
+        <div class="form-group">
+          <label for="video">Vídeo:</label>
+          <input type="file" class="form-control neon-input" id="video"
+            (change)="onVideoChange($event)" accept="video/*">
+          <video *ngIf="videoPreview" [src]="videoPreview" controls
+            class="preview-video"></video>
+        </div>
+        <div class="form-group">
+          <span class="error-message"
+            *ngIf="!fotoFile && !videoFile && errorMessage === 'Has de pujar almenys una imatge o un vídeo.'">
+            {{ errorMessage }}
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="estat">Estat:</label>
+          <input class="form-control neon-input" formControlName="estat"
+            id="estat" [value]="'Ticket de Queixa inicialitzat'" readonly>
+        </div>
+        <div class="form-group">
+          <label for="torneig_id">Torneig:</label>
+          <select class="form-control neon-input" formControlName="torneig_id"
+            (change)="onTournamentChange($event)">
+            <option value>Selecciona un Torneig</option>
+            <option *ngFor="let torneig of tornejos" [value]="torneig.id">
+              {{ torneig.nom }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="usuari_destinatari_id">Usuari Culpable:</label>
+          <select class="form-control neon-input"
+            formControlName="usuari_destinatari_id" [disabled]="!users?.length">
+            <option value>Selecciona un Usuari</option>
+            <option *ngFor="let usuari of users || []" [value]="usuari.id">
+              {{ usuari.name }}</option>
+          </select>
+        </div>
+        <button type="submit" class="btn neon-button">Enviar</button>
+      </form>
+    </div>
+    <div class="alert alert-danger" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+  </body>
 </html>
-
-
-

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->boolean('guanyador')->default(false);
+            $table->boolean('expulsat')->default(false);
             $table->timestamps();
         });
     }

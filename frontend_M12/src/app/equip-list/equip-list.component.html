@@ -39,10 +39,9 @@
             <p><strong>Idioma Equip:</strong> {{ equip.idioma_equip }}</p>
             <p><strong>Patrocinadors:</strong> {{ equip.patrocinadors }}</p>
             <p><strong>Data Fundació:</strong> {{ equip.data_fundacio }}</p>
-            <p><strong>Entrenador:</strong> {{ equip.entrenador || 'Sense entrenador' }}</p>
+            <p><strong>Entrenador:</strong> {{ equip.entrenador || 'Sense Entrenador' }}</p>
             <p><strong>Descripció:</strong> {{ equip.descripcio }}</p>
             <p><strong>Actiu:</strong> {{ equip.actiu ? 'Actiu' : 'No Actiu' }}</p>
-            <p><strong>Guanyador:</strong> {{ equip.guanyador ? 'Guanyador' : 'No Guanyador' }}</p>
             <div class="card-actions">
               <a *ngIf="isLoggedIn && user?.role === 'administrador'" 
                  [routerLink]="['/equip-edit', equip.id]" 

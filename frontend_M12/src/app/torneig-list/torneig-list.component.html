@@ -29,6 +29,7 @@
           <ul>
             <li *ngFor="let user of torneig.jugadors">
               {{ user.name }} ({{ user.equip?.nom }})
+              <span *ngIf="user.pivot?.expulsat">- Expulsat</span>
             </li>
           </ul>
         </div>
@@ -41,13 +42,17 @@
                   (click)="deleteTorneig(torneig.id)" 
                   class="btn neon-button-danger">Eliminar</button>
 
-          <button *ngIf="isLoggedIn && user?.role === 'participant' && !isJoined(torneig.id)" 
+          <button *ngIf="isLoggedIn && user?.role === 'participant' && !isJoined(torneig.id) && !isExpulsat(torneig.id)" 
                   (click)="joinTorneig(torneig.id)"
                   class="btn neon-button">Unir-se</button>          
 
           <button *ngIf="isLoggedIn && user?.role === 'participant' && isJoined(torneig.id)" 
                   (click)="leaveTorneig(torneig.id)" 
-                  class="btn neon-button-danger">Sortir-se</button>                             
+                  class="btn neon-button-danger">Sortir-se</button> 
+                  
+          <button *ngIf="isLoggedIn && user?.role === 'organitzador'" 
+                  [routerLink]="['/torneig-declare-winner', torneig.id]"
+                  class="btn neon-button">Declarar Guanyador</button> 
         </div>
       </div>
     </div>

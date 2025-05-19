@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Declarar Guanyador Torneig</title>
+</head>
+<body>
+  <div class="container">
+    <div class="title-container">
+      <h3 class="title">Declarar Guanyador Torneig</h3>
+    </div>
+
+    <div class="participants-container">
+      <div *ngFor="let participant of participants" class="participant-item">
+        <input type="checkbox" class="checkbox-neon" [(ngModel)]="participant.selected" [value]="participant.id" />
+        <span class="participant-name">{{ participant.name }}</span>
+      </div>
+    </div>
+
+    <button (click)="onDeclareWinner()" class="btn neon-button">Declarar Guanyador</button>
+  </div>
+</body>
+</html>

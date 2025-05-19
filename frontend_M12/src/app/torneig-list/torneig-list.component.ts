@@ -94,6 +94,11 @@ export class TorneigListComponent {
    
   isJoined(torneigId: number): boolean {
     return !!(this.user?.tornejos && this.user.tornejos.some(t => t.id === torneigId));
+  }
+  
+  isExpulsat(torneigId: number): boolean {
+    const torneig = this.user?.tornejos?.find(t => t.id === torneigId);
+    return !!(torneig && (torneig as any).pivot && (torneig as any).pivot.expulsat);
   }  
 
   deleteTorneig(id: number): void {

@@ -10,4 +10,7 @@ export interface IUser {
     foto?: string | null;
     equip?: IEquip | null; 
     tornejos?: ITorneig[];
+    pivot?: {
+        expulsat: boolean;
+    };
 }

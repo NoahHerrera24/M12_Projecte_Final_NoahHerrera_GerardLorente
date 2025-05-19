@@ -3,18 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ranking Participants Victories</title>
+  <title>Ranking Participants</title>
 </head>
 <body>
-  <h2 class="ranking-title">Ranking de Participants amb Més Victories</h2>
-  <ul>
-    <li *ngFor="let participant of rankingParticipants; let i = index">
-      <strong>#{{ i + 1 }} {{ participant.name }}</strong> - {{ participant.victories }} victories
-    </li>
-  </ul>
-
-  <div *ngIf="errorMessage" class="alert alert-danger">
-    {{ errorMessage }}
+  <div class="ranking-container">
+    <h2 class="ranking-title">Ranking de Participants amb Més Victories</h2>
+  
+    <!-- Podio -->
+    <div class="podium">
+      <div class="podium-item second">
+        <img src="../assets/plata.png" alt="Medalla Plata" class="podium-image">
+        <h3>#2</h3>
+        <p>{{ rankingParticipants[1]?.name }}</p>
+        <span>{{ rankingParticipants[1]?.victories }} victories</span>
+      </div>
+      <div class="podium-item first">
+        <img src="../assets/oro.png" alt="Medalla Oro" class="podium-image">
+        <h3>#1</h3>
+        <p>{{ rankingParticipants[0]?.name }}</p>
+        <span>{{ rankingParticipants[0]?.victories }} victories</span>
+      </div>
+      <div class="podium-item third">
+        <img src="../assets/bronce.png" alt="Medalla Bronce" class="podium-image2">
+        <h3>#3</h3>
+        <p>{{ rankingParticipants[2]?.name }}</p>
+        <span>{{ rankingParticipants[2]?.victories }} victories</span>
+      </div>
+    </div>
+  
+    <!-- Ranking -->
+    <ul class="ranking-list">
+      <li *ngFor="let participant of rankingParticipants.slice(3); let i = index">
+        <strong>#{{ i + 4 }} {{ participant.name }}</strong> - {{ participant.victories }} victories
+      </li>
+    </ul>
+  
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
   </div>
 </body>
+
 </html>

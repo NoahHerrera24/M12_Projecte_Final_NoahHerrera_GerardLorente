@@ -15,11 +15,16 @@ export class NavBarComponent implements OnInit {
   constructor(private authService: AuthService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-        this.authService.isLoggedIn$.subscribe((loggedIn) => {
-      this.isLoggedIn = loggedIn;
-      if (loggedIn) {
-        this.user = this.authService.getUser();
-      }
+    console.log('NavBarComponent inicializado');
+    this.authService.isLoggedIn$.subscribe(status => {
+      this.isLoggedIn = status;
+      this.cdr.detectChanges();
+    });
+
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+      console.log('Rol del usuario:', this.user?.role); 
+      this.cdr.detectChanges();
     });
   }
 

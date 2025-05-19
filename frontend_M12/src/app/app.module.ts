@@ -26,6 +26,8 @@ import { RegisterComponent } from './register/register.component';
 import { CsrfInterceptor } from './interceptors/csrf.interceptor';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { FooterComponent } from './footer/footer.component';
+import { TorneigDeclareWinnerComponent } from './torneig-declare-winner/torneig-declare-winner.component';
+import { QuiSomComponent } from './qui-som/qui-som.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
@@ -51,6 +53,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     LoginComponent,
     RegisterComponent,
     FooterComponent,
+    TorneigDeclareWinnerComponent,
+    QuiSomComponent,
     ForgotPasswordComponent 
   ],
   imports: [

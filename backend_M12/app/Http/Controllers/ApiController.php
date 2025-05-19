@@ -45,11 +45,11 @@ class ApiController extends Controller
         $torneig->data_fi = $request->input('data_fi');
 
         $torneig->save();
-    
+
         if ($request->has('jugadors')) {
             $torneig->jugadors()->sync($request->input('jugadors'));
         }
-    
+
         $torneig = Torneig::with(['jugadors'])->find($torneig->id);
 
         return response()->json($torneig, 201);
@@ -92,11 +92,11 @@ class ApiController extends Controller
         }
 
         $torneig->save();
-    
+
         if ($request->has('jugadors')) {
             $torneig->jugadors()->sync($request->input('jugadors'));
         }
-    
+
         $torneig = Torneig::with(['jugadors'])->find($id);
 
         return response()->json($torneig, 200);
@@ -109,7 +109,7 @@ class ApiController extends Controller
         if (!$torneig) {
             return response()->json(['error' => 'Torneig no trobat'], 404);
         }
-    
+
         $torneig->jugadors()->detach();
 
         $torneig->delete();
@@ -133,7 +133,7 @@ class ApiController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-    
+
     public function joinTorneig(Request $request, $torneigId)
     {
         $torneig = Torneig::find($torneigId);
@@ -148,11 +148,20 @@ class ApiController extends Controller
             return response()->json(['error' => 'Usuari no trobat'], 404);
         }
 
-        if ($torneig->jugadors()->where('user_id', $user->id)->exists()) {
-            return response()->json(['error' => 'Ja estàs inscrit en aquest torneig'], 400);
+        $relacio = $torneig->jugadors()->where('user_id', $user->id)->first();
+
+        if ($relacio) {
+            if ($relacio->pivot->expulsat) {
+                return response()->json(['error' => 'Has estat expulsat d\'aquest torneig. No pots tornar a inscriure\'t.'], 403);
+            } else {
+                return response()->json(['error' => 'Ja estàs inscrit en aquest torneig'], 400);
+            }
         }
 
-        $torneig->jugadors()->attach($user->id);
+        $torneig->jugadors()->attach($user->id, [
+            'guanyador' => false,
+            'expulsat' => false
+        ]);
 
         return response()->json(['message' => 'T\'has inscrit correctament al torneig'], 200);
     }
@@ -180,6 +189,53 @@ class ApiController extends Controller
         return response()->json(['message' => 'Has sortit del torneig correctament'], 200);
     }
 
+    public function getParticipants(Request $request, $torneigId)
+    {
+        $torneig = Torneig::findOrFail($torneigId);
+
+        $user = User::find($request->input('user_id'));
+
+        if ($user->role !== 'organitzador') {
+            return response()->json(['error' => 'Acció no permesa'], 403);
+        }
+
+        $participants = $torneig->jugadors()->withPivot('expulsat')->get();
+
+        return response()->json($participants);
+    }
+
+    public function declareWinner(Request $request, $torneigId)
+    {
+        $torneig = Torneig::findOrFail($torneigId);
+
+        $user = User::find($request->input('user_id'));
+
+        if ($user->role !== 'organitzador') {
+            return response()->json(['error' => 'Acció no permesa'], 403);
+        }
+
+        $request->validate([
+            'winner_id' => 'required|exists:users,id'
+        ]);
+
+        foreach ($torneig->jugadors as $jugador) {
+            $torneig->jugadors()->updateExistingPivot($jugador->id, ['guanyador' => false]);
+        }
+
+        $torneig->jugadors()->updateExistingPivot($request->winner_id, ['guanyador' => true]);
+
+        return response()->json(['message' => 'Guanyador declarat correctament']);
+    }
+
+    public function getTornejosByUser($userId)
+    {
+        $user = User::findOrFail($userId);
+
+        $tornejos = $user->tornejos()->get();
+
+        return response()->json($tornejos);
+    }
+
     //// EQUIPS:
 
     public function getEquips()
@@ -193,12 +249,6 @@ class ApiController extends Controller
 
         return response()->json($equips);
     }
-
-/*   public function getEquip($id)
-    {
-        $equip = Equip::find($id);
-        return response()->json($equip);
-    } */
 
     public function getEquip($id)
     {
@@ -217,13 +267,13 @@ class ApiController extends Controller
     public function getEquipImg($id)
     {
         $equip = Equip::find($id);
-        
+
         if (!$equip || !$equip->logo) {
             return response()->json(['error' => 'Imagen no encontrada'], 404);
         }
-        
+
         $path = public_path(env('RUTA_IMATGES') . '/' . $equip->logo);
-        
+
         if (file_exists($path)) {
             $headers = ['Content-Type' => mime_content_type($path)];
             return response()->file($path, $headers);
@@ -396,75 +446,52 @@ class ApiController extends Controller
         return response()->json(['message' => 'Has sortit de l\'equip correctament'], 200);
     }
 
-
-    /**public function getEquipsWithGuanyador()
+    public function getRankingEquips()
     {
-        $equips = Equip::with(['tornejos' => function ($query) {
-            $query->select('tornejos.id', 'tornejos.nom', 'tornejos_equips.guanyador');
-        }])->get();
+        $ranking = Equip::with(['users.tornejos'])
+            ->get()
+            ->map(function ($equip) {
+                $victories = 0;
 
-        return response()->json($equips);
+                foreach ($equip->users as $user) {
+                    $victories += $user->tornejos()->wherePivot('guanyador', true)->count();
+                }
+
+                return [
+                    'equip_id' => $equip->id,
+                    'nom' => $equip->nom,
+                    'victories' => $victories
+                ];
+            })
+            ->sortByDesc('victories')
+            ->values()
+            ->all();
+
+        return response()->json($ranking);
     }
-
-    public function assignTorneigToEquip(Request $request, $equipId, $torneigId)
-    {
-        $equip = Equip::find($equipId);
-        $torneig = Torneig::find($torneigId);
-
-        if (!$equip || !$torneig) {
-            return response()->json(['error' => 'Equip o Torneig no trobat'], 404);
-        }
-
-        // Asociar el torneo con el equipo y establecer el valor del campo pivote 'guanyador'
-        $equip->tornejos()->attach($torneigId, ['guanyador' => $request->input('guanyador', false)]);
-
-        return response()->json(['message' => 'Torneig assignat al equip amb èxit'], 200);
-    }
-
-    public function updateGuanyador(Request $request, $equipId, $torneigId)
-    {
-        $equip = Equip::find($equipId);
-
-        if (!$equip) {
-            return response()->json(['error' => 'Equip no trobat'], 404);
-        }
-
-        // Actualizar el valor del campo pivote 'guanyador'
-        $equip->tornejos()->updateExistingPivot($torneigId, ['guanyador' => $request->input('guanyador', false)]);
-
-        return response()->json(['message' => 'Guanyador actualitzat amb èxit'], 200);
-    }
-
-    public function getRankingEquips() 
-    {
-        try {
-            $ranking = DB::table('equips')
-                ->select('equips.id', 'equips.nom', DB::raw('COUNT(tornejos_equips.id) as victories'))
-                ->join('tornejos_equips', 'equips.id', '=', 'tornejos_equips.equip_id')
-                ->where('tornejos_equips.guanyador', 1) 
-                ->groupBy('equips.id', 'equips.nom')
-                ->orderByDesc('victories')
-                ->get();
-
-            return response()->json($ranking);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }**/
 
     //// TICKETS QUEIXA:
 
-    public function getTicketsQueixa()
+    public function getTicketsQueixa(Request $request)
     {
-        $ticketsQueixa = TicketQueixa::all();
+        $user = User::find($request->input('user_id'));
 
-        foreach ($ticketsQueixa as $ticketQueixa) {
-            $ticketQueixa->foto = url('/api/ticket-queixa/getimg/' . $ticketQueixa->id);
+        if (!$user) {
+            return response()->json(['error' => 'Usuari no autenticat'], 401);
         }
 
-        return response()->json($ticketsQueixa);
-    }
+        if ($user->role === 'organitzador') {
+            $tickets = TicketQueixa::with(['creador', 'culpable'])->get();
+        } else if ($user->role === 'participant') {
+            $tickets = TicketQueixa::with(['creador', 'culpable'])
+                ->where('usuari_id', $user->id)
+                ->get();
+        } else {
+            return response()->json(['error' => 'Rol no autoritzat'], 403);
+        }
 
+        return response()->json($tickets);
+    }
 
     public function getTicketQueixa($id)
     {
@@ -482,13 +509,13 @@ class ApiController extends Controller
     public function getTicketQueixaImg($id)
     {
         $ticketQueixa = TicketQueixa::find($id);
-        
+
         if (!$ticketQueixa || !$ticketQueixa->foto) {
             return response()->json(['error' => 'Imagen no encontrada'], 404);
         }
-        
+
         $path = public_path(env('RUTA_IMATGES') . '/' . $ticketQueixa->foto);
-        
+
         if (file_exists($path)) {
             $headers = ['Content-Type' => mime_content_type($path)];
             return response()->file($path, $headers);
@@ -499,35 +526,39 @@ class ApiController extends Controller
 
     public function createTicketQueixa(Request $request)
     {
-    if (!$request->hasFile('foto') && !$request->hasFile('video')) {
-        return response()->json(['error' => 'Has de pujar almenys una imatge o un vídeo.'], 422);
-    }
+        if (!$request->hasFile('foto') && !$request->hasFile('video')) {
+            return response()->json(['error' => 'Has de pujar almenys una imatge o un vídeo.'], 422);
+        }
 
-    $ticketQueixa = new TicketQueixa();
-    $ticketQueixa->descripcio = $request->input('descripcio');
-    $ticketQueixa->estat = $request->input('estat');
+        $ticketQueixa = new TicketQueixa();
+        $ticketQueixa->descripcio = $request->input('descripcio');
+        $ticketQueixa->estat = $request->input('estat');
+        $ticketQueixa->torneig_id = $request->input('torneig_id');
+        $ticketQueixa->culpable_id = $request->input('culpable_id');
 
-    if ($request->file('foto')) {
-        $file = $request->file('foto');
-        $idAleatori = uniqid();
-        $extensio = $file->getClientOriginalExtension();
-        $filename = "foto_{$idAleatori}.{$extensio}";
-        $file->move(public_path(env('RUTA_IMATGES')), $filename);
-        $ticketQueixa->foto = $filename;
-    }
+        if ($request->file('foto')) {
+            $file = $request->file('foto');
+            $idAleatori = uniqid();
+            $extensio = $file->getClientOriginalExtension();
+            $filename = "foto_{$idAleatori}.{$extensio}";
+            $file->move(public_path(env('RUTA_IMATGES')), $filename);
+            $ticketQueixa->foto = $filename;
+        }
 
-    if ($request->file('video')) {
-        $file = $request->file('video');
-        $idAleatori = uniqid();
-        $extensio = $file->getClientOriginalExtension();
-        $filename = "video_{$idAleatori}.{$extensio}";
-        $file->move(public_path(env('RUTA_VIDEOS')), $filename);
-        $ticketQueixa->video = $filename;
-    }
+        if ($request->file('video')) {
+            $file = $request->file('video');
+            $idAleatori = uniqid();
+            $extensio = $file->getClientOriginalExtension();
+            $filename = "video_{$idAleatori}.{$extensio}";
+            $file->move(public_path(env('RUTA_VIDEOS')), $filename);
+            $ticketQueixa->video = $filename;
+        }
 
-    $ticketQueixa->save();
+        $ticketQueixa->usuari_id = $request->input('user_id');
 
-    return response()->json($ticketQueixa, 201);
+        $ticketQueixa->save();
+
+        return response()->json($ticketQueixa, 201);
     }
 
     public function updateTicketQueixa(Request $request, $id)
@@ -544,6 +575,14 @@ class ApiController extends Controller
 
         if ($request->has('estat')) {
             $ticketQueixa->estat = $request->input('estat');
+        }
+
+        if ($request->has('torneig_id')) {
+            $ticketQueixa->torneig_id = $request->input('torneig_id');
+        }
+
+        if ($request->has('culpable_id')) {
+            $ticketQueixa->culpable_id = $request->input('culpable_id');
         }
 
         if ($request->file('foto')) {
@@ -578,6 +617,24 @@ class ApiController extends Controller
         return $ticketQueixa;
     }
 
+    public function expulsarJugador($torneigId, $userId)
+    {
+        $torneig = Torneig::findOrFail($torneigId);
+
+        $torneig->jugadors()->updateExistingPivot($userId, ['expulsat' => true]);
+
+        return response()->json(['message' => 'Jugador Expulsat Correctament.']);
+    }
+
+    public function actualitzarEstatQueixa($ticketId)
+    {
+        $ticket = TicketQueixa::findOrFail($ticketId);
+        $ticket->estat = 'Ticket de Queixa Resolt';
+        $ticket->save();
+
+        return response()->json(['message' => 'Estat del Ticket actualitzat correctament.']);
+    }
+
     //// USERS:
 
     public function getRankingParticipants()
@@ -586,8 +643,8 @@ class ApiController extends Controller
             $ranking = DB::table('users')
                 ->select('users.id', 'users.name', DB::raw('COUNT(tornejos_users.id) as victories'))
                 ->join('tornejos_users', 'users.id', '=', 'tornejos_users.user_id')
-                ->where('tornejos_users.guanyador', 1) 
-                ->where('users.role', 'participant') 
+                ->where('tornejos_users.guanyador', 1)
+                ->where('users.role', 'participant')
                 ->groupBy('users.id', 'users.name')
                 ->orderByDesc('victories')
                 ->get();
@@ -596,7 +653,7 @@ class ApiController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
-    } 
+    }
 
     public function getJugadors()
     {
@@ -604,19 +661,5 @@ class ApiController extends Controller
 
         return response()->json($participants);
     }
-/* 
-    public function forgotPassword(Request $request)
-    {
-        $request->validate(['email' => 'required|email']);
 
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
-
-        if ($status === Password::RESET_LINK_SENT) {
-            return response()->json(['message' => 'Enlace de recuperación enviado.'], 200);
-        }
-
-        return response()->json(['error' => 'No se pudo enviar el enlace de recuperación.'], 400);
-    } */
 }

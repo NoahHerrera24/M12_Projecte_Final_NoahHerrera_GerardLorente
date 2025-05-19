@@ -38,12 +38,22 @@ export class DadesTornejosService {
     return this._http.get<IUser[]>(`${this.baseUrl}/jugadors`, { observe: 'response' });
   }
 
-  joinTorneig(torneigId: number, userId: number): Observable<any> {
+  public joinTorneig(torneigId: number, userId: number): Observable<any> {
     return this._http.post(`${this.baseUrl}/torneig/${torneigId}/join`, { user_id: userId });
   }
 
-  leaveTorneig(torneigId: number, userId: number): Observable<any> {
+  public leaveTorneig(torneigId: number, userId: number): Observable<any> {
     return this._http.post(`${this.baseUrl}/torneig/${torneigId}/leave`, { user_id: userId });
-  }  
+  }
+  
+  public getParticipants(torneigId: number, userId: number): Observable<any> {
+    return this._http.get(`${this.baseUrl}/torneig/${torneigId}/participants`, {
+      params: { user_id: userId }
+    });
+  }
+  
+  public declareWinner(torneigId: number, winnerId: number, userId: number): Observable<any> {
+    return this._http.post<any>(`${this.baseUrl}/torneig/${torneigId}/declare-winner`, { winner_id: winnerId, user_id: userId });
+  }
   
 }

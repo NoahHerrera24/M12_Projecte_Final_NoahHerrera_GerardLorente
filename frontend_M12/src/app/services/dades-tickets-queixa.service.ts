@@ -13,9 +13,9 @@ export class DadesTicketsQueixaService {
 
   constructor(private _http: HttpClient) { }
 
-  public getTicketsQueixa(): Observable<HttpResponse<ITicketQueixa[]>> {
-    return this._http.get<ITicketQueixa[]>(`${this.baseUrl}/tickets-queixa`, { observe: 'response' });
-  }
+  getTicketsQueixa(userId: number): Observable<HttpResponse<any>> {
+    return this._http.post<any>(`${this.baseUrl}/tickets-queixa`, { user_id: userId }, { observe: 'response' });
+  }   
   
   public updateTicketQueixa(id: any, dada: any): Observable<HttpResponse<any>> {
     return this._http.post<any>(`${this.baseUrl}/ticket-queixa/${id}`, dada, { observe: 'response' });
@@ -33,6 +33,24 @@ export class DadesTicketsQueixaService {
     return this._http.post<any>(`${this.baseUrl}/ticket-queixa/create`, dada, { observe: 'response' });
   }
 
+  public getTornejosByUser(userId: number): Observable<any> {
+    return this._http.get(`${this.baseUrl}/ticket-queixa/tornejos-user/${userId}`, { observe: 'response' });
+  }
+
+  public getParticipantsByTorneig(torneigId: number, userId: number): Observable<any> {
+    return this._http.get(`${this.baseUrl}/ticket-queixa/participants-torneig/${torneigId}/${userId}`, { observe: 'response' });
+  }
+
+  public getUsuariCulpable(id: number): Observable<any> {
+    return this._http.get(`${this.baseUrl}/ticket-queixa/user-culpable/${id}`);
+  }
+  
+  public expulsarJugador(torneigId: number, userId: number) {
+    return this._http.put(`${this.baseUrl}/ticket-queixa/${torneigId}/expulsar/${userId}`, {});
+  }
+  
+  public actualitzarEstatTicketQueixa(ticketId: number) {
+    return this._http.put(`${this.baseUrl}/ticket-queixa/${ticketId}/resoldre`, null, { observe: 'response' });
+  }  
+
 }
-
-

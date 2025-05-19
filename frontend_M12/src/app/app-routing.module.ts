@@ -12,9 +12,11 @@ import { TicketQueixaEditComponent } from './ticket-queixa-edit/ticket-queixa-ed
 import { TicketQueixaCreateComponent } from './ticket-queixa-create/ticket-queixa-create.component';
 import { RankingTorneigListComponent } from './ranking-torneig-list/ranking-torneig-list.component';
 import { RankingParticipantListComponent } from './ranking-participant-list/ranking-participant-list.component';
+import { TorneigDeclareWinnerComponent } from './torneig-declare-winner/torneig-declare-winner.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { QuiSomComponent } from './qui-som/qui-som.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 export const routes: Routes = [
@@ -28,11 +30,13 @@ export const routes: Routes = [
     { path: 'torneig-list', component: TorneigListComponent },
     { path: 'torneig-edit/:id', component: TorneigEditComponent },
     { path: 'torneig-create', component: TorneigCreateComponent },
+    { path: 'torneig-declare-winner/:id', component: TorneigDeclareWinnerComponent },
     { path: 'ticket-queixa-list', component: TicketQueixaListComponent },
     { path: 'ticket-queixa-edit/:id', component: TicketQueixaEditComponent },
     { path: 'ticket-queixa-create', component: TicketQueixaCreateComponent },
     { path: 'ranking-tornejos', component: RankingTorneigListComponent },
     { path: 'ranking-participants', component: RankingParticipantListComponent },
+    { path: 'qui-som', component: QuiSomComponent },
     { path: 'forgot-password', component: ForgotPasswordComponent },
     { path: '', redirectTo: 'welcome', pathMatch: 'full' },
     { path: '**', redirectTo: 'welcome', pathMatch: 'full' }

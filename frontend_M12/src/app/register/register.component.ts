@@ -86,7 +86,6 @@ export class RegisterComponent {
     if (this.selectedFile) {
       formData.append('foto', this.selectedFile);
     }
-
     this.authService.register(formData).subscribe({
       next: (response) => {
         console.log('Usuario registrado', response);
