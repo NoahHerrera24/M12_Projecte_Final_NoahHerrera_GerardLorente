@@ -9,6 +9,7 @@ import { DadesTornejosService } from '../services/dades-tornejos.service';
   templateUrl: './torneig-edit.component.html',
   styleUrls: ['./torneig-edit.component.css']
 })
+
 export class TorneigEditComponent implements OnInit {
   myForm: FormGroup;
   errorMessage: string = '';
@@ -75,4 +76,5 @@ export class TorneigEditComponent implements OnInit {
       });
     }    
   }
+  
 }
