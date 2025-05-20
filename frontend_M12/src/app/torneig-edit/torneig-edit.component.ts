@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DadesTornejosService } from '../services/dades-tornejos.service';
-import { DadesEquipsService } from '../services/dades-equips.service';
-import { IEquip } from '../interfaces/iequip';
-import { IUser } from '../interfaces/iuser';
-import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-torneig-edit',
@@ -16,13 +12,10 @@ import { HttpResponse } from '@angular/common/http';
 export class TorneigEditComponent implements OnInit {
   myForm: FormGroup;
   errorMessage: string = '';
-  equips: IEquip[] = [];
-  users: IUser[] = [];
   id: string | null | undefined;
 
   constructor(
     private torneigService: DadesTornejosService,
-    private equipsService: DadesEquipsService,
     private router: Router,
     private formBuilder: FormBuilder,
     private ruta: ActivatedRoute
@@ -33,37 +26,13 @@ export class TorneigEditComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.ruta.snapshot.paramMap.get('id');
     this.myForm = this.formBuilder.group({
-      nom: [null],
-      regles: [null],
-      premis: [null],
-      categoria: [null],
-      format: [null],
-      data_inici: [null],
-      data_fi: [null],
-      equips: [[]],
-      users: [[]]
-    });
-
-    this.equipsService.getEquips().subscribe({
-      next: (resp) => {
-        if (resp.body) {
-          this.equips = resp.body;
-        }
-      },
-      error: (err) => {
-        console.error('Error en obtenir les dades dels equips:', err);
-      }
-    });
-
-    this.torneigService.getJugadors().subscribe({
-      next: (resp: HttpResponse<IUser[]>) => {
-        if (resp.body) {
-          this.users = resp.body.filter(user => user.role === 'participant');
-        }
-      },
-      error: (err: any) => {
-        console.error('Error al obtener los datos de los jugadores:', err);
-      }
+      nom: [null, [Validators.required, Validators.maxLength(15)]],
+      regles: [null, [Validators.required, Validators.maxLength(50)]],
+      premis: [null, [Validators.required, Validators.maxLength(15)]],
+      categoria: [null, [Validators.required, Validators.maxLength(15)]],
+      format: [null, [Validators.required, Validators.maxLength(15)]],
+      data_inici: [null, Validators.required],
+      data_fi: [null, Validators.required]
     });
 
     if (this.id) {
@@ -76,9 +45,7 @@ export class TorneigEditComponent implements OnInit {
             categoria: data.body?.categoria || '',
             format: data.body?.format || '',
             data_inici: data.body?.data_inici ? new Date(data.body.data_inici).toISOString().split('T')[0] : '',
-            data_fi: data.body?.data_fi ? new Date(data.body.data_fi).toISOString().split('T')[0] : '',
-            equips: data.body?.equips.map(equip => equip.id) || [],
-            users: data.body?.jugadors.map((user: IUser) => user.id) || []
+            data_fi: data.body?.data_fi ? new Date(data.body.data_fi).toISOString().split('T')[0] : ''
           });
         },
         error: (error) => {
@@ -89,40 +56,15 @@ export class TorneigEditComponent implements OnInit {
     }
   }
 
-  onEquipToggle(equipId: number): void {
-    const equipsControl = this.myForm.get('equips');
-    const currentValue = equipsControl?.value || [];
-    if (currentValue.includes(equipId)) {
-      equipsControl?.setValue(currentValue.filter((id: number) => id !== equipId));
-    } else {
-      equipsControl?.setValue([...currentValue, equipId]);
-    }
-  }  
-  
-  onUserToggle(userId: number): void {
-    const usersControl = this.myForm.get('users');
-    const currentValue = usersControl?.value || [];
-    if (currentValue.includes(userId)) {
-      usersControl?.setValue(currentValue.filter((id: number) => id !== userId));
-    } else {
-      usersControl?.setValue([...currentValue, userId]);
-    }
-  }    
-
   onSubmit(): void {
     if (this.myForm.invalid) {
       this.errorMessage = 'Si us plau, completa tots els camps obligatoris.';
       return;
     }
+
     if (this.id) {
-      const formValue = this.myForm.value;
-      const payload = {
-        ...formValue,
-        jugadors: formValue.users 
-      };
-      delete payload.users;
-  
-      this.torneigService.updateTorneig(this.id, payload).subscribe({
+      const formValue = this.myForm.value;   
+      this.torneigService.updateTorneig(this.id, formValue).subscribe({
         next: () => {
           this.router.navigate(['/torneig-list']);
         },
@@ -131,7 +73,6 @@ export class TorneigEditComponent implements OnInit {
           console.error('Error:', error);
         }
       });
-    }
-  }  
-
+    }    
+  }
 }

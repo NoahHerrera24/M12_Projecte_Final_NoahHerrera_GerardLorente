@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DadesEquipsService } from '../services/dades-equips.service';
 
@@ -26,17 +26,16 @@ export class EquipEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
     this.id = this.route.snapshot.paramMap.get('id');
     this.myForm = this.fb.group({
-      nom: [null],
-      colors_representatius: [null],
-      idioma_equip: [null],
-      patrocinadors: [null],
-      data_fundacio: [null],
-      entrenador: [null],
+      nom: [null, [Validators.required, Validators.maxLength(15)]],
+      colors_representatius: [null, [Validators.required, Validators.maxLength(40)]],
+      idioma_equip: [null, [Validators.required, Validators.maxLength(40)]],
+      patrocinadors: [null, [Validators.required, Validators.maxLength(50)]],
+      data_fundacio: [null, Validators.required],
+      entrenador: [null, [Validators.required, Validators.maxLength(15)]],
       logo: [null],
-      descripcio: [null],
+      descripcio: [null, [Validators.required, Validators.maxLength(40)]],
       actiu: [false],
       guanyador: [false]
     });
@@ -69,9 +68,6 @@ export class EquipEditComponent implements OnInit {
   onFileChange(event: any): void {
     if (event.target.files.length > 0) {
       this.selectedFile = event.target.files[0];
-      console.log('Archivo seleccionado:', this.selectedFile); // Verifica el archivo seleccionado
-
-      // Add a null check for selectedFile
       if (this.selectedFile) {
         this.myForm.patchValue({ logo: this.selectedFile.name });
       }
@@ -79,7 +75,11 @@ export class EquipEditComponent implements OnInit {
   }
 
   onSubmit(): void {
- 
+    if (this.myForm.invalid) {
+      this.errorMessage = 'Si us plau, completa tots els camps obligatoris.';
+      return;
+    }
+
     if (this.id) {
       const formData = new FormData();
       formData.append('nom', this.myForm.get('nom')?.value);
@@ -97,22 +97,15 @@ export class EquipEditComponent implements OnInit {
         formData.append('logo', this.imatgeActual);
       }
 
-      // Verifica el contenido de FormData
-      for (const pair of formData.entries()) {
-        console.log(`${pair[0]}: ${pair[1]}`);
-      }
-
       this.dadesEquipsService.updateEquip(this.id, formData).subscribe({
         next: () => {
-          // Realiza una petición adicional para obtener los datos actualizados del equipo
-          this.dadesEquipsService.getEquip(this.id).subscribe({
+          this.dadesEquipsService.getEquip(this.id!).subscribe({
             next: (data) => {
-              this.imatgeActual = data.body?.logo || ''; // Actualiza la imagen actual
-              console.log('Imagen actualizada:', this.imatgeActual);
-              this.router.navigate(['/equip-list']); // Navega después de actualizar
+              this.imatgeActual = data.body?.logo || '';
+              this.router.navigate(['/equip-list']);
             },
             error: (error) => {
-              console.error('Error al obtener los datos actualizados del equipo:', error);
+              console.error('Error al obtenir els dades actualitzats del equip:', error);
             }
           });
         },

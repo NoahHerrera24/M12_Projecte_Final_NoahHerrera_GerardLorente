@@ -662,4 +662,15 @@ class ApiController extends Controller
         return response()->json($participants);
     }
 
+    public function getParticipantsByTorneig($torneigId, $userId)
+    {
+        $torneig = Torneig::findOrFail($torneigId);
+
+        $participants = $torneig->jugadors()
+            ->where('users.id', '!=', $userId)
+            ->get();
+
+        return response()->json($participants);
+    }
+
 }

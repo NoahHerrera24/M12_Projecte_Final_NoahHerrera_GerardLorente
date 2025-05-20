@@ -28,9 +28,9 @@ body {
 
 .torneig-list {
   display: flex;
-  flex-wrap: wrap; /* Permite que las tarjetas se ajusten en varias filas */
-  gap: 20px; /* Espaciado entre las tarjetas */
-  justify-content: center; /* Centra las tarjetas horizontalmente */
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
 
 .torneig-card {
@@ -39,12 +39,15 @@ body {
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); /* Sombra */
   padding: 15px;
-  width: 300px; /* Ancho fijo para las tarjetas */
+  min-width: 220px;      /* ancho mínimo */
+  max-width: 100%;       /* permite crecer hasta el 100% del contenedor */
+  width: auto;           /* elimina el ancho fijo */
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  word-break: break-word; /* para evitar desbordamiento de texto largo */
 }
 
 .torneig-card:hover {

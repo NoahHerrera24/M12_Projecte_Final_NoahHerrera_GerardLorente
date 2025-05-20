@@ -34,9 +34,15 @@ body {
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); /* Sombra */
   overflow: hidden;
-  width: calc(30% - 20px); /* Ajusta el ancho para que quepan dos tarjetas por fila */
+  min-width: 220px;      /* ancho mínimo */
+  max-width: 100%;       /* permite crecer hasta el 100% del contenedor */
+  width: auto;           /* elimina el ancho fijo */
+  padding: 15px;
   margin-bottom: 20px; /* Espaciado inferior entre tarjetas */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  word-break: break-word; /* para evitar desbordamiento de texto largo */
+/*     width: calc(30% - 20px); 
+ */
 }
 
 .card-header {
@@ -60,7 +66,7 @@ body {
 }
 
 .card-image {
-    width: 30%; /* Ancho fijo para la imagen */
+    width: 35%; /* Ancho fijo para la imagen */
     height: 100%; /* La imagen ocupará toda la altura de la tarjeta */
     object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
     border-right: 2px solid rgba(255, 255, 255, 0.8); /* Línea separadora */
@@ -71,6 +77,8 @@ body {
   padding: 15px;
   text-align: left; /* Alinea el texto a la izquierda */
   flex: 1; /* Permite que el contenido ocupe el espacio restante */
+  width: 100%;
+  word-break: break-word;
 }
 
 .card-details {

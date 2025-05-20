@@ -1,15 +1,20 @@
-
 .ticket-container {
-display: flex;
-flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
-justify-content: flex-start; /* Mantiene el contenido en la parte superior */
-min-height: 100vh; /* Ocupa toda la altura de la pantalla */
-text-align: center;
-background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
-color: white;
-padding: 20px;
-box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); /* Sombra */
+  display: flex;
+  flex-direction: column;
+  /* Asegura que los elementos se apilen verticalmente */
+  justify-content: flex-start;
+  /* Mantiene el contenido en la parte superior */
+  min-height: 100vh;
+  /* Ocupa toda la altura de la pantalla */
+  text-align: center;
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
+  /* Fondo degradado */
+  color: white;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+  /* Sombra */
 }
+
 .ticket-title {
   font-size: 2rem;
   font-weight: bold;
@@ -19,28 +24,42 @@ box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); /* Sombra */
 
 .ticket-list {
   display: flex;
-  flex-wrap: wrap; /* Permite que las tarjetas se ajusten en varias filas */
-  gap: 20px; /* Espaciado entre las tarjetas */
-  justify-content: center; /* Centra las tarjetas horizontalmente */
+  flex-wrap: wrap;
+  /* Permite que las tarjetas se ajusten en varias filas */
+  gap: 20px;
+  /* Espaciado entre las tarjetas */
+  justify-content: center;
+  /* Centra las tarjetas horizontalmente */
 }
 
 .ticket-card {
-  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e); /* Fondo degradado */
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
+  /* Fondo degradado */
   color: white;
   border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); /* Sombra */
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+  /* Sombra */
   padding: 15px;
-  width: 300px; /* Ancho fijo para las tarjetas */
+  min-width: 220px;
+  /* ancho mínimo */
+  max-width: 100%;
+  /* permite crecer hasta el 100% del contenedor */
+  width: auto;
+  /* elimina el ancho fijo */
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  word-break: break-word;
+  /* para evitar desbordamiento de texto largo */
 }
 
 .ticket-card:hover {
-  transform: scale(1.05); /* Efecto de zoom al pasar el ratón */
-  box-shadow: 0 0 30px rgba(0, 255, 204, 0.8); /* Sombra más intensa */
+  transform: scale(1.05);
+  /* Efecto de zoom al pasar el ratón */
+  box-shadow: 0 0 30px rgba(0, 255, 204, 0.8);
+  /* Sombra más intensa */
 }
 
 .ticket-header {
@@ -73,7 +92,8 @@ box-shadow: 0 0 20px rgba(0, 255, 204, 0.5); /* Sombra */
 
 .ticket-actions {
   display: flex;
-  gap: 10px; /* Espaciado entre los botones */
+  gap: 10px;
+  /* Espaciado entre los botones */
   justify-content: center;
 }
 

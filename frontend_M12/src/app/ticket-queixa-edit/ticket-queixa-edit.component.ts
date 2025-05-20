@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DadesTicketsQueixaService } from '../services/dades-tickets-queixa.service';
 import { AuthService } from '../services/auth.service';
@@ -39,7 +39,7 @@ export class TicketQueixaEditComponent implements OnInit {
     this.user = this.authService.getUser();
     this.id = this.ruta.snapshot.paramMap.get('id');
     this.myForm = this.formBuilder.group({
-      descripcio: [null],
+      descripcio: [null, [Validators.required, Validators.maxLength(30)]],
       estat: [{ value: '', disabled: true }],
       foto: [null],
       video: [null],

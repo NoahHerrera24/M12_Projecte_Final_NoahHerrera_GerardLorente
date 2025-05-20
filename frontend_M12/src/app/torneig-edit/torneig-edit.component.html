@@ -15,37 +15,67 @@
     <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="form-container">
       <div class="form-group">
         <label for="nom">Nom:</label>
-        <input class="form-control neon-input" formControlName="nom" id="nom">
-       
+        <input class="form-control neon-input" formControlName="nom" id="nom" maxlength="15">
+        <span class="error-message" *ngIf="myForm.get('nom')?.invalid && myForm.get('nom')?.touched">
+          El nom és obligatori.
+        </span>
+        <span class="error-message" *ngIf="myForm.get('nom')?.errors?.['maxlength'] && myForm.get('nom')?.touched">
+          El nom no pot superar els 15 caràcters.
+        </span>
       </div>
       <div class="form-group">
         <label for="regles">Regles:</label>
-        <textarea class="form-control neon-input" formControlName="regles" id="regles"></textarea>
-      
+        <textarea class="form-control neon-input" formControlName="regles" id="regles" maxlength="50"></textarea>
+        <span class="error-message" *ngIf="myForm.get('regles')?.invalid && myForm.get('regles')?.touched">
+          Les regles són obligatòries.
+        </span>
+        <span class="error-message" *ngIf="myForm.get('regles')?.errors?.['maxlength'] && myForm.get('regles')?.touched">
+          Les regles no poden superar els 50 caràcters.
+        </span>
       </div>
       <div class="form-group">
         <label for="premis">Premi:</label>
-        <input class="form-control neon-input" formControlName="premis" id="premis">
-       
+        <input class="form-control neon-input" formControlName="premis" id="premis" maxlength="15">
+        <span class="error-message" *ngIf="myForm.get('premis')?.invalid && myForm.get('premis')?.touched">
+          El premi és obligatori.
+        </span>
+        <span class="error-message" *ngIf="myForm.get('premis')?.errors?.['maxlength'] && myForm.get('premis')?.touched">
+          El premi no pot superar els 15 caràcters.
+        </span>
       </div>
       <div class="form-group">
         <label for="categoria">Categoria:</label>
-        <input class="form-control neon-input" formControlName="categoria" id="categoria">
-       
+        <input class="form-control neon-input" formControlName="categoria" id="categoria" maxlength="15">
+        <span class="error-message" *ngIf="myForm.get('categoria')?.invalid && myForm.get('categoria')?.touched">
+          La categoria és obligatòria.
+        </span>
+        <span class="error-message" *ngIf="myForm.get('categoria')?.errors?.['maxlength'] && myForm.get('categoria')?.touched">
+          La categoria no pot superar els 15 caràcters.
+        </span>
       </div>
       <div class="form-group">
         <label for="format">Format:</label>
-        <input class="form-control neon-input" formControlName="format" id="format">
-       
+        <input class="form-control neon-input" formControlName="format" id="format" maxlength="15">
+        <span class="error-message" *ngIf="myForm.get('format')?.invalid && myForm.get('format')?.touched">
+          El format és obligatori.
+        </span>
+        <span class="error-message" *ngIf="myForm.get('format')?.errors?.['maxlength'] && myForm.get('format')?.touched">
+          El format no pot superar els 15 caràcters.
+        </span>
       </div>
       <div class="form-group">
         <label for="data_inici">Data d'Inici:</label>
         <input type="date" class="form-control neon-input" formControlName="data_inici" id="data_inici">
-      
+        <span class="error-message" *ngIf="myForm.get('data_inici')?.invalid && myForm.get('data_inici')?.touched">
+          La data d'inici és obligatòria.
+        </span>
       </div>
       <div class="form-group">
         <label for="data_fi">Data de Fi:</label>
         <input type="date" class="form-control neon-input" formControlName="data_fi" id="data_fi">
+        <span class="error-message" *ngIf="myForm.get('data_fi')?.invalid && myForm.get('data_fi')?.touched">
+          La data de fi és obligatòria.
+        </span>
       </div>             
       <button type="submit" class="neon-button">Guardar</button>
     </form>

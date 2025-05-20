@@ -38,7 +38,7 @@ export class TicketQueixaCreateComponent implements OnInit {
     this.user = this.authService.getUser();
     this.loadTornejos();
     this.myForm = this.formBuilder.group({
-      descripcio: [null, Validators.required],
+      descripcio: [null, [Validators.required, Validators.maxLength(30)]],
       estat: [{ value: 'Ticket de Queixa inicialitzat', disabled: true }],
       torneig_id: ['', Validators.required],
       usuari_destinatari_id: ['', Validators.required]

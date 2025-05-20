@@ -24,14 +24,14 @@ export class EquipCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.myForm = this.fb.group({
-      nom: [null, [Validators.required, Validators.maxLength(15)]],
-      colors_representatius: [null, [Validators.required, Validators.maxLength(40)]],
-      idioma_equip: [null, [Validators.required, Validators.maxLength(40)]],
-      patrocinadors: [null, [Validators.required, Validators.maxLength(50)]],
+      nom: [null, [Validators.required, Validators.maxLength(16)]],
+      colors_representatius: [null, [Validators.required, Validators.maxLength(41)]],
+      idioma_equip: [null, [Validators.required, Validators.maxLength(41)]],
+      patrocinadors: [null, [Validators.required, Validators.maxLength(51)]],
       data_fundacio: [null, Validators.required],
-      entrenador: [null, [Validators.required, Validators.maxLength(15)]],
+      entrenador: [null, [Validators.required, Validators.maxLength(16)]],
       logo: [null, Validators.required],
-      descripcio: [null, Validators.required, Validators.maxLength(40)],
+      descripcio: [null, Validators.required, Validators.maxLength(41)],
       actiu: [false],
     });
   }
