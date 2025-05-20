@@ -18,10 +18,13 @@
         <div class="form-group">
           <br>
 
-          <input #nameInput="ngModel" type="text" placeholder="Nombre" [(ngModel)]="user.name" name="name" required>
+          <input #nameInput="ngModel" type="text" placeholder="Nombre" [(ngModel)]="user.name" name="name" required maxlength="15">
           <br>
           <span class="error-message" *ngIf="nameInput.invalid && nameInput.touched">
             El nombre es obligatorio.
+          </span>
+          <span class="error-message" *ngIf="user.name && user.name.length > 15 && nameInput.touched">
+            El nombre no puede superar los 15 caracteres.
           </span>
         </div>
         <div class="form-group">

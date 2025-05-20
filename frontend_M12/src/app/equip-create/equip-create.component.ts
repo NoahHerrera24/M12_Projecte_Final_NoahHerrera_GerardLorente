@@ -24,26 +24,36 @@ export class EquipCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.myForm = this.fb.group({
-      nom: [null, Validators.required],
-      colors_representatius: [null, Validators.required],
-      idioma_equip: [null, Validators.required],
-      patrocinadors: [null, Validators.required],
+      nom: [null, [Validators.required, Validators.maxLength(15)]],
+      colors_representatius: [null, [Validators.required, Validators.maxLength(40)]],
+      idioma_equip: [null, [Validators.required, Validators.maxLength(40)]],
+      patrocinadors: [null, [Validators.required, Validators.maxLength(50)]],
       data_fundacio: [null, Validators.required],
-      entrenador: [null, Validators.required],
+      entrenador: [null, [Validators.required, Validators.maxLength(15)]],
       logo: [null, Validators.required],
-      descripcio: [null, Validators.required],
+      descripcio: [null, Validators.required, Validators.maxLength(40)],
       actiu: [false],
     });
   }
 
   onFileChange(event: any): void {
-    if (event.target.files.length > 0) {
-      this.selectedFile = event.target.files[0];
+    const file: File = event.target.files[0];
+    if (file) {
+      // Solo aceptar imágenes
+      if (!file.type.startsWith('image/')) {
+        this.errorMessage = 'Només es permeten arxius d\'imatge per al logo.';
+        this.selectedFile = null;
+        this.myForm.get('logo')?.setValue(null);
+        return;
+      }
+      this.selectedFile = file;
+      this.myForm.get('logo')?.setValue(file);
+      this.errorMessage = '';
     }
   }
 
   onSubmit(): void {
-    if (!this.myForm.invalid) {
+    if (this.myForm.invalid) {
       this.errorMessage = 'Si us plau, completa tots els camps obligatoris.';
       return;
     }

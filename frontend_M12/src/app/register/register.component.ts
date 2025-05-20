@@ -61,6 +61,11 @@ export class RegisterComponent {
       return;
     }
 
+    if (this.user.name.length > 15) {
+      this.errorMessage = 'El nombre no puede superar los 15 caracteres.';
+      return;
+    }
+
     if (this.user.password.length < 8) {
       this.errorMessage = 'La contrasenya ha de tenir almenys 8 caràcters.';
       return;

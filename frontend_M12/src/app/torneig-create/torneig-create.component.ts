@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DadesTornejosService } from '../services/dades-tornejos.service';
 import { DadesEquipsService } from '../services/dades-equips.service';
@@ -27,17 +27,16 @@ export class TorneigCreateComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder
   ) {
-    this.myForm = new FormGroup({
-    });
+    this.myForm = new FormGroup({});
   }
 
   ngOnInit() {
     this.myForm = this.formBuilder.group({
-      nom: [null, Validators.required],
-      regles: [null, Validators.required],
-      premis: [null, Validators.required],
-      categoria: [null, Validators.required],
-      format: [null, Validators.required],
+      nom: [null, [Validators.required, Validators.maxLength(15)]],
+      regles: [null, [Validators.required, Validators.maxLength(50)]],
+      premis: [null, [Validators.required, Validators.maxLength(15)]],
+      categoria: [null, [Validators.required, Validators.maxLength(15)]],
+      format: [null, [Validators.required, Validators.maxLength(15)]],
       data_inici: [null, Validators.required],
       data_fi: [null, Validators.required],
       equips: [[]],
@@ -92,5 +91,4 @@ export class TorneigCreateComponent implements OnInit {
       }
     });
   }  
-
 }
