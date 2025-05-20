@@ -10,7 +10,7 @@ import { IUser } from '../interfaces/iuser';
 })
 export class DadesTornejosService {
 
-  private readonly baseUrl: string = 'http://127.0.0.1:8000/api';
+  private readonly baseUrl: string = 'https://m12projectefinalnoahherreragerardlorente-production.up.railway.app/api';
 
   constructor(private _http: HttpClient) { }
 
