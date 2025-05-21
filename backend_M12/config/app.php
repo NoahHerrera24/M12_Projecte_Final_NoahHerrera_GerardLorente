@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://m12-projecte-final-noah-herrera-gerard-lorente.vercel.app'),
 
     /*
     |--------------------------------------------------------------------------

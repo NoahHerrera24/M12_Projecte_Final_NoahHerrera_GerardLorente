@@ -17,7 +17,7 @@ return [
 
     'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', sprintf(
     '%s%s',
-    'localhost,localhost:3000,localhost:4200,127.0.0.1,127.0.0.1:8000,https://m12projectefinalnoahherreragerardlorente-production.up.railway.app,::1',
+    'localhost,https://m12-projecte-final-noah-herrera-gerard-lorente.vercel.app,localhost:3000,localhost:4200,127.0.0.1,127.0.0.1:8000,https://m12projectefinalnoahherreragerardlorente-production.up.railway.app,::1',
             Sanctum::currentApplicationUrlWithPort()
     ))),
 
