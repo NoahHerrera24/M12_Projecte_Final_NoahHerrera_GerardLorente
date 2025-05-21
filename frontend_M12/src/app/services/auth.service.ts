@@ -9,6 +9,8 @@ import { IUser } from '../interfaces/iuser';
   providedIn: 'root'
 })
 export class AuthService {
+  
+  private readonly baseUrl: string = 'https://m12projectefinalnoahherreragerardlorente-production.up.railway.app/api';
 
   constructor(private http: HttpClient, private router: Router) {} 
 
@@ -32,7 +34,7 @@ export class AuthService {
   login(email: string, password: string): Observable<IUser> {
     return this.http.get('/sanctum/csrf-cookie', { withCredentials: true }).pipe(
       switchMap(() =>
-        this.http.post<{ user: IUser }>('api/login', {
+        this.http.post<{ user: IUser }>(`${this.baseUrl}/login`, {
           email: email,
           password: password
         }, { withCredentials: true }).pipe(
@@ -57,11 +59,11 @@ export class AuthService {
 
   // Método para verificar si el correo ya está registrado
   checkEmail(email: string): Observable<boolean> {
-    return this.http.post<boolean>(`api/check-email`, { email });
+    return this.http.post<boolean>(`${this.baseUrl}/check-email`, { email });
   }
 
   register(userData: FormData): Observable<any> {
-    return this.http.post(`api/register`, userData);
+    return this.http.post(`${this.baseUrl}/register`, userData);
   }
 
   setUser(user: IUser): void {
@@ -76,10 +78,10 @@ export class AuthService {
     return this.userSubject.value?.role || null;
   }
   forgotPassword(email: string): Observable<any> {
-    return this.http.post('/api/forgot-password', { email });
+    return this.http.post(`${this.baseUrl}/forgot-password`, { email });
   }
 
   changePassword(data: { email: string; password: string; password_confirmation: string; resetToken: string }): Observable<any> {
-    return this.http.post('/api/change-password', data);
+    return this.http.post(`${this.baseUrl}/change-password`, data);
   }
 }
