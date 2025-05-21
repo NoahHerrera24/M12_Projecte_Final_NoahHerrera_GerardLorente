@@ -11,6 +11,7 @@ import { IUser } from '../interfaces/iuser';
 export class AuthService {
   
   private readonly baseUrl: string = 'https://m12projectefinalnoahherreragerardlorente-production.up.railway.app/api';
+  private readonly baseUrlSanctum: string = 'https://m12projectefinalnoahherreragerardlorente-production.up.railway.app/sanctum';
 
   constructor(private http: HttpClient, private router: Router) {} 
 
@@ -28,11 +29,11 @@ export class AuthService {
   }
 
   getCsrfToken(): Observable<any> {
-    return this.http.get('/sanctum/csrf-cookie', { withCredentials: true });
+    return this.http.get(`${this.baseUrlSanctum}/csrf-cookie`, { withCredentials: true });
   }
   
   login(email: string, password: string): Observable<IUser> {
-    return this.http.get('/sanctum/csrf-cookie', { withCredentials: true }).pipe(
+    return this.http.get(`${this.baseUrlSanctum}/csrf-cookie`, { withCredentials: true }).pipe(
       switchMap(() =>
         this.http.post<{ user: IUser }>(`${this.baseUrl}/login`, {
           email: email,
