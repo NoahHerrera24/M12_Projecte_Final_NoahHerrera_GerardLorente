@@ -62,7 +62,7 @@
         <div class="form-group">
           <label for="usuari_destinatari_id">Usuari Culpable:</label>
           <select class="form-control neon-input"
-            formControlName="usuari_destinatari_id" [disabled]="!users?.length">
+            formControlName="usuari_destinatari_id" [disabled]="!users.length">
             <option value>Selecciona un Usuari</option>
             <option *ngFor="let usuari of users || []" [value]="usuari.id">
               {{ usuari.name }}</option>
