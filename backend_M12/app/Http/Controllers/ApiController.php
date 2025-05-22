@@ -244,9 +244,9 @@ class ApiController extends Controller
 
         foreach ($equips as $equip) {
             if ($equip->logo && Storage::disk('public')->exists($equip->logo)) {
-                $equip->logo_url = asset('storage/' . $equip->logo);
+                $equip->logo = asset('storage/' . $equip->logo);
             } else {
-                $equip->logo_url = null;
+                $equip->logo = null;
             }
         }
 
@@ -262,9 +262,9 @@ class ApiController extends Controller
         }
 
         if ($equip->logo && Storage::disk('public')->exists($equip->logo)) {
-            $equip->logo_url = asset('storage/' . $equip->logo);
+            $equip->logo = asset('storage/' . $equip->logo);
         } else {
-            $equip->logo_url = null;
+            $equip->logo = null;
         }
 
         return response()->json($equip);
@@ -385,6 +385,8 @@ class ApiController extends Controller
 
         $equip->save();
 
+        $equip->logo = $equip->logo ? asset('storage/' . $equip->logo) : null;
+
         return response()->json($equip, 200);
     }
 
@@ -499,7 +501,7 @@ class ApiController extends Controller
             return response()->json(['error' => 'Ticket de Queixa no trobat'], 404);
         }
 
-        $ticketQueixa->foto_url = $ticketQueixa->foto
+        $ticketQueixa->foto = $ticketQueixa->foto
             ? asset('storage/' . $ticketQueixa->foto)
             : null;
 
