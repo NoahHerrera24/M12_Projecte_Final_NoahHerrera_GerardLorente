@@ -246,8 +246,7 @@ class ApiController extends Controller
         foreach ($equips as $equip) {
             // Generar la URL para acceder a la imagen del equipo
             $equip->logo = url('/api/equip/getimg/' . $equip->id);        
-        }
-            
+        }           
 
         return response()->json($equips);
     }
