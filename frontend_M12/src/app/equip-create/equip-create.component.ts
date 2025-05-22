@@ -53,7 +53,7 @@ export class EquipCreateComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (!this.myForm.invalid) {
+    if (this.myForm.invalid) {
       this.errorMessage = 'Si us plau, completa tots els camps obligatoris.';
       return;
     }
