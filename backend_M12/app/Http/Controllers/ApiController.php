@@ -12,6 +12,7 @@ use App\Models\Equip;
 use App\Models\TicketQueixa;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Storage;
 
 class ApiController extends Controller
@@ -243,12 +244,10 @@ class ApiController extends Controller
         $equips = Equip::all();
 
         foreach ($equips as $equip) {
-            if ($equip->logo && Storage::disk('public')->exists($equip->logo)) {
-                $equip->logo = asset('storage/' . $equip->logo);
-            } else {
-                $equip->logo = null;
-            }
+            // Generar la URL para acceder a la imagen del equipo
+            $equip->logo = url('/api/equip/getimg/' . $equip->id);        
         }
+            
 
         return response()->json($equips);
     }
@@ -261,32 +260,29 @@ class ApiController extends Controller
             return response()->json(['error' => 'Equip no trobat'], 404);
         }
 
-        if ($equip->logo && Storage::disk('public')->exists($equip->logo)) {
-            $equip->logo = asset('storage/' . $equip->logo);
-        } else {
-            $equip->logo = null;
-        }
+        // Generar la URL para acceder a la imagen del equipo
+        $equip->logo = url('/api/equip/getimg/' . $equip->id);        
 
         return response()->json($equip);
     }
 
     public function getEquipImg($id)
-    {
-        $equip = Equip::find($id);
+{
+    $equip = Equip::find($id);
 
-        if (!$equip || !$equip->logo) {
-            return response()->json(['error' => 'Imagen no encontrada'], 404);
-        }
+    if (!$equip || !$equip->logo) {
+        return response()->json(['error' => 'Imagen no encontrada'], 404);
+    }
 
-        if (!Storage::disk('public')->exists($equip->logo)) {
-            return response()->json(['error' => 'Imatge no trobada'], 404);
-        }
+    $path = storage_path("app/public/uploads/imatges/{$equip->logo}");
 
-        $path = Storage::disk('public')->path($equip->logo);
+    if (file_exists($path)) {
         $headers = ['Content-Type' => mime_content_type($path)];
-
         return response()->file($path, $headers);
     }
+
+    return response()->json(['error' => 'Imagen no encontrada'], 404);
+}
 
     public function createEquip(Request $request)
     {
@@ -310,10 +306,11 @@ class ApiController extends Controller
             $idAleatori = uniqid();
             $extensio = $file->getClientOriginalExtension();
             $filename = "{$equip->nom}_{$idAleatori}.{$extensio}";
-            Storage::disk('public')->putFileAs('imatges', $file, $filename);
-
-            $equip->logo = "imatges/{$filename}";
-
+    
+            // Guardar el archivo en storage/public/uploads/imatges
+            $path = $file->storeAs('public/uploads/imatges', $filename);
+    
+            // Guardar la ruta relativa en la base de datos
             $equip->logo = $filename;
         }
 
@@ -374,18 +371,19 @@ class ApiController extends Controller
             $idAleatori = uniqid();
             $extensio = $file->getClientOriginalExtension();
             $filename = "{$nom}_{$idAleatori}.{$extensio}";
-            $file->storeAs('imatges', $filename, 'public');
+            $rutaImatges = public_path(env('RUTA_IMATGES', 'uploads/imatges'));
 
-            if ($equip->logo && Storage::disk('public')->exists($equip->logo)) {
-                Storage::disk('public')->delete($equip->logo);
+            // Verifica que el directorio existe y tiene permisos de escritura
+            if (!file_exists($rutaImatges)) {
+                mkdir($rutaImatges, 0755, true);
             }
 
-            $equip->logo = 'imatges/' . $filename;
+            $file->move($rutaImatges, $filename);
+
+            $equip->logo = $filename;
         }
 
         $equip->save();
-
-        $equip->logo = $equip->logo ? asset('storage/' . $equip->logo) : null;
 
         return response()->json($equip, 200);
     }
@@ -501,9 +499,7 @@ class ApiController extends Controller
             return response()->json(['error' => 'Ticket de Queixa no trobat'], 404);
         }
 
-        $ticketQueixa->foto = $ticketQueixa->foto
-            ? asset('storage/' . $ticketQueixa->foto)
-            : null;
+        $ticketQueixa->foto = url('/api/ticket-queixa/getimg/' . $ticketQueixa->id);
 
         return response()->json($ticketQueixa);
     }
@@ -516,15 +512,14 @@ class ApiController extends Controller
             return response()->json(['error' => 'Imagen no encontrada'], 404);
         }
 
-        $path = storage_path('app/public/' . $ticketQueixa->foto);
+        $path = public_path(env('RUTA_IMATGES') . '/' . $ticketQueixa->foto);
 
-        if (!file_exists($path)) {
-            return response()->json(['error' => 'Imagen no encontrada'], 404);
+        if (file_exists($path)) {
+            $headers = ['Content-Type' => mime_content_type($path)];
+            return response()->file($path, $headers);
         }
 
-        $headers = ['Content-Type' => mime_content_type($path)];
-
-        return response()->file($path, $headers);
+        return response()->download($path);
     }
 
     public function createTicketQueixa(Request $request)
@@ -544,8 +539,8 @@ class ApiController extends Controller
             $idAleatori = uniqid();
             $extensio = $file->getClientOriginalExtension();
             $filename = "foto_{$idAleatori}.{$extensio}";
-            $path = $file->storeAs('imatges', $filename, 'public');
-            $ticketQueixa->foto = $path;
+            $file->move(public_path(env('RUTA_IMATGES')), $filename);
+            $ticketQueixa->foto = $filename;
         }
 
         if ($request->file('video')) {
@@ -553,8 +548,8 @@ class ApiController extends Controller
             $idAleatori = uniqid();
             $extensio = $file->getClientOriginalExtension();
             $filename = "video_{$idAleatori}.{$extensio}";
-            $path = $file->storeAs('videos', $filename, 'public');
-            $ticketQueixa->video = $path;
+            $file->move(public_path(env('RUTA_VIDEOS')), $filename);
+            $ticketQueixa->video = $filename;
         }
 
         $ticketQueixa->usuari_id = $request->input('user_id');
@@ -593,8 +588,8 @@ class ApiController extends Controller
             $idAleatori = uniqid();
             $extensio = $file->getClientOriginalExtension();
             $filename = "foto_{$idAleatori}.{$extensio}";
-            $path = $file->storeAs('imatges', $filename, 'public');
-            $ticketQueixa->foto = $path;
+            $file->move(public_path('uploads/imatges'), $filename);
+            $ticketQueixa->foto = $filename;
         }
 
         if ($request->file('video')) {
@@ -602,14 +597,15 @@ class ApiController extends Controller
             $idAleatori = uniqid();
             $extensio = $file->getClientOriginalExtension();
             $filename = "video_{$idAleatori}.{$extensio}";
-            $path = $file->storeAs('videos', $filename, 'public');
-            $ticketQueixa->video = $path;
+            $file->move(public_path('uploads/videos'), $filename);
+            $ticketQueixa->video = $filename;
         }
 
         $ticketQueixa->save();
 
         return response()->json($ticketQueixa, 200);
     }
+
 
     public function deleteTicketQueixa($id)
     {
