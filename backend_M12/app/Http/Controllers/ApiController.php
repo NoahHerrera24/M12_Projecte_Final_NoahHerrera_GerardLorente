@@ -273,15 +273,16 @@ class ApiController extends Controller
         return response()->json(['error' => 'Imagen no encontrada'], 404);
     }
 
-    $path = storage_path("app/public/uploads/imatges/{$equip->logo}");
-
-    if (file_exists($path)) {
+/*     $path = storage_path("app/public/uploads/imatges/{$equip->logo}");
+ */$path = url('/storage/' . $equip->logo);
+    return redirect($path);
+    /* if (file_exists($path)) {
         $headers = ['Content-Type' => mime_content_type($path)];
         return response()->file($path, $headers);
-    }
+    } */
 
-    return response()->json(['error' => 'Imagen no encontrada'], 404);
-}
+/*     return response()->json(['error' => 'Imagen no encontrada'], 404);
+ */}
 
     public function createEquip(Request $request)
     {
@@ -310,7 +311,7 @@ class ApiController extends Controller
             $path = $file->storeAs('public/uploads/imatges', $filename);
     
             // Guardar la ruta relativa en la base de datos
-            $equip->logo = $filename;
+            $equip->logo = $path;
         }
 
         $equip->save();
@@ -538,9 +539,22 @@ class ApiController extends Controller
             $idAleatori = uniqid();
             $extensio = $file->getClientOriginalExtension();
             $filename = "foto_{$idAleatori}.{$extensio}";
-            $file->move(public_path(env('RUTA_IMATGES')), $filename);
-            $ticketQueixa->foto = $filename;
+            $path = $file->storeAs('public/uploads/imatges', $filename);
+            $ticketQueixa->foto = $path;
         }
+
+        /* if ($request->file('logo')) {
+            $file = $request->file('logo');
+            $idAleatori = uniqid();
+            $extensio = $file->getClientOriginalExtension();
+            $filename = "{$equip->nom}_{$idAleatori}.{$extensio}";
+    
+            // Guardar el archivo en storage/public/uploads/imatges
+            $path = $file->storeAs('public/uploads/imatges', $filename);
+    
+            // Guardar la ruta relativa en la base de datos
+            $equip->logo = $path;
+        } */
 
         if ($request->file('video')) {
             $file = $request->file('video');
