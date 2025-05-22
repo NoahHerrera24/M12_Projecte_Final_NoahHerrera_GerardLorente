@@ -4,8 +4,6 @@ import { Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
-declare var grecaptcha: any;
-
 @Component({
   selector: 'app-register',
   standalone: false,
@@ -24,7 +22,6 @@ export class RegisterComponent {
   selectedFile: File | null = null;
   errorMessage: string = ''; // Para manejar mensajes de error
   emailExists: boolean = false; // Para manejar el error de correo ya registrado
-  recaptchaToken: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -54,16 +51,6 @@ export class RegisterComponent {
       error: (error) => {
         console.error('Error al verificar el correo:', error);
       }
-    });
-  }
-
-  executeRecaptcha(event: Event) {
-    event.preventDefault();
-    grecaptcha.ready(() => {
-      grecaptcha.execute('6LdqQEUrAAAAAL4I9CGcdf3X8tKh9Stm0O14L-DY', {action: 'register'}).then((token: string) => {
-        this.recaptchaToken = token;
-        this.register(); // Llama al método de registro después de obtener el token
-      });
     });
   }
 
@@ -100,7 +87,6 @@ export class RegisterComponent {
     formData.append('password', this.user.password);
     formData.append('password_confirmation', this.user.password_confirmation);
     formData.append('role', this.user.role);
-    formData.append('recaptchaToken', this.recaptchaToken); // Agrega el token de reCAPTCHA
 
     if (this.selectedFile) {
       formData.append('foto', this.selectedFile);

@@ -77,9 +77,7 @@
         <div class="form-group">
           <input type="file" (change)="onFileSelected($event)" name="foto" accept="image/*">
         </div>
-        <!-- Campo oculto para el token de reCAPTCHA -->
-        <input type="hidden" name="recaptchaToken" [(ngModel)]="recaptchaToken">
-        <button type="submit" (click)="executeRecaptcha($event)">Registrarse</button>
+        <button type="submit">Registrarse</button>
       </form>
     </div>
   
