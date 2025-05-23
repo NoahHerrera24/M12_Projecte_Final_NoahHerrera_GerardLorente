@@ -496,7 +496,7 @@ class ApiController extends Controller
             return response()->json(['error' => 'Imagen no encontrada'], 404);
         }
 
-        $ticketQueixa->foto = url('/api/ticket-queixa/getimg/' . $ticketQueixa->id);
+        $ticketQueixa->foto = url('/storage/' . $ticketQueixa->id);
         return redirect($ticketQueixa );
     }
 
