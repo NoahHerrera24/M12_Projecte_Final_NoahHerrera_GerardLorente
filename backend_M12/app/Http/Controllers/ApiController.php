@@ -242,7 +242,7 @@ class ApiController extends Controller
         $equips = Equip::all();
 
         foreach ($equips as $equip) {
-            $equip->logo = $equip->logo ? url('/storage/uploads/imatges/' . $equip->logo) : null;
+            $equip->logo = $equip->logo ? url('/storage/app/public/uploads/imatges/' . $equip->logo) : null;
         }
 
         return response()->json($equips);
@@ -256,7 +256,7 @@ class ApiController extends Controller
             return response()->json(['error' => 'Equip no trobat'], 404);
         }
 
-        $equip->logo = $equip->logo ? url('/storage/uploads/imatges/' . $equip->logo) : null;
+        $equip->logo = $equip->logo ? url('/storage/app/public/uploads/imatges/' . $equip->logo) : null;
 
         return response()->json($equip);
     }
