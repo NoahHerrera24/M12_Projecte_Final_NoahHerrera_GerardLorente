@@ -14,12 +14,12 @@
       <div class="ticket-body">
         <div *ngIf="ticketQueixa.foto" class="ticket-image">
           <img
-            [src]="'https://m12projectefinalnoahherreragerardlorente-production.up.railway.app/uploads/imatges/' + ticketQueixa.foto"
+            [src]="'https://m12projectefinalnoahherreragerardlorente-production.up.railway.app/' + ticketQueixa.foto"
             alt="Foto del Ticket">
         </div>
         <div *ngIf="ticketQueixa.video" class="ticket-video">
           <video
-            [src]="'https://m12projectefinalnoahherreragerardlorente-production.up.railway.app/uploads/videos/' + ticketQueixa.video"
+            [src]="'https://m12projectefinalnoahherreragerardlorente-production.up.railway.app/' + ticketQueixa.video"
             controls></video>
         </div>
 
