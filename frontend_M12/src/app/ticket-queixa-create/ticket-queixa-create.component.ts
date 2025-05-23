@@ -17,9 +17,9 @@ export class TicketQueixaCreateComponent implements OnInit {
   filePreviews: string[] = [];
   selectedFiles: File[] = [];
   fotoFile?: File;
-  videoFile?: File;
+  // videoFile?: File;
   fotoPreview?: string;
-  videoPreview?: string;
+  // videoPreview?: string;
   user: any = null;
   tornejos: any[] = [];
   users: any[] = [];
@@ -78,29 +78,29 @@ export class TicketQueixaCreateComponent implements OnInit {
     }
   }
 
-  onVideoChange(event: any): void {
+  /* onVideoChange(event: any): void {
     const file = event.target.files[0];
     if (file) {
       this.videoFile = file;
       this.videoPreview = URL.createObjectURL(file);
     }
-  }
+  } */
 
   isImage(fileUrl: string): boolean {
     return fileUrl.match(/\.(jpeg|jpg|gif|png)$/i) !== null;
   }
 
-  isVideo(fileUrl: string): boolean {
+  /* isVideo(fileUrl: string): boolean {
     return fileUrl.match(/\.(mp4|webm|ogg)$/i) !== null;
-  }
+  } */
 
   onSubmit(): void {
     if (this.myForm.invalid) {
       this.errorMessage = 'Si us plau, completa tots els camps obligatoris.';
       return;
     }
-    if (!this.fotoFile && !this.videoFile) {
-      this.errorMessage = 'Has de pujar almenys una imatge o un vídeo.';
+    if (!this.fotoFile) {
+      this.errorMessage = 'Has de pujar una imatge.';
       return;
     }
 
@@ -112,7 +112,7 @@ export class TicketQueixaCreateComponent implements OnInit {
     formData.append('culpable_id', this.myForm.get('usuari_destinatari_id')?.value);
   
     if (this.fotoFile) formData.append('foto', this.fotoFile);
-    if (this.videoFile) formData.append('video', this.videoFile);
+    /* if (this.videoFile) formData.append('video', this.videoFile); */
   
     this.ticketQueixaService.createTicketQueixa(formData).subscribe({
       next: () => this.router.navigate(['/ticket-queixa-list']),

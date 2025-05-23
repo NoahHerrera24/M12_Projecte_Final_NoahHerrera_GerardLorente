@@ -17,11 +17,11 @@
             [src]="'https://m12projectefinalnoahherreragerardlorente-production.up.railway.app/storage/' + ticketQueixa.foto"
             alt="Foto del Ticket">
         </div>
-        <div *ngIf="ticketQueixa.video" class="ticket-video">
+        <!-- <div *ngIf="ticketQueixa.video" class="ticket-video">
           <video
             [src]="'https://m12projectefinalnoahherreragerardlorente-production.up.railway.app/storage/' + ticketQueixa.video"
             controls></video>
-        </div>
+        </div> -->
 
         <p><strong>Estat:</strong> {{ ticketQueixa.estat }}</p>
         <p><strong>Torneig:</strong> {{ getNomTorneig(ticketQueixa.torneig_id)

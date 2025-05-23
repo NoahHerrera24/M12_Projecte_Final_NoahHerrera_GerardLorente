@@ -17,9 +17,9 @@ export class TicketQueixaEditComponent implements OnInit {
   selectedFile: File | null = null;
   fotoActual: string = '';
   fotoFile: File | null = null;
-  videoFile: File | null = null;
-  videoActual: string = '';
-  videoPreview: string | null = null;
+  // videoFile: File | null = null;
+  // videoActual: string = '';
+  // videoPreview: string | null = null;
   tornejos: any[] = [];
   users: any[] = [];
   selectedUserId: string = '';
@@ -51,12 +51,12 @@ export class TicketQueixaEditComponent implements OnInit {
       this.ticketQueixaService.getTicketQueixa(this.id).subscribe({
         next: (data) => {
           this.fotoActual = data.body?.foto || '';
-          this.videoActual = data.body?.video || '';
+          // this.videoActual = data.body?.video || '';
           this.myForm.patchValue({
             descripcio: data.body?.descripcio || '',
             estat: data.body?.estat || '',
             foto: this.fotoActual,
-            video: this.videoActual,
+            // video: this.videoActual,
             torneig_id: data.body?.torneig_id || ''
           });
           if (data.body?.torneig_id) {
@@ -115,14 +115,14 @@ export class TicketQueixaEditComponent implements OnInit {
     }
   }
 
-  onVideoChange(event: any): void {
+  /* onVideoChange(event: any): void {
     const file = event.target.files[0];
     if (file) {
       this.videoFile = file;
       this.videoPreview = URL.createObjectURL(file);
       console.log('Archivo de video seleccionado:', this.videoFile);
     }
-  }
+  } */
 
   onSubmit(): void {
 
@@ -131,8 +131,8 @@ export class TicketQueixaEditComponent implements OnInit {
       return;
     }
 
-    if (!this.fotoFile && !this.videoFile) {
-      this.errorMessage = 'Has de pujar almenys una imatge o un vídeo.';
+    if (!this.fotoFile) {
+      this.errorMessage = 'Has de pujar una imatge.';
       return;
     }
 
@@ -149,11 +149,11 @@ export class TicketQueixaEditComponent implements OnInit {
         formData.append('foto', this.fotoActual);
       }
 
-      if (this.videoFile) {
+      /* if (this.videoFile) {
         formData.append('video', this.videoFile);
       } else {
         formData.append('video', this.videoActual);
-      }
+      } */
 
       for (const pair of formData.entries()) {
         console.log(`${pair[0]}: ${pair[1]}`);
@@ -164,8 +164,8 @@ export class TicketQueixaEditComponent implements OnInit {
           this.ticketQueixaService.getTicketQueixa(this.id).subscribe({
             next: (data) => {
               this.fotoActual = data.body?.foto || '';
-              this.videoActual = data.body?.video || '';
-              console.log('Datos actualizados:', this.fotoActual, this.videoActual);
+              // this.videoActual = data.body?.video || '';
+              console.log('Datos actualizados:', this.fotoActual);
               this.router.navigate(['/ticket-queixa-list']);
             },
             error: (error) => {

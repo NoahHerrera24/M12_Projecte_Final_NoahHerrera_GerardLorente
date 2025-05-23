@@ -32,16 +32,16 @@
           <img *ngIf="fotoPreview" [src]="fotoPreview" alt="Foto"
             class="preview-image">
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="video">Vídeo:</label>
           <input type="file" class="form-control neon-input" id="video"
             (change)="onVideoChange($event)" accept="video/*">
           <video *ngIf="videoPreview" [src]="videoPreview" controls
             class="preview-video"></video>
-        </div>
+        </div> -->
         <div class="form-group">
           <span class="error-message"
-            *ngIf="!fotoFile && !videoFile && errorMessage === 'Has de pujar almenys una imatge o un vídeo.'">
+            *ngIf="!fotoFile && !videoFile && errorMessage === 'Has de pujar una imatge.'">
             {{ errorMessage }}
           </span>
         </div>
