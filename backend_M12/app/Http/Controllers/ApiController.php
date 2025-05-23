@@ -301,7 +301,7 @@ class ApiController extends Controller
             $extensio = $file->getClientOriginalExtension();
             $filename = "{$equip->nom}_{$idAleatori}.{$extensio}";
 
-            $file->storeAs('public/uploads/imatges', $filename);
+            $file->storeAs('app/public/uploads/imatges/', $filename);
 
             $equip->logo = $filename;
         }
@@ -363,7 +363,7 @@ class ApiController extends Controller
             $extensio = $file->getClientOriginalExtension();
             $filename = "{$nom}_{$idAleatori}.{$extensio}";
 
-            $file->storeAs('public/uploads/imatges', $filename);
+            $file->storeAs('app/public/uploads/imatges/', $filename);
 
             $equip->logo = $filename;
         }
