@@ -256,7 +256,7 @@ class ApiController extends Controller
             return response()->json(['error' => 'Equip no trobat'], 404);
         }
 
-            $equip->logo = url('/api/equip/getimg/' . $equip->id);
+        $equip->logo = url('/api/equip/getimg/' . $equip->id);
 
         return response()->json($equip);
     }
@@ -361,15 +361,10 @@ class ApiController extends Controller
 
         if ($request->file('logo')) {
             $file = $request->file('logo');
-
-            $nom = $equip->nom ?? 'equip';
-            $idAleatori = uniqid();
-            $extensio = $file->getClientOriginalExtension();
-            $filename = "{$nom}_{$idAleatori}.{$extensio}";
-
-            $file->storeAs('/uploads/imatges/', $filename);
-
-            $equip->logo = $filename;
+            $extension = $file->getClientOriginalExtension();
+            $filename = strtolower($equip->nom . '_' . uniqid() . '.' . $extension);
+            $ruta = $request->file('logo')->storeAs('uploads/imatges', $filename, 'public');
+            $equip->logo = $ruta;
         }
 
         $equip->save();
@@ -501,14 +496,8 @@ class ApiController extends Controller
             return response()->json(['error' => 'Imagen no encontrada'], 404);
         }
 
-        $path = public_path(env('RUTA_IMATGES') . '/' . $ticketQueixa->foto);
-
-        if (file_exists($path)) {
-            $headers = ['Content-Type' => mime_content_type($path)];
-            return response()->file($path, $headers);
-        }
-
-        return response()->download($path);
+        $imageUrl = url('/storage/' . $ticketQueixa->foto);
+        return redirect($imageUrl);
     }
 
     public function createTicketQueixa(Request $request)
@@ -523,22 +512,20 @@ class ApiController extends Controller
         $ticketQueixa->torneig_id = $request->input('torneig_id');
         $ticketQueixa->culpable_id = $request->input('culpable_id');
 
-        if ($request->file('foto')) {
-            $file = $request->file('foto');
-            $idAleatori = uniqid();
-            $extensio = $file->getClientOriginalExtension();
-            $filename = "foto_{$idAleatori}.{$extensio}";
-            $path = $file->storeAs('public/uploads/imatges', $filename);
-            $ticketQueixa->foto = $path;
+        if ($request->file('logo')) {
+            $file = $request->file('logo');
+            $extension = $file->getClientOriginalExtension();
+            $filename = strtolower('foto' . '_' . uniqid() . '.' . $extension);
+            $ruta = $request->file('logo')->storeAs('uploads/imatges', $filename, 'public');
+            $ticketQueixa->foto = $ruta;
         }
 
         if ($request->file('video')) {
             $file = $request->file('video');
-            $idAleatori = uniqid();
-            $extensio = $file->getClientOriginalExtension();
-            $filename = "video_{$idAleatori}.{$extensio}";
-            $file->move(public_path(env('RUTA_VIDEOS')), $filename);
-            $ticketQueixa->video = $filename;
+            $extension = $file->getClientOriginalExtension();
+            $filename = strtolower('video' . '_' . uniqid() . '.' . $extension);
+            $ruta = $request->file('video')->storeAs('uploads/videos', $filename, 'public');
+            $ticketQueixa->video = $ruta;
         }
 
         $ticketQueixa->usuari_id = $request->input('user_id');
@@ -572,22 +559,20 @@ class ApiController extends Controller
             $ticketQueixa->culpable_id = $request->input('culpable_id');
         }
 
-        if ($request->file('foto')) {
-            $file = $request->file('foto');
-            $idAleatori = uniqid();
-            $extensio = $file->getClientOriginalExtension();
-            $filename = "foto_{$idAleatori}.{$extensio}";
-            $file->move(public_path('uploads/imatges'), $filename);
-            $ticketQueixa->foto = $filename;
+         if ($request->file('logo')) {
+            $file = $request->file('logo');
+            $extension = $file->getClientOriginalExtension();
+            $filename = strtolower('foto' . '_' . uniqid() . '.' . $extension);
+            $ruta = $request->file('logo')->storeAs('uploads/imatges', $filename, 'public');
+            $ticketQueixa->foto = $ruta;
         }
 
         if ($request->file('video')) {
             $file = $request->file('video');
-            $idAleatori = uniqid();
-            $extensio = $file->getClientOriginalExtension();
-            $filename = "video_{$idAleatori}.{$extensio}";
-            $file->move(public_path('uploads/videos'), $filename);
-            $ticketQueixa->video = $filename;
+            $extension = $file->getClientOriginalExtension();
+            $filename = strtolower('video' . '_' . uniqid() . '.' . $extension);
+            $ruta = $request->file('video')->storeAs('uploads/videos', $filename, 'public');
+            $ticketQueixa->video = $ruta;
         }
 
         $ticketQueixa->save();
