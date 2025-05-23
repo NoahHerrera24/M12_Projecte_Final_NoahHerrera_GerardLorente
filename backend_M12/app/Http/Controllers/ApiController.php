@@ -512,11 +512,11 @@ class ApiController extends Controller
         $ticketQueixa->torneig_id = $request->input('torneig_id');
         $ticketQueixa->culpable_id = $request->input('culpable_id');
 
-        if ($request->file('logo')) {
-            $file = $request->file('logo');
+        if ($request->file('foto')) {
+            $file = $request->file('foto');
             $extension = $file->getClientOriginalExtension();
             $filename = strtolower('foto' . '_' . uniqid() . '.' . $extension);
-            $ruta = $request->file('logo')->storeAs('uploads/imatges', $filename, 'public');
+            $ruta = $request->file('foto')->storeAs('uploads/imatges', $filename, 'public');
             $ticketQueixa->foto = $ruta;
         }
 
@@ -559,11 +559,11 @@ class ApiController extends Controller
             $ticketQueixa->culpable_id = $request->input('culpable_id');
         }
 
-         if ($request->file('logo')) {
-            $file = $request->file('logo');
+         if ($request->file('foto')) {
+            $file = $request->file('foto');
             $extension = $file->getClientOriginalExtension();
             $filename = strtolower('foto' . '_' . uniqid() . '.' . $extension);
-            $ruta = $request->file('logo')->storeAs('uploads/imatges', $filename, 'public');
+            $ruta = $request->file('foto')->storeAs('uploads/imatges', $filename, 'public');
             $ticketQueixa->foto = $ruta;
         }
 
