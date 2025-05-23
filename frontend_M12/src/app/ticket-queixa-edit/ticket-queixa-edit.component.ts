@@ -42,6 +42,7 @@ export class TicketQueixaEditComponent implements OnInit {
       descripcio: [null, [Validators.required, Validators.maxLength(30)]],
       estat: [{ value: '', disabled: true }],
       foto: [null],
+      video: [null],
       torneig_id: [''],
       culpable_id: ['']
     });
@@ -49,21 +50,38 @@ export class TicketQueixaEditComponent implements OnInit {
     if (this.id) {
       this.ticketQueixaService.getTicketQueixa(this.id).subscribe({
         next: (data) => {
-          this.fotoActual = data.body?.foto 
-            ? `https://m12projectefinalnoahherreragerardlorente-production.up.railway.app/storage/${data.body.foto}`
-            : '';
+          this.fotoActual = data.body?.foto || '';
+          // this.videoActual = data.body?.video || '';
           this.myForm.patchValue({
             descripcio: data.body?.descripcio || '',
             estat: data.body?.estat || '',
-            torneig_id: data.body?.torneig_id || '',
-            culpable_id: data.body?.culpable_id || ''
+            foto: this.fotoActual,
+            // video: this.videoActual,
+            torneig_id: data.body?.torneig_id || ''
           });
+          if (data.body?.torneig_id) {
+            this.ticketQueixaService.getParticipantsByTorneig(data.body.torneig_id, this.user.id).subscribe({
+              next: (res) => {
+                this.users = res.body;
+                this.myForm.patchValue({
+                  culpable_id: data.body?.culpable_id || ''
+                });
+              },
+              error: (err) => console.error(err)
+            });
+          }
         },
         error: (error) => {
-          console.error('Error al cargar el ticket de queja:', error);
-        }
+          this.errorMessage = error.message;
+          console.error('Error:', error);
+        },
       });
     }
+
+    this.ticketQueixaService.getTornejosByUser(this.user.id).subscribe({
+      next: (res) => this.tornejos = res.body,
+      error: (err) => console.error(err)
+    });
   }
 
   onTournamentChange(event: any): void {
