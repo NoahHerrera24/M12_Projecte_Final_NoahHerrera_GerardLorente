@@ -242,7 +242,7 @@ class ApiController extends Controller
         $equips = Equip::all();
 
         foreach ($equips as $equip) {
-            $equip->logo = $equip->logo ? url('/storage/uploads/imatges/' . $equip->logo) : null;
+            $equip->logo = url('/api/equip/getimg/' . $equip->id);
         }
 
         return response()->json($equips);
@@ -256,7 +256,7 @@ class ApiController extends Controller
             return response()->json(['error' => 'Equip no trobat'], 404);
         }
 
-        $equip->logo = $equip->logo ? url('/storage/uploads/imatges/' . $equip->logo) : null;
+            $equip->logo = url('/api/equip/getimg/' . $equip->id);
 
         return response()->json($equip);
     }
@@ -269,13 +269,9 @@ class ApiController extends Controller
             return response()->json(['error' => 'Imagen no encontrada'], 404);
         }
 
-        $path = storage_path('/uploads/imatges/' . $equip->logo);
-
-        if (!file_exists($path)) {
-            return response()->json(['error' => 'Imagen no encontrada'], 404);
-        }
-
-        return response()->file($path);
+       // Redirigir a la URL pública de la imagen
+    $imageUrl = url('/storage/' . $equip->logo);
+    return redirect($imageUrl);
     }
 
     public function createEquip(Request $request)
@@ -295,7 +291,7 @@ class ApiController extends Controller
             $equip->guanyador = $request->input('guanyador');
         }
 
-        if ($request->file('logo')) {
+        /* if ($request->file('logo')) {
             $file = $request->file('logo');
             $idAleatori = uniqid();
             $extensio = $file->getClientOriginalExtension();
@@ -304,6 +300,14 @@ class ApiController extends Controller
             $file->storeAs('/uploads/imatges/', $filename);
 
             $equip->logo = $filename;
+        } */
+
+        if ($request->file('logo')) {
+            $file = $request->file('logo');
+            $extension = $file->getClientOriginalExtension();
+            $filename = strtolower($equip->nom . '_' . uniqid() . '.' . $extension);
+            $ruta = $request->file('logo')->storeAs('uploads/imatges', $filename, 'public');
+            $equip->logo = $ruta;
         }
 
         $equip->save();
