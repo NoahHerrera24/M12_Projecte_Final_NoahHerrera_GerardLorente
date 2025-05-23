@@ -242,7 +242,6 @@ class ApiController extends Controller
         $equips = Equip::all();
 
         foreach ($equips as $equip) {
-            // Generar la URL para acceder a la imagen del equipo
             $equip->logo = $equip->logo ? url('/storage/uploads/imatges/' . $equip->logo) : null;
         }
 
@@ -257,7 +256,6 @@ class ApiController extends Controller
             return response()->json(['error' => 'Equip no trobat'], 404);
         }
 
-        // Generar la URL para acceder a la imagen del equipo
         $equip->logo = $equip->logo ? url('/storage/uploads/imatges/' . $equip->logo) : null;
 
         return response()->json($equip);
@@ -303,9 +301,9 @@ class ApiController extends Controller
             $extensio = $file->getClientOriginalExtension();
             $filename = "{$equip->nom}_{$idAleatori}.{$extensio}";
 
-            $path = $file->storeAs('public/uploads/imatges', $filename);
+            $file->storeAs('public/uploads/imatges', $filename);
 
-            $equip->logo = $path;
+            $equip->logo = $filename;
         }
 
         $equip->save();
@@ -353,7 +351,6 @@ class ApiController extends Controller
             $equip->actiu = $request->input('actiu');
         }
 
-        // Solo asignar 'guanyador' si está presente en la solicitud
         if ($request->has('guanyador')) {
             $equip->guanyador = $request->input('guanyador');
         }
@@ -366,9 +363,9 @@ class ApiController extends Controller
             $extensio = $file->getClientOriginalExtension();
             $filename = "{$nom}_{$idAleatori}.{$extensio}";
 
-            $path = $file->storeAs('public/uploads/imatges', $filename);
+            $file->storeAs('public/uploads/imatges', $filename);
 
-            $equip->logo = $path;
+            $equip->logo = $filename;
         }
 
         $equip->save();
