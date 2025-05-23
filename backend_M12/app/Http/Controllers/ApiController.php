@@ -303,6 +303,8 @@ class ApiController extends Controller
 
             $file->storeAs('/uploads/imatges/', $filename);
 
+            \Log::info("Archivo guardado en: " . $file);
+
             $equip->logo = $filename;
         }
 
