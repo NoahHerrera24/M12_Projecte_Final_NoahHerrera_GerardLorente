@@ -34,13 +34,20 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role' => 'required|in:participant,organitzador,administrador',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:20048'
         ]);
 
-        $photoPath = null;
+        // $photoPath = null;
 
-        if ($request->hasFile('foto')) {
+        /* if ($request->hasFile('foto')) {
             $photoPath = $request->file('foto')->store('', 'imatges');
+        } */
+
+        if ($request->file('foto')) {
+            $file = $request->file('foto');
+            $extension = $file->getClientOriginalExtension();
+            $filename = strtolower('usuari' . '_' . uniqid() . '.' . $extension);
+            $ruta = $request->file('foto')->storeAs('uploads/imatges', $filename, 'public');
         }
 
         $user = User::create([
@@ -48,7 +55,7 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
-            'foto' => $photoPath,
+            'foto' => $ruta,
         ]);
 
         event(new Registered($user));
